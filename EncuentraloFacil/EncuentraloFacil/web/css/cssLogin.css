@@ -1,0 +1,52 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 20-nov-2014, 0:37:31
+    Author     : Mario
+*/
+
+.divSuperior{
+    width: 30%;
+    height: 20%;
+  
+
+}
+.button{
+    width: 100px;       
+}
+.label{
+    width: 100px; 
+}
+
+footer {
+    position: relative  ;
+    /* Altura total del footer en px con valor negativo */
+    margin-top: 15%;
+    
+    /* Altura del footer en px. Se han restado los 5px del margen
+       superior mas los 5px del margen inferior
+    */
+    height: 80px; 
+    padding:5px 0px;
+    clear: left;
+    
+    text-align: center;
+    
+}
+.p{
+    text-align: right;
+    margin-top: 5%;
+    font-family: cursive;
+}
+  /* Esta clase define la anchura del contenido y la posicion centrada 
+           El contenido queda centrado y limitado, pero la cabecera y el pie
+           llegan hasta los limites del navegador.
+        */
+        .define {
+            width:960px;
+            margin:0 auto;
+            
+        }

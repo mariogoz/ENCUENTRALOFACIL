@@ -1,0 +1,81 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<faces-config version="2.1"
+              xmlns="http://java.sun.com/xml/ns/javaee"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_1.xsd">
+    <navigation-rule>
+        <from-view-id>/index.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>Page1</from-outcome>
+            <to-view-id>/ViewLogin.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+  
+    <!--Regla de navegacion Login -->
+    <navigation-rule>
+        <from-view-id>/ViewLogin.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>exito.login</from-outcome>
+            <to-view-id>/ViewAutoAdm.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>fallo.login</from-outcome>
+            <to-view-id>/ViewLogin.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>usuario.nuevo</from-outcome>
+            <to-view-id>/ViewRegistrar.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>cancelar.login</from-outcome>
+            <to-view-id>/ViewBusqueda.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+        <from-view-id>/ViewAutoAdm.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>cerrar.auto</from-outcome>
+            <to-view-id>/ViewLogin.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    
+    
+
+  <managed-bean>
+              <description>
+                         Bean para la gestión de logeo
+              </description>
+              <managed-bean-name>BeanLogin</managed-bean-name>
+              <managed-bean-class>cl.encuentraloFacil.aplicacion.Controlador</managed-bean-class>
+              <managed-bean-scope>session</managed-bean-scope>
+  </managed-bean>
+    <managed-bean>
+        <description>autoAdmin</description>
+        <managed-bean-name>beanAutoAdmin</managed-bean-name>
+        <managed-bean-class>cl.encuentraloFacil.aplicacion.Controlador.BeanAutoAdmin</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+    <managed-bean>
+        <description>Bean encargados de realizar registros en el sistema</description>
+        <managed-bean-name>beanRegistro</managed-bean-name>
+        <managed-bean-class>cl.encuentraloFacil.aplicacion.Controlador.BeanRegistro</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <managed-bean>
+              <description>
+                         Bean map
+              </description>
+              <managed-bean-name>mapBean</managed-bean-name>
+              <managed-bean-class>cl.encuentraloFacil.aplicacion.Controlador</managed-bean-class>
+              <managed-bean-scope>session</managed-bean-scope>
+  </managed-bean>
+  <managed-bean>
+              <description>
+                         BeanBusqueda
+              </description>
+              <managed-bean-name>BeanBusqueda</managed-bean-name>
+              <managed-bean-class>cl.encuentraloFacil.aplicacion.Controlador</managed-bean-class>
+              <managed-bean-scope>session</managed-bean-scope>
+  </managed-bean>
+</faces-config>

@@ -1,0 +1,71 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+
+      xmlns:p="http://primefaces.org/ui"
+      >
+    <h:head>
+        <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
+
+    </h:head>
+    <h:body>
+        <p:layout fullPage="true">
+            <p:layoutUnit position="north" size="100">
+
+            </p:layoutUnit>
+            <p:layoutUnit position="center">
+
+                <h:form prependId="false">
+
+                    <p:gmap 
+                        zoom='14'
+                        type='HYBRID'
+                        style='width:1045px;height:439px'
+                        model='#{mapbean.mapModel}'
+                        center='#{mapbean.centerCoords}'
+
+                        id="map"
+
+
+                        >
+
+
+                        <p:ajax event="overlaySelect" listener="#{mapbean.onMarkerSelect}" />
+
+                        <p:gmapInfoWindow>
+                            <p:outputPanel style="text-align: center; display: block; margin: auto">                      
+
+                                <p:graphicImage value="#{mapbean.value}" />
+                                <h:outputText value="#{mapbean.marker.title}" />   
+                                <h:commandLink value="VISITAR EMPRESA" action="#{mapbean.redireccionarResultado()}" /> 
+
+                            </p:outputPanel>
+
+                        </p:gmapInfoWindow>
+
+                    </p:gmap>
+
+
+                </h:form>
+
+
+
+            </p:layoutUnit>
+            
+            <p:layoutUnit position="west" size="150">
+
+            </p:layoutUnit>
+            
+            <p:layoutUnit position="east" size="150">
+
+            </p:layoutUnit>
+            <p:layoutUnit position="south" size="100">
+
+            </p:layoutUnit>
+            
+            
+            
+        </p:layout> 
+    </h:body>
+</html>

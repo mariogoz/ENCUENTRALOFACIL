@@ -1,0 +1,87 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <title>Geolocation</title>
+        <meta name="viewport" content="initial-scale=1.0, user-scalable=no"/>
+        <meta charset="utf-8"/>
+        <style>
+             #centrar {
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                width: 650px;
+                height: 500px;
+                margin-top: -70px;
+                margin-left: -200px;
+                overflow:hidden;
+            }</style>
+        <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
+
+        <script>
+            // Note: This example requires that you consent to location sharing when
+            // prompted by your browser. If you see a blank space instead of the map, this
+            // is probably because you have denied permission for location sharing.
+
+
+
+            function initialize() {
+
+                // Try HTML5 geolocation
+                if (navigator.geolocation) {
+                    var geo = navigator.geolocation;
+                    geo.getCurrentPosition(showLocation, showError);
+                } else {
+
+                }
+
+
+                function showLocation(position) {
+
+                    var lng = position.coords.longitude;//longitud
+
+                    var lat = position.coords.latitude;//latitud
+                    document.getElementById("form1:lat").value = lat;
+                    document.getElementById("form1:lng").value = lng;
+                    var infowindow = new google.maps.InfoWindow();
+                    infowindow.setContent('');
+                    google.maps.event.addListener(marker, 'click', function () {
+                        infowindow.open(map, marker);
+                    });
+                }
+
+                function showError(error) {
+                    alert('Busqueda personalizada');
+                        window.location= "ViewBusqueda2.xhtml";
+                    }
+                }
+
+            
+
+            google.maps.event.addDomListener(window, 'load', initialize());
+        </script>
+    </h:head>
+    <body background="imagen/Santiago_de_Chile_de_noche.jpg">
+
+        <div id="centrar">
+
+          
+            <h:form id="form1" >
+                <h:inputHidden id="lat" value="#{beanBusqueda.emprego.lat}" />
+                <h:inputHidden id="lng" value="#{beanBusqueda.emprego.lng}" />
+                <h:panelGrid columns="2">
+                    <p:autoComplete value="#{beanBusqueda.prod.nombreProducto}" completeMethod="#{beanBusqueda.complete}" placeholder="Qué producto buscas ?" onclick="this.select()"/>
+                    <p:commandButton id="button" value="Buscar" action="#{beanBusqueda.ejecutarBusqueda()}" />
+               </h:panelGrid>
+                <p:messages id="messages" autoUpdate="true"/>
+                
+                
+            </h:form>
+
+        </div> 
+    </body>
+</html>
+

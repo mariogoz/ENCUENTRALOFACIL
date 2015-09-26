@@ -1,0 +1,60 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ppctu="http://primefaces.org/ui">
+    <h:head>
+        <title>Autentificacion EncuentraFacil</title>
+        <link rel="stylesheet" href="css/cssLogin.css" type="text/css" media="all" />
+    </h:head>
+    <h:body>
+        <f:view>
+
+
+            <div id="slider-holder">
+                <ul>
+                    <center><img src="imagen/encuentraloFacil.gif" alt="" /></center>
+                </ul>
+            </div> 
+
+            <div  align="center">
+
+                <h:form>
+
+
+                    <ppctu:panel header="Autentificacion Sistema" styleClass="divSuperior"   >
+                        <h:panelGrid columns="2" >
+                            <h:outputLabel value="Usuario:" for="login" class="label"/>
+                            <h:inputText id="login" value="#{beanLogin.usuario.userName}" />
+
+                            <h:outputLabel value="Contraseña:" for="password" class="label" />
+                            <h:inputSecret id="password" value="#{beanLogin.usuario.password}" />
+
+                        </h:panelGrid>
+                        <ppctu:messages/>
+                        <h:panelGrid columns="2">
+                            <h:commandButton value="Acceder" action="#{beanLogin.doLogin()}" class="button"/>
+                            <h:commandButton value="Volver" action="#{beanLogin.cancelarLogin()}" class="button" />
+                        </h:panelGrid>
+                        
+                           
+                         
+                        <p> <h:commandLink value="Envio Solicitud Incorporación" action="#{beanLogin.doNuevoUsuario}" disabled="true"/> </p>
+                    </ppctu:panel>
+
+                </h:form>
+            </div>
+            
+        </f:view> 
+        <footer>
+                <div class='define'>
+                    <p class="p">@2014 Todos los derechos Reservados po oee! 2014</p>
+                </div>
+            </footer>
+    </h:body>
+
+</html>
+

@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+    
+    <h:head>
+        <title>Registro EncuentraloFacil</title>
+        <script language="javascript" src="js/jsAutentificacion.js"/>
+        <link rel="STYLESHEET" type="text/css" href="fileformato.css"></link> 
+    </h:head>
+    <h:body>
+        <div center="center">
+      <h:form>
+        <table>
+                <tr>    
+                    <h:outputLabel id="lblSubTituloRegistro" value="Registro usuario EncuentraloFacil" />
+                </tr>
+                <tr>
+                   
+                   <td><h:outputLabel id="lblRutRegistar" value="Rut"/></td>
+                   <td><h:inputText id="txtRutRegistro"  > 
+                           <f:validator validatorId="cl.encuentraloFacil.aplicacion.util.Validacion" />
+                       </h:inputText>
+                   
+                   </td>
+                   
+                </tr>
+                <tr>
+                    <td><h:outputLabel id="lblPrimerNombreRegistro" value="Primer Nombre"/></td>
+                    <td><h:inputText id="txtPrimerNombreRegistro"  /></td>
+                </tr>
+                <tr>
+                    <td><h:outputLabel id="lblSegundoNombreRegistro" value="Segundo Nombre" /></td>
+                    <td><h:inputText id="txtSegundoNombreRegistro"  /></td>
+                </tr>
+                <tr>
+                    
+
+                    <td><h:outputLabel id="lblPrimerApellRegistro" value="Apellido Paterno" /></td>
+                    <td><h:inputText id="txtPrimerApellRegistro" /></td>
+                </tr>
+                <tr>
+                    <td><h:outputLabel id="lblSegundoApellRegistro" value="Apellido Materno" /></td>
+                    <td><h:inputText id="txtSegundoApelliRegisto"  /></td>
+                </tr>
+                <tr>
+                    <td><h:outputLabel id="lblFechaNacimientoRegistro" value="Fecha de Nacimiento" /></td>
+                    <td><input type="date" min="1910-01-01" id="dateFechaNacRegistro" /></td>
+                </tr>
+                <td>
+                    <td> <h:commandButton id="btnClienteRegistro"  value="Registar" action="#{beanRegistro.registrarCliente()}" /> </td>
+                    <td> <h:commandButton id="btnLimpiarRegistro" value="Limpiar" onclick="limpiarRegistro()"/> </td>
+                    <td> <h:commandButton id="btnVolverRegistro" value="Volver" action="ViewLogin"/></td>
+                </td>
+                
+            </table>
+         </h:form> 
+        </div>
+    </h:body>
+ 
+</html>
+
