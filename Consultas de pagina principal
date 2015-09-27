@@ -1,0 +1,23 @@
+Seleccionar Familia segùn empresa para pagina principal
+
+select distinct d.nomfam from  producto_empresa as a,subfamilia as b, producto as c , familia as d
+where b.idSubFamilia = c.SubFamilia_idSubFamilia and
+a.producto_idproduc = c.idproduc and
+d.idfamilia = b.Familia_idFamilia
+and a.Empresa_idemp = 19;
+
+Seleccionar SubFamilia segùn empresa para pagina principal
+
+select distinct d.idfamilia ,d.nomfam , b.nomsubfam from  producto_empresa as a,subfamilia as b, producto as c , familia as d
+where b.idSubFamilia = c.SubFamilia_idSubFamilia and
+a.producto_idproduc = c.idproduc and
+d.idfamilia = b.Familia_idFamilia
+and a.Empresa_idemp = 19;
+
+Seleccionar SubFamilia segùn familia y empresa para pagina principal
+
+select distinct  b.nomsubfam from  producto_empresa as a,subfamilia as b, producto as c , familia as d
+where b.idSubFamilia = c.SubFamilia_idSubFamilia and
+a.producto_idproduc = c.idproduc and
+b.Familia_idFamilia = 9
+and a.Empresa_idemp = 19;
