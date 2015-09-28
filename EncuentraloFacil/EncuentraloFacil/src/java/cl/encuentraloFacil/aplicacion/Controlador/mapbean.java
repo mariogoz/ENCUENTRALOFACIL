@@ -6,8 +6,7 @@
 package cl.encuentraloFacil.aplicacion.Controlador;
 
 import cl.encuentraloFacil.aplicacion.Business.BusquedaBusiness;
-import cl.encuentraloFacil.aplicacion.TO.BusquedaTO;
-import cl.encuentraloFacil.aplicacion.TO.EmpresaGeoTO;
+import cl.encuentraloFacil.aplicacion.TO.*;
 import cl.encuentraloFacil.aplicacion.util.Properties;
 import java.io.IOException;
 import java.io.Serializable;
@@ -98,6 +97,30 @@ public  class mapbean implements Serializable {
             if (resultaBusqueda != null && !resultaBusqueda.isEmpty()) {
                 setNomEmpresa(getMarker().getTitle());
                 System.out.println("asdas" + getNomEmpresa());
+               
+            } else {
+                msg = new FacesMessage(FacesMessage.SEVERITY_INFO, Properties.getProperty("beanBusqueda.buscarProducto.noregistros"), null);
+                context.addMessage(null, msg);
+            }
+
+        } catch (Exception e) {   
+            System.out.println(e.getCause());
+            e.getMessage();
+        }
+
+        return resultaBusqueda;
+    }
+    
+    public List<FamiliaProdTO> getEjecutarBusquedaFamilia() {
+        busquedaBusiness = new BusquedaBusiness();
+        context = FacesContext.getCurrentInstance();
+        int x = Integer.parseInt(getIdEmpresaBuscar());
+        List<FamiliaProdTO> resultaBusqueda = new ArrayList<FamiliaProdTO>();
+        try {
+            resultaBusqueda = getBusquedaBusiness().getBusquedaFamiliaEmpre(x);
+            if (resultaBusqueda != null && !resultaBusqueda.isEmpty()) {
+                setNomEmpresa(getMarker().getTitle());
+                System.out.println("asdas" + resultaBusqueda);
                
             } else {
                 msg = new FacesMessage(FacesMessage.SEVERITY_INFO, Properties.getProperty("beanBusqueda.buscarProducto.noregistros"), null);
