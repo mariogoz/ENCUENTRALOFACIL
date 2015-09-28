@@ -17,6 +17,7 @@ import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 
 /**
@@ -43,10 +44,14 @@ public class BeanBusqueda implements Serializable {
      */
     public BeanBusqueda() {
         busquedaBusiness = new BusquedaBusiness();
+        ExternalContext contexto =  (ExternalContext) FacesContext.getCurrentInstance().getExternalContext();
+        if (contexto.getSessionMap().get("mapbean") != null) {
+            contexto.invalidateSession();
+        } 
     }
 
     public void ejecutarBusqueda() {
-              
+             mapbean s = null ; 
         BusquedaBusiness bbuss = new BusquedaBusiness();
         setResFinal(null);
         List<EmpresaGeoTO> resultadoFinal = new ArrayList<EmpresaGeoTO>();
@@ -56,8 +61,7 @@ public class BeanBusqueda implements Serializable {
                 if (emprego.getLat() != 0.0 && emprego.getLng() != 0.0) {
                     resultadoFinal = bbuss.buscarProducto(getProd().getNombreProducto(), emprego.getLat(), emprego.getLng());
                     if (resultadoFinal != null && !resultadoFinal.isEmpty()) {                                
-                                setResFinal(resultadoFinal);
-                                FacesContext.getCurrentInstance().getExternalContext().setResponseHeader("Cache-Control", "no-cache");
+                                setResFinal(resultadoFinal);    
                                 FacesContext.getCurrentInstance().getExternalContext().redirect("resultado.xhtml");
                     } else {
                         msg = new FacesMessage(FacesMessage.SEVERITY_INFO, Properties.getProperty("beanBusqueda.buscarProducto.noregistros"), null);
@@ -76,6 +80,9 @@ public class BeanBusqueda implements Serializable {
             System.out.println(e.getCause());
             e.getMessage();
         } 
+ //         if (s != null) {
+ //                                   FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+ //                               } 
     }
 
     public List<BusquedaTO> getEjecutarBusqueda() {

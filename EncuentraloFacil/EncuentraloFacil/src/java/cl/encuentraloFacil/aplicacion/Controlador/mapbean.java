@@ -48,27 +48,23 @@ public  class mapbean implements Serializable {
     private FacesContext context;
     private Object value;
     private EmpresaGeoTO emprsaGeoTO = new EmpresaGeoTO();
-    public mapbean() {
 
-        //BeanBusqueda referenciaBeanRequest = (BeanBusqueda) FacesContext.getCurrentInstance().getApplication().evaluateExpressionGet(FacesContext.getCurrentInstance(), "#{beanBusqueda}", BeanBusqueda.class);
+ 
+    public mapbean() {
         ExternalContext contexto = FacesContext.getCurrentInstance().getExternalContext();
-        contexto.setResponseHeader("Cache-Control", "no-cache");
-       // contexto.getRequestCookieMap().get(map)
         BeanBusqueda referenciaBeanSession = (BeanBusqueda) contexto.getSessionMap().get("beanBusqueda");
         List<EmpresaGeoTO> resultadoFinal = referenciaBeanSession.getResFinal();
         String centrarMapa = referenciaBeanSession.getEmprego().getLat() + "," + referenciaBeanSession.getEmprego().getLng();
         listaIdEmpresa = new ArrayList<EmpresaGeoTO>();
         centerCoords = centrarMapa;
+        
         for (EmpresaGeoTO empresa : resultadoFinal) {
             LatLng ll = new LatLng(empresa.getLat(), empresa.getLng());
-            Marker markers = new Marker(ll, String.valueOf(empresa.getIdem()), "imagen/" + empresa.getIdem() + ".png");
-            
+            Marker markers = new Marker(ll, String.valueOf(empresa.getIdem()), "imagen/" + empresa.getIdem() + ".png");     
             mapModel.addOverlay(markers);
-
         }
-       FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
-       
-       
+        
+       FacesContext.getCurrentInstance().getExternalContext().invalidateSession();      
     }
         
     public void onMarkerSelect(OverlaySelectEvent event) {
@@ -76,8 +72,6 @@ public  class mapbean implements Serializable {
         marker = (Marker) event.getOverlay();
         setIdEmpresaBuscar(getMarker().getTitle());
         setValue(getMarker().getData());
-        
-        
     }
 
     public void redireccionarResultado() {
