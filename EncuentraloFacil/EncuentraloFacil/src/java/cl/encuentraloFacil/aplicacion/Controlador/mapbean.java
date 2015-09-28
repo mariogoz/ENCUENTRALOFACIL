@@ -22,6 +22,8 @@ import org.primefaces.model.map.DefaultMapModel;
 import org.primefaces.model.map.LatLng;
 import org.primefaces.model.map.MapModel;
 import org.primefaces.model.map.Marker;
+import org.primefaces.model.DefaultTreeNode;
+import org.primefaces.model.TreeNode;
 
 /**
  * @version 1.1
@@ -29,8 +31,8 @@ import org.primefaces.model.map.Marker;
  */
 @ManagedBean
 @SessionScoped
-public  class mapbean implements Serializable {
-        
+public class mapbean implements Serializable {
+
     private final double distance = 2800;
     //private final double distance_meters = distance * 1852;
     private String centerCoords = "";
@@ -47,8 +49,8 @@ public  class mapbean implements Serializable {
     private FacesContext context;
     private Object value;
     private EmpresaGeoTO emprsaGeoTO = new EmpresaGeoTO();
+    private TreeNode root;
 
- 
     public mapbean() {
         ExternalContext contexto = FacesContext.getCurrentInstance().getExternalContext();
         BeanBusqueda referenciaBeanSession = (BeanBusqueda) contexto.getSessionMap().get("beanBusqueda");
@@ -56,16 +58,16 @@ public  class mapbean implements Serializable {
         String centrarMapa = referenciaBeanSession.getEmprego().getLat() + "," + referenciaBeanSession.getEmprego().getLng();
         listaIdEmpresa = new ArrayList<EmpresaGeoTO>();
         centerCoords = centrarMapa;
-        
+
         for (EmpresaGeoTO empresa : resultadoFinal) {
             LatLng ll = new LatLng(empresa.getLat(), empresa.getLng());
-            Marker markers = new Marker(ll, String.valueOf(empresa.getIdem()), "imagen/" + empresa.getIdem() + ".png");     
+            Marker markers = new Marker(ll, String.valueOf(empresa.getIdem()), "imagen/" + empresa.getIdem() + ".png");
             mapModel.addOverlay(markers);
         }
-        
-       FacesContext.getCurrentInstance().getExternalContext().invalidateSession();      
+
+        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
     }
-        
+
     public void onMarkerSelect(OverlaySelectEvent event) {
         setIdEmpresaBuscar("");
         marker = (Marker) event.getOverlay();
@@ -97,20 +99,21 @@ public  class mapbean implements Serializable {
             if (resultaBusqueda != null && !resultaBusqueda.isEmpty()) {
                 setNomEmpresa(getMarker().getTitle());
                 System.out.println("asdas" + getNomEmpresa());
-               
             } else {
                 msg = new FacesMessage(FacesMessage.SEVERITY_INFO, Properties.getProperty("beanBusqueda.buscarProducto.noregistros"), null);
                 context.addMessage(null, msg);
             }
 
-        } catch (Exception e) {   
+        } catch (Exception e) {
             System.out.println(e.getCause());
             e.getMessage();
         }
-
-        return resultaBusqueda;
+         BeanCategoriasProdEmpr bcpe = new BeanCategoriasProdEmpr();
+         bcpe.init();
+         return resultaBusqueda;
     }
-    
+
+   
     public List<FamiliaProdTO> getEjecutarBusquedaFamilia() {
         busquedaBusiness = new BusquedaBusiness();
         context = FacesContext.getCurrentInstance();
@@ -121,29 +124,29 @@ public  class mapbean implements Serializable {
             if (resultaBusqueda != null && !resultaBusqueda.isEmpty()) {
                 setNomEmpresa(getMarker().getTitle());
                 System.out.println("asdas" + resultaBusqueda);
-               
+
             } else {
                 msg = new FacesMessage(FacesMessage.SEVERITY_INFO, Properties.getProperty("beanBusqueda.buscarProducto.noregistros"), null);
                 context.addMessage(null, msg);
             }
 
-        } catch (Exception e) {   
+        } catch (Exception e) {
             System.out.println(e.getCause());
             e.getMessage();
         }
-
         return resultaBusqueda;
+        
     }
     
     /*
-    public String bundle(){
-        FacesContext facesContext = FacesContext.getCurrentInstance();
-        String messageBundleName = facesContext.getApplication().getMessageBundle();
-        Locale locale = facesContext.getViewRoot().getLocale();
-        ResourceBundle bundle = ResourceBundle.getBundle(messageBundleName, locale);
-        return "";
-    }
-*/
+     public String bundle(){
+     FacesContext facesContext = FacesContext.getCurrentInstance();
+     String messageBundleName = facesContext.getApplication().getMessageBundle();
+     Locale locale = facesContext.getViewRoot().getLocale();
+     ResourceBundle bundle = ResourceBundle.getBundle(messageBundleName, locale);
+     return "";
+     }
+     */
     /**
      * @return the idemp
      */
@@ -220,8 +223,8 @@ public  class mapbean implements Serializable {
     public void setNomEmpresa(String nomEmpresa) {
         this.nomEmpresa = nomEmpresa;
     }
-    
-      public MapModel getMapModel() {
+
+    public MapModel getMapModel() {
         return mapModel;
     }
 
@@ -249,7 +252,6 @@ public  class mapbean implements Serializable {
     public void setValue(Object value) {
         this.value = value;
     }
-
 
     /**
      * @return the emprsaGeoTO

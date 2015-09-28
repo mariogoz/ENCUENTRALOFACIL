@@ -19,7 +19,18 @@
                 <div align="center" > <img src="imagen/encuentraloFacil.gif" alt="" align="top" /> </div>
                 </p:layoutUnit>
             <p:layoutUnit position="west" size="200">
-                
+                <p:tree value="#{arbolCatEmpr.root}" var="node">
+                    <p:treeNode>
+                        <h:outputText value="#{node}" />
+                    </p:treeNode>
+                </p:tree>
+
+                <h3>Ajax</h3>
+                <p:tree value="#{arbolCatEmpr.root}" var="node" dynamic="true">
+                    <p:treeNode>
+                        <h:outputText value="#{node}" />
+                    </p:treeNode>
+                </p:tree>
             </p:layoutUnit>
        <p:layoutUnit position="center">
             <h:form id="form3"></h:form>
