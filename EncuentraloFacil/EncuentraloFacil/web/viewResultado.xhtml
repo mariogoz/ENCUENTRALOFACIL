@@ -19,12 +19,16 @@
                 </p:layoutUnit>
             <p:layoutUnit position="west" size="200">
                 <h:form>
-                <p:slideMenu model="#{MenuProdEmpre.modelomenu}"></p:slideMenu>
+                    <p:slideMenu model="#{MenuProdEmpre.modelomenu}" style="width:180px">
+                        <p:submenu label="Navigations" icon="ui-icon-extlink" />
+                            
+                    </p:slideMenu>
                 </h:form>
             </p:layoutUnit>
        <p:layoutUnit position="center">
+           <h:outputLabel value="#{mapbean.nomEmpresa}"/>
             <h:form id="form3"></h:form>
-            <h:outputLabel value="#{mapbean.nomEmpresa}"/>
+            
             
             <h:form id="form">
                 <p:dataGrid emptyMessage="Información no Disponible" var="car" value="#{mapbean.ejecutarBusqueda}" columns="3" layout="grid"

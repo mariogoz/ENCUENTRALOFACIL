@@ -50,12 +50,14 @@ public class mapbean implements Serializable {
     private Object value;
     private EmpresaGeoTO emprsaGeoTO = new EmpresaGeoTO();
     private TreeNode root;
-
+    private int idprod;
+    
     public mapbean() {
         ExternalContext contexto = FacesContext.getCurrentInstance().getExternalContext();
         BeanBusqueda referenciaBeanSession = (BeanBusqueda) contexto.getSessionMap().get("beanBusqueda");
         List<EmpresaGeoTO> resultadoFinal = referenciaBeanSession.getResFinal();
         String centrarMapa = referenciaBeanSession.getEmprego().getLat() + "," + referenciaBeanSession.getEmprego().getLng();
+        setIdprod(referenciaBeanSession.getIdprod());
         listaIdEmpresa = new ArrayList<EmpresaGeoTO>();
         centerCoords = centrarMapa;
 
@@ -69,10 +71,9 @@ public class mapbean implements Serializable {
     }
 
     public void onMarkerSelect(OverlaySelectEvent event) {
-        setIdEmpresaBuscar("");
         marker = (Marker) event.getOverlay();
         setIdEmpresaBuscar(getMarker().getTitle());
-        setValue(getMarker().getData());
+        setValue(getMarker().getData());    
     }
 
     public void redireccionarResultado() {
@@ -90,15 +91,13 @@ public class mapbean implements Serializable {
     public List<BusquedaTO> getEjecutarBusqueda() {
         busquedaBusiness = new BusquedaBusiness();
         context = FacesContext.getCurrentInstance();
-        System.out.println("idEmpresa" + getIdEmpresaBuscar());
         int x = Integer.parseInt(getIdEmpresaBuscar());
-        System.out.println("idEmpresa" + x);
         List<BusquedaTO> resultaBusqueda = new ArrayList<BusquedaTO>();
         try {
-            resultaBusqueda = getBusquedaBusiness().getBusquedaProductoBusiness(x);
+            
+            resultaBusqueda = getBusquedaBusiness().getBusquedaProductoBusiness(x, getIdprod());
             if (resultaBusqueda != null && !resultaBusqueda.isEmpty()) {
-                setNomEmpresa(getMarker().getTitle());
-                System.out.println("asdas" + getNomEmpresa());
+                setNomEmpresa(resultaBusqueda.get(0).getEmpresa().getNombreEmpresa());
             } else {
                 msg = new FacesMessage(FacesMessage.SEVERITY_INFO, Properties.getProperty("beanBusqueda.buscarProducto.noregistros"), null);
                 context.addMessage(null, msg);
@@ -241,5 +240,19 @@ public class mapbean implements Serializable {
      */
     public void setEmprsaGeoTO(EmpresaGeoTO emprsaGeoTO) {
         this.emprsaGeoTO = emprsaGeoTO;
+    }
+
+    /**
+     * @return the idprod
+     */
+    public int getIdprod() {
+        return idprod;
+    }
+
+    /**
+     * @param idprod the idprod to set
+     */
+    public void setIdprod(int idprod) {
+        this.idprod = idprod;
     }
 }
