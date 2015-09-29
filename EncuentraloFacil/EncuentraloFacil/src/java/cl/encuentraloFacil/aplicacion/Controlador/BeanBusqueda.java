@@ -38,7 +38,6 @@ public class BeanBusqueda implements Serializable {
     List<ProductoTO> producto = new ArrayList<ProductoTO>();
     private FacesMessage msg;
     private FacesContext context;
-
     /**
      * Creates a new instance of BeanBusqueda
      */
@@ -84,26 +83,7 @@ public class BeanBusqueda implements Serializable {
  //                                   FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
  //                               } 
     }
-
-    public List<BusquedaTO> getEjecutarBusqueda() {
-        int x = 2;
-        busquedaBusiness = new BusquedaBusiness();
-        List<BusquedaTO> resultaBusqueda = new ArrayList<BusquedaTO>();
-
-        resultaBusqueda = busquedaBusiness.getBusquedaProductoBusiness(x);
-
-        setNomEmpresa(resultaBusqueda.get(0).getEmpresa().getNombreEmpresa());
-        System.out.println("asdas" + getNomEmpresa());
-        setUrl(resultaBusqueda.get(0).getEmpresa().getUrl());
-        System.out.println("asd" + getUrl());
-
-        for (BusquedaTO resultaBusqueda1 : resultaBusqueda) {
-            System.out.println("Clase" + resultaBusqueda1.getEmpresa().getNombreEmpresa());
-        }
-
-        return resultaBusqueda;
-    }
-
+    
     public List<String> complete(String query) {
         prod.setNombreProducto("");
         BusquedaBusiness bbuss = new BusquedaBusiness();

@@ -2,6 +2,8 @@ package cl.encuentraloFacil.aplicacion.Controlador;
 
 import cl.encuentraloFacil.aplicacion.Business.BusquedaBusiness;
 import cl.encuentraloFacil.aplicacion.TO.FamiliaProdTO;
+import cl.encuentraloFacil.aplicacion.TO.SubFamiliaProdTO;
+import java.awt.Menu;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -34,17 +36,12 @@ public class BeanCategoriasProdEmpr implements Serializable {
     
     
     public List<FamiliaProdTO> ejecutarBusquedaFamilia() {
-       mapbean map =  (mapbean) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("mapbean");
+        mapbean map =  (mapbean) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("mapbean");
         BusquedaBusiness busquedaBusiness = new BusquedaBusiness();
         int x = Integer.parseInt(map.getIdEmpresaBuscar());
         List<FamiliaProdTO> resultaBusqueda = new ArrayList<FamiliaProdTO>();
         try {
             resultaBusqueda = busquedaBusiness.getBusquedaFamiliaEmpre(x);
-            if (resultaBusqueda != null && !resultaBusqueda.isEmpty()) {
-                System.out.println("asdas" + resultaBusqueda);
-
-            } else {
-                 }
 
         } catch (Exception e) {
             System.out.println(e.getCause());
@@ -57,10 +54,21 @@ public class BeanCategoriasProdEmpr implements Serializable {
          
         for(FamiliaProdTO fam: familia)
         {
+            BusquedaBusiness busquedaBusiness = new BusquedaBusiness();
             DefaultSubMenu primSubMenu =  new DefaultSubMenu(fam.getNomFam());
-            //DefaultMenuItem item = new DefaultMenuItem(fam.getNomFam().toString());
-            //primSubMenu.addElement(item);
+            mapbean map =  (mapbean) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("mapbean");
+            int idemp = Integer.parseInt(map.getIdEmpresaBuscar());
+            List<SubFamiliaProdTO> resultaBusqueda = new ArrayList<SubFamiliaProdTO>();
+            resultaBusqueda = busquedaBusiness.getBusquedaSubFamiliaEmpre(fam.getIdFam(),idemp);
+            if(resultaBusqueda.size()>0)
+            {
+                for(SubFamiliaProdTO subFa: resultaBusqueda){
+                DefaultMenuItem subitem = new DefaultMenuItem(subFa.getNomSubFam());
+                primSubMenu.addElement(subitem);}
+            }
+                       
             getModelomenu().addElement(primSubMenu);
+            
         }
         
     }
