@@ -11,6 +11,7 @@ import cl.encuentraloFacil.aplicacion.TO.BusquedaTO;
 import cl.encuentraloFacil.aplicacion.TO.EmpresaGeoTO;
 import cl.encuentraloFacil.aplicacion.TO.FamiliaProdTO;
 import cl.encuentraloFacil.aplicacion.TO.ProductoTO;
+import cl.encuentraloFacil.aplicacion.TO.SubFamiliaProdTO;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -54,6 +55,16 @@ public class BusquedaBusiness implements Serializable{
             throw new RuntimeException(e);
         }
         return listFamiliaEmpresa;
+    }
+    public List<SubFamiliaProdTO> getBusquedaSubFamiliaEmpre(int fam,int emp){
+        List<SubFamiliaProdTO> listSubFamiliaEmpresa = new ArrayList<>();
+        try {
+            listSubFamiliaEmpresa = busquedaDAO.getBusquedaSubFamiliaEmpre(emp,fam);
+        } catch (Exception e) {
+            e.getMessage();
+            throw new RuntimeException(e);
+        }
+        return listSubFamiliaEmpresa;
     }
     
     public List<ProductoTO> retornaNomProd(String nombreprod) {

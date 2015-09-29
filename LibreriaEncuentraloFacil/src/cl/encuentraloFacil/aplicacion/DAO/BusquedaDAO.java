@@ -10,6 +10,7 @@ import cl.encuentraloFacil.aplicacion.TO.BusquedaTO;
 import cl.encuentraloFacil.aplicacion.TO.EmpresaGeoTO;
 import cl.encuentraloFacil.aplicacion.TO.FamiliaProdTO;
 import cl.encuentraloFacil.aplicacion.TO.ProductoTO;
+import cl.encuentraloFacil.aplicacion.TO.SubFamiliaProdTO;
 import java.io.Serializable;
 import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
@@ -87,6 +88,36 @@ public class BusquedaDAO implements Serializable {
             }
         }
         return listFamiliaProd;
+    }
+    
+    public List<SubFamiliaProdTO> getBusquedaSubFamiliaEmpre(int emp, int fam) {
+        List<SubFamiliaProdTO> listSubFamiliaProd = new ArrayList<>();
+        try {
+            PreparedStatement cst = conn.getConnection().prepareStatement("select distinct b.idSubFamilia, b.nomsubfam from  producto_empresa as a,subfamilia as b, producto as c , familia as d\n" +
+            "where b.idSubFamilia = c.SubFamilia_idSubFamilia and\n" +
+            "a.producto_idproduc = c.idproduc and\n" +
+            "b.Familia_idFamilia = "+fam+"\n" +
+            "and a.Empresa_idemp = "+emp+";");
+            ResultSet rs = cst.executeQuery();
+            while (rs.next()) {
+                SubFamiliaProdTO subFamilia = new SubFamiliaProdTO();
+                subFamilia.setIdSubFam(rs.getInt(1));
+                subFamilia.setNomSubFam(rs.getString(2));
+                listSubFamiliaProd.add(subFamilia);
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                conn.getConnection().close();
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+        }
+        return listSubFamiliaProd;
     }
     
     //connect to DB and get customer list
