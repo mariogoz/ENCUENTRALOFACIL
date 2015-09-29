@@ -27,11 +27,12 @@ public class BusquedaDAO implements Serializable {
 
     Conexion conn = new Conexion();
 
-    public List<BusquedaTO> getBusquedaProd(int valorx) {
+    public List<BusquedaTO> getBusquedaProd(int emp, int prod) {
         List<BusquedaTO> listBusqueda = new ArrayList<>();
         try {
-            CallableStatement cst = conn.getConnection().prepareCall("{call busquedaProducto(?)}");
-            cst.setInt("valor", valorx);
+            PreparedStatement cst = conn.getConnection().prepareStatement("select * from producto as a, empresa as b \n" +
+            "where a.idproduc = "+prod+" and\n" +
+            "b.idemp = "+emp+"");
             ResultSet rs = cst.executeQuery();
             while (rs.next()) {
                 BusquedaTO busqueda = new BusquedaTO();
@@ -128,7 +129,7 @@ public class BusquedaDAO implements Serializable {
         double difdist = 0;
         try {
             
-            PreparedStatement st = conn.getConnection().prepareStatement("select b.idemp,b.nomb,c.latitud,c.longitud,b.urlemp \n"
+            PreparedStatement st = conn.getConnection().prepareStatement("select b.idemp,b.nomb,c.latitud,c.longitud,b.urlemp,a.idproduc \n"
                     + "from producto as a,empresa as b, emprgeo as c, producto_empresa as d\n"
                     + "where d.producto_idproduc = a.idproduc\n"
                     + "and d.empresa_idemp = b.idemp \n"
@@ -146,6 +147,7 @@ public class BusquedaDAO implements Serializable {
                     empresas.setLat(rs.getDouble(3));
                     empresas.setLng(rs.getDouble(4));
                     empresas.setLink(rs.getString(5));
+                    empresas.setIdprod(Integer.valueOf(rs.getString(6)));
                     resultadoFinal.add(empresas);
                 } else {
                     System.out.print("la empresa" + rs.getString(2) + " no fue agregada porque su distancia es " + difdist + "");

@@ -23,10 +23,10 @@ import java.util.List;
 public class BusquedaBusiness implements Serializable{
     BusquedaDAO busquedaDAO = new BusquedaDAO();
     
-    public List<BusquedaTO> getBusquedaProductoBusiness(int x){
+    public List<BusquedaTO> getBusquedaProductoBusiness(int emp, int prod){
         List<BusquedaTO> busquedaPro = new ArrayList<>();
         try {
-            busquedaPro = busquedaDAO.getBusquedaProd(x);
+            busquedaPro = busquedaDAO.getBusquedaProd(emp,prod);
         } catch (Exception e) {
             e.getMessage();
             throw new RuntimeException(e);
