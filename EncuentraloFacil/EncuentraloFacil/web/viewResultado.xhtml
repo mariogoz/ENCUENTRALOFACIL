@@ -3,9 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui"
+      xmlns:p="http://primefaces.org/ui">
       
-      >
 
     <h:head>
         <meta http-equiv="Expires" content="0" />
@@ -19,18 +18,9 @@
                 <div align="center" > <img src="imagen/encuentraloFacil.gif" alt="" align="top" /> </div>
                 </p:layoutUnit>
             <p:layoutUnit position="west" size="200">
-                <p:tree value="#{arbolCatEmpr.root}" var="node">
-                    <p:treeNode>
-                        <h:outputText value="#{node}" />
-                    </p:treeNode>
-                </p:tree>
-
-                <h3>Ajax</h3>
-                <p:tree value="#{arbolCatEmpr.root}" var="node" dynamic="true">
-                    <p:treeNode>
-                        <h:outputText value="#{node}" />
-                    </p:treeNode>
-                </p:tree>
+                <h:form>
+                <p:slideMenu model="#{MenuProdEmpre.modelomenu}"></p:slideMenu>
+                </h:form>
             </p:layoutUnit>
        <p:layoutUnit position="center">
             <h:form id="form3"></h:form>

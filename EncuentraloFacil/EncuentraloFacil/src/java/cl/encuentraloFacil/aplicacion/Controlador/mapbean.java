@@ -114,30 +114,6 @@ public class mapbean implements Serializable {
     }
 
    
-    public List<FamiliaProdTO> getEjecutarBusquedaFamilia() {
-        busquedaBusiness = new BusquedaBusiness();
-        context = FacesContext.getCurrentInstance();
-        int x = Integer.parseInt(getIdEmpresaBuscar());
-        List<FamiliaProdTO> resultaBusqueda = new ArrayList<FamiliaProdTO>();
-        try {
-            resultaBusqueda = getBusquedaBusiness().getBusquedaFamiliaEmpre(x);
-            if (resultaBusqueda != null && !resultaBusqueda.isEmpty()) {
-                setNomEmpresa(getMarker().getTitle());
-                System.out.println("asdas" + resultaBusqueda);
-
-            } else {
-                msg = new FacesMessage(FacesMessage.SEVERITY_INFO, Properties.getProperty("beanBusqueda.buscarProducto.noregistros"), null);
-                context.addMessage(null, msg);
-            }
-
-        } catch (Exception e) {
-            System.out.println(e.getCause());
-            e.getMessage();
-        }
-        return resultaBusqueda;
-        
-    }
-    
     /*
      public String bundle(){
      FacesContext facesContext = FacesContext.getCurrentInstance();
