@@ -80,9 +80,6 @@ public class BeanBusqueda implements Serializable {
             System.out.println(e.getCause());
             e.getMessage();
         } 
- //         if (s != null) {
- //                                   FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
- //                               } 
     }
 
     public List<BusquedaTO> getEjecutarBusqueda() {
