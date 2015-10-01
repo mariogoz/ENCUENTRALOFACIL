@@ -25,10 +25,11 @@ import java.util.List;
  */
 public class BusquedaDAO implements Serializable {
 
-    Conexion conn = new Conexion();
+    
 
     public List<BusquedaTO> getBusquedaProd(int emp, int prod) {
         List<BusquedaTO> listBusqueda = new ArrayList<>();
+        Conexion conn = new Conexion();
         try {
             PreparedStatement cst = conn.getConnection().prepareStatement("select * from producto as a, empresa as b \n" +
             "where a.idproduc = "+prod+" and\n" +
@@ -48,21 +49,18 @@ public class BusquedaDAO implements Serializable {
                 listBusqueda.add(busqueda);
 
             }
+            conn.getConnection().close();
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            try {
-                conn.getConnection().close();
-            } catch (SQLException ex) {
-                throw new RuntimeException(ex);
-            }
-        }
+        } 
         return listBusqueda;
     }
+    
     public List<FamiliaProdTO> getBusquedaFamiliaEmpre(int valorx) {
         List<FamiliaProdTO> listFamiliaProd = new ArrayList<>();
+        Conexion conn = new Conexion();
         try {
             PreparedStatement cst = conn.getConnection().prepareStatement("select distinct d.idfamilia ,d.nomfam from  producto_empresa as a,subfamilia as b, producto as c , familia as d\n" +
             "where b.idSubFamilia = c.SubFamilia_idSubFamilia and\n" +
@@ -76,23 +74,45 @@ public class BusquedaDAO implements Serializable {
                 familia.setNomFam(rs.getString(2));
                 listFamiliaProd.add(familia);
 
-            }
+            }    
+            conn.getConnection().close();
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            try {
-                conn.getConnection().close();
-            } catch (SQLException ex) {
-                throw new RuntimeException(ex);
-            }
-        }
+        } 
         return listFamiliaProd;
+    }
+    
+    public List<ProductoTO> getBusquedaProductosSubfamilia(int idempresa, String subfamilia) {
+        List<ProductoTO> listProductos = new ArrayList<>();
+        Conexion conn = new Conexion();
+        try {
+            PreparedStatement cst = conn.getConnection().prepareStatement("select distinct d.idfamilia ,d.nomfam from  producto_empresa as a,subfamilia as b, producto as c , familia as d\n" +
+            "where b.idSubFamilia = c.SubFamilia_idSubFamilia and\n" +
+            "a.producto_idproduc = c.idproduc and\n" +
+            "d.idfamilia = b.Familia_idFamilia\n" +
+            "and a.Empresa_idemp = "+idempresa+";");
+            ResultSet rs = cst.executeQuery();
+            while (rs.next()) {
+                ProductoTO productos = new ProductoTO();
+                //familia.setIdFam(rs.getInt(1));
+                //familia.setNomFam(rs.getString(2));
+                //listFamiliaProd.add(familia);
+
+            }    
+            conn.getConnection().close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } 
+        return listProductos;
     }
     
     public List<SubFamiliaProdTO> getBusquedaSubFamiliaEmpre(int emp, int fam) {
         List<SubFamiliaProdTO> listSubFamiliaProd = new ArrayList<>();
+        Conexion conn = new Conexion();
         try {
             PreparedStatement cst = conn.getConnection().prepareStatement("select distinct b.idSubFamilia, b.nomsubfam from  producto_empresa as a,subfamilia as b, producto as c , familia as d\n" +
             "where b.idSubFamilia = c.SubFamilia_idSubFamilia and\n" +
@@ -107,17 +127,12 @@ public class BusquedaDAO implements Serializable {
                 listSubFamiliaProd.add(subFamilia);
 
             }
+            conn.getConnection().close();
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            try {
-                conn.getConnection().close();
-            } catch (SQLException ex) {
-                throw new RuntimeException(ex);
-            }
-        }
+        } 
         return listSubFamiliaProd;
     }
     
@@ -125,7 +140,7 @@ public class BusquedaDAO implements Serializable {
     public List<EmpresaGeoTO> getEmpresas(String nomprod, double lat, double lng)  {
         Conexion con = new Conexion();
         List<EmpresaGeoTO> resultadoFinal = new ArrayList<EmpresaGeoTO>();
-
+        Conexion conn = new Conexion();
         double difdist = 0;
         try {
             
@@ -153,15 +168,10 @@ public class BusquedaDAO implements Serializable {
                     System.out.print("la empresa" + rs.getString(2) + " no fue agregada porque su distancia es " + difdist + "");
                 }
             }
+            conn.getConnection().close();
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            try {
-                con.getConnection().close();
-            } catch (SQLException ex) {
-                throw new RuntimeException(ex);
-            }
-        }
+        } 
 
         return resultadoFinal;
     }
@@ -188,7 +198,7 @@ public class BusquedaDAO implements Serializable {
      * @return
      */
     public List<ProductoTO> autoComProd(String nombreProd) {
-        Conexion con = new Conexion();
+        Conexion conn = new Conexion();
         List<ProductoTO> resultadoFinal = new ArrayList<ProductoTO>();
 
         try {
@@ -203,15 +213,10 @@ public class BusquedaDAO implements Serializable {
                 prod.setNombreProducto(rs.getString(2));
                 resultadoFinal.add(prod);
             }
+            conn.getConnection().close();
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            try {
-                con.getConnection().close();
-            } catch (SQLException ex) {
-                throw new RuntimeException(ex);
-            }
-        }
+        } 
         return resultadoFinal;
     }
 
