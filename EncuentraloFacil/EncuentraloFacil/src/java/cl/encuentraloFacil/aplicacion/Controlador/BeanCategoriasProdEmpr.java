@@ -1,3 +1,4 @@
+
 package cl.encuentraloFacil.aplicacion.Controlador;
 
 import cl.encuentraloFacil.aplicacion.Business.BusquedaBusiness;
@@ -27,7 +28,7 @@ public class BeanCategoriasProdEmpr implements Serializable {
     private List<FamiliaProdTO> familia;
     private FacesContext context;
     private SubFamiliaProdTO SubFamilia;
-    
+    private List<ProductoTO> productosBean ;
     @PostConstruct
     public void init() {
         familia = ejecutarBusquedaFamilia();
@@ -66,7 +67,7 @@ public class BeanCategoriasProdEmpr implements Serializable {
             {
                 for(SubFamiliaProdTO subFa: resultaBusqueda){
                 DefaultMenuItem subitem = new DefaultMenuItem(subFa.getNomSubFam());
-                subitem.setCommand("#{MenuProdEmpre.ejecutarBusquedaProductosPorSubFam()}");
+                subitem.setCommand("#{MenuProdEmpre.ejecutarBusquedaProductosPorSubFam("+subFa.getIdSubFam()+")}");
                 primSubMenu.addElement(subitem);}
             }
                        
@@ -78,7 +79,7 @@ public class BeanCategoriasProdEmpr implements Serializable {
     
     
     //Método que ejecuta la busqueda de los productos según subFamilia seleccionada en el MenuItem de la página viewResultado.xhtml
-     public List<ProductoTO> ejecutarBusquedaProductosPorSubFam() {
+     public List<ProductoTO> ejecutarBusquedaProductosPorSubFam(int idsubfa) {
         mapbean map =  (mapbean) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("mapbean");
         BusquedaBusiness busquedaBusiness = new BusquedaBusiness();
         
@@ -86,14 +87,19 @@ public class BeanCategoriasProdEmpr implements Serializable {
         List<ProductoTO> productos = new ArrayList<ProductoTO>();
         try {
             //necesito capturar variable seleccionada de subfamilia para listar
-            productos = busquedaBusiness.getBusquedaProductosSubfa(idempresa,"ss");
-
+            productos = busquedaBusiness.getBusquedaProductosSubfa(idempresa,idsubfa);
+            productosBean = productos;
+            FacesContext.getCurrentInstance().getExternalContext().redirect("viewResultadoSubFamilia.xhtml");
         } catch (Exception e) {
             System.out.println(e.getCause());
             e.getMessage();
         }
         return productos;
     }
+     
+     public List<ProductoTO> retornaListaProductos(){
+         return this.productosBean;
+     }
     
     public void familias(List<FamiliaProdTO> familiaresultado){
         familia = familiaresultado;
@@ -140,5 +146,19 @@ public class BeanCategoriasProdEmpr implements Serializable {
      */
     public void setSubFamilia(SubFamiliaProdTO SubFamilia) {
         this.SubFamilia = SubFamilia;
+    }
+
+    /**
+     * @return the productos
+     */
+    public List<ProductoTO> getProductos() {
+        return productosBean;
+    }
+
+    /**
+     * @param productos the productos to set
+     */
+    public void setProductos(List<ProductoTO> productosBean) {
+        this.productosBean = productosBean;
     }
 }

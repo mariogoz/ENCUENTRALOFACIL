@@ -30,7 +30,7 @@
             
             
             <h:form id="form">
-                <p:dataGrid emptyMessage="Información no Disponible" var="car" value="#{mapbean.ejecutarBusqueda}" columns="3" layout="grid"
+                <p:dataGrid emptyMessage="Información no Disponible" var="car" value="#{MenuProdEmpre.retornaListaProductos}" columns="3" layout="grid"
                             rows="10" paginator="true" id="cars"
                             paginatorTemplate=" {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
 
@@ -62,4 +62,3 @@
         </p:layout>
     </h:body>
 </html>
-
