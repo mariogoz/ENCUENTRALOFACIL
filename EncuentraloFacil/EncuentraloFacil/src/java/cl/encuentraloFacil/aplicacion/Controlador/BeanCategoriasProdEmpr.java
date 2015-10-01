@@ -26,6 +26,7 @@ public class BeanCategoriasProdEmpr implements Serializable {
     private MenuModel modelomenu;
     private List<FamiliaProdTO> familia;
     private FacesContext context;
+    private SubFamiliaProdTO SubFamilia;
     
     @PostConstruct
     public void init() {
@@ -74,7 +75,9 @@ public class BeanCategoriasProdEmpr implements Serializable {
         
     }
     
-     public List<ProductoTO> ejecutarBusquedaProductosSubFam() {
+    
+    //Método que ejecuta la busqueda de los productos según subFamilia seleccionada en el MenuItem de la página viewResultado.xhtml
+     public List<ProductoTO> ejecutarBusquedaProductosPorSubFam() {
         mapbean map =  (mapbean) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("mapbean");
         BusquedaBusiness busquedaBusiness = new BusquedaBusiness();
         //int idsubfa = map.
@@ -122,5 +125,19 @@ public class BeanCategoriasProdEmpr implements Serializable {
      */
     public void setModelomenu(MenuModel modelomenu) {
         this.modelomenu = modelomenu;
+    }
+
+    /**
+     * @return the SubFamilia
+     */
+    public SubFamiliaProdTO getSubFamilia() {
+        return SubFamilia;
+    }
+
+    /**
+     * @param SubFamilia the SubFamilia to set
+     */
+    public void setSubFamilia(SubFamiliaProdTO SubFamilia) {
+        this.SubFamilia = SubFamilia;
     }
 }

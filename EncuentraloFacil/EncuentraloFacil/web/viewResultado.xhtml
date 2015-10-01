@@ -19,8 +19,10 @@
                 </p:layoutUnit>
             <p:layoutUnit position="west" size="200">
                 <h:form>
-                    <p:slideMenu model="#{MenuProdEmpre.modelomenu}" style="width:180px">
-                        <p:submenu label="Navigations" icon="ui-icon-extlink" />
+                    <p:slideMenu model="#{MenuProdEmpre.modelomenu}" triggerEvent="#{MenuProdEmpre.ejecutarBusquedaProductosPorSubFam()}" style="width:180px">
+                        <p:submenu label="Navigations"  icon="ui-icon-extlink">
+                            <p:menuitem actionListener="#{MenuProdEmpre.ejecutarBusquedaProductosPorSubFam()}" value="#{MenuProdEmpre.subFamilia.nomSubFam}" ></p:menuitem> 
+                        </p:submenu>
                             
                     </p:slideMenu>
                 </h:form>
@@ -44,7 +46,7 @@
                     <p:panel header="#{car.producto.nombreProducto}" style="text-align:center" >
                         <h:panelGrid columns="1" style="width:100%; " >
                          
-                            <img src="imagen/#{car.producto.idProducto}.JPG" alt="" />
+                            <img width="180px" height="180" src="imagen/#{car.producto.idProducto}.JPG" alt="" />
 
                             <h:outputText value="#{car.producto.precio}" />
 
