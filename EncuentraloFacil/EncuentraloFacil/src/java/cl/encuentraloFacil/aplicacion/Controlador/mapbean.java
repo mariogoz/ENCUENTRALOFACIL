@@ -51,6 +51,7 @@ public class mapbean implements Serializable {
     private EmpresaGeoTO emprsaGeoTO = new EmpresaGeoTO();
     private TreeNode root;
     private int idprod;
+    private String nombreEmpresa;
     
     public mapbean() {
         ExternalContext contexto = FacesContext.getCurrentInstance().getExternalContext();
@@ -63,17 +64,19 @@ public class mapbean implements Serializable {
 
         for (EmpresaGeoTO empresa : resultadoFinal) {
             LatLng ll = new LatLng(empresa.getLat(), empresa.getLng());
-            Marker markers = new Marker(ll, String.valueOf(empresa.getIdem()), "imagen/" + empresa.getIdem() + ".png");
+            Marker markers = new Marker(ll, String.valueOf(empresa.getIdem())+", "+empresa.getNombre(), "imagen/" + empresa.getIdem() + ".png");
             mapModel.addOverlay(markers);
         }
-
+        
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
     }
 
     public void onMarkerSelect(OverlaySelectEvent event) {
         marker = (Marker) event.getOverlay();
-        setIdEmpresaBuscar(getMarker().getTitle());
+        String datos[] = getMarker().getTitle().split(",");
+        setIdEmpresaBuscar(datos[0]);
         setValue(getMarker().getData());    
+        setNombreEmpresa(datos[1]);
     }
 
     public void redireccionarResultado() {
@@ -254,5 +257,19 @@ public class mapbean implements Serializable {
      */
     public void setIdprod(int idprod) {
         this.idprod = idprod;
+    }
+
+    /**
+     * @return the nombreEmpresa
+     */
+    public String getNombreEmpresa() {
+        return nombreEmpresa;
+    }
+
+    /**
+     * @param nombreEmpresa the nombreEmpresa to set
+     */
+    public void setNombreEmpresa(String nombreEmpresa) {
+        this.nombreEmpresa = nombreEmpresa;
     }
 }

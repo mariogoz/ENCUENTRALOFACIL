@@ -2,6 +2,7 @@ package cl.encuentraloFacil.aplicacion.Controlador;
 
 import cl.encuentraloFacil.aplicacion.Business.BusquedaBusiness;
 import cl.encuentraloFacil.aplicacion.TO.FamiliaProdTO;
+import cl.encuentraloFacil.aplicacion.TO.ProductoTO;
 import cl.encuentraloFacil.aplicacion.TO.SubFamiliaProdTO;
 import java.awt.Menu;
 import java.io.Serializable;
@@ -71,6 +72,23 @@ public class BeanCategoriasProdEmpr implements Serializable {
             
         }
         
+    }
+    
+     public List<ProductoTO> ejecutarBusquedaProductosSubFam() {
+        mapbean map =  (mapbean) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("mapbean");
+        BusquedaBusiness busquedaBusiness = new BusquedaBusiness();
+        //int idsubfa = map.
+        int idempresa = Integer.parseInt(map.getIdEmpresaBuscar());
+        List<ProductoTO> productos = new ArrayList<ProductoTO>();
+        try {
+            //necesito capturar variable seleccionada de subfamilia para listar
+            productos = busquedaBusiness.getBusquedaProductosSubfa(idempresa,"ss");
+
+        } catch (Exception e) {
+            System.out.println(e.getCause());
+            e.getMessage();
+        }
+        return productos;
     }
     
     public void familias(List<FamiliaProdTO> familiaresultado){
