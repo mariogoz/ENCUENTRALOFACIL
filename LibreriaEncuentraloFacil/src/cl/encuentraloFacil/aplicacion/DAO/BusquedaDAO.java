@@ -73,7 +73,6 @@ public class BusquedaDAO implements Serializable {
                 familia.setIdFam(rs.getInt(1));
                 familia.setNomFam(rs.getString(2));
                 listFamiliaProd.add(familia);
-
             }    
             conn.getConnection().close();
         } catch (SQLException e) {
@@ -84,22 +83,21 @@ public class BusquedaDAO implements Serializable {
         return listFamiliaProd;
     }
     
-    public List<ProductoTO> getBusquedaProductosSubfamilia(int idempresa, String subfamilia) {
+    public List<ProductoTO> getBusquedaProductosSubfamilia(int idempresa, int idsubfamilia) {
         List<ProductoTO> listProductos = new ArrayList<>();
         Conexion conn = new Conexion();
         try {
-            PreparedStatement cst = conn.getConnection().prepareStatement("select distinct d.idfamilia ,d.nomfam from  producto_empresa as a,subfamilia as b, producto as c , familia as d\n" +
-            "where b.idSubFamilia = c.SubFamilia_idSubFamilia and\n" +
-            "a.producto_idproduc = c.idproduc and\n" +
-            "d.idfamilia = b.Familia_idFamilia\n" +
+            PreparedStatement cst = conn.getConnection().prepareStatement("select distinct c.idproduc, c.nomprod, c.precio from  producto_empresa as a,subfamilia as b, producto as c \n" +
+            "where a.producto_idproduc = c.idproduc " +
+            "and c.SubFamilia_idSubFamilia = "+idsubfamilia+"\n" +
             "and a.Empresa_idemp = "+idempresa+";");
             ResultSet rs = cst.executeQuery();
             while (rs.next()) {
                 ProductoTO productos = new ProductoTO();
-                //familia.setIdFam(rs.getInt(1));
-                //familia.setNomFam(rs.getString(2));
-                //listFamiliaProd.add(familia);
-
+                productos.setIdProducto(rs.getInt(1));
+                productos.setNombreProducto(rs.getString(2));
+                productos.setPrecio(rs.getDouble(3));
+                listProductos.add(productos);
             }    
             conn.getConnection().close();
         } catch (SQLException e) {

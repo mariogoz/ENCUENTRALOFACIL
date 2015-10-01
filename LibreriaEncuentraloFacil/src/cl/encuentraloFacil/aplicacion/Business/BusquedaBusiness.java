@@ -57,7 +57,7 @@ public class BusquedaBusiness implements Serializable{
         return listFamiliaEmpresa;
     }
     
-     public List<ProductoTO> getBusquedaProductosSubfa(int idempresa, String subfamilia){
+     public List<ProductoTO> getBusquedaProductosSubfa(int idempresa, int subfamilia){
         List<ProductoTO> listProductos = new ArrayList<>();
         try {
             listProductos = busquedaDAO.getBusquedaProductosSubfamilia(idempresa, subfamilia);
