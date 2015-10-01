@@ -19,17 +19,14 @@
                 </p:layoutUnit>
             <p:layoutUnit position="west" size="200">
                 <h:form>
-                    <p:slideMenu model="#{MenuProdEmpre.modelomenu}" triggerEvent="#{MenuProdEmpre.ejecutarBusquedaProductosPorSubFam()}" style="width:180px">
-                        <p:submenu label="Navigations"  icon="ui-icon-extlink">
-                            <p:menuitem actionListener="#{MenuProdEmpre.ejecutarBusquedaProductosPorSubFam()}" value="#{MenuProdEmpre.subFamilia.nomSubFam}" ></p:menuitem> 
-                        </p:submenu>
-                            
-                    </p:slideMenu>
+                    <p:growl id="messages"></p:growl>
+                    <p:slideMenu model="#{MenuProdEmpre.modelomenu}" style="width:180px"></p:slideMenu>
+     
                 </h:form>
             </p:layoutUnit>
        <p:layoutUnit position="center">
-           <h:outputLabel value="#{mapbean.nomEmpresa}"/>
-            <h:form id="form3"></h:form>
+           
+            <h:form id="form3"><h:outputLabel value="#{mapbean.nomEmpresa}"/></h:form>
             
             
             <h:form id="form">

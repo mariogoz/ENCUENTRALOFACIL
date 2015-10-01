@@ -110,8 +110,6 @@ public class mapbean implements Serializable {
             System.out.println(e.getCause());
             e.getMessage();
         }
-         BeanCategoriasProdEmpr bcpe = new BeanCategoriasProdEmpr();
-         bcpe.init();
          return resultaBusqueda;
     }
 

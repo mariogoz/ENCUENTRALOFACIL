@@ -66,6 +66,7 @@ public class BeanCategoriasProdEmpr implements Serializable {
             {
                 for(SubFamiliaProdTO subFa: resultaBusqueda){
                 DefaultMenuItem subitem = new DefaultMenuItem(subFa.getNomSubFam());
+                subitem.setCommand("#{MenuProdEmpre.ejecutarBusquedaProductosPorSubFam()}");
                 primSubMenu.addElement(subitem);}
             }
                        
@@ -80,7 +81,7 @@ public class BeanCategoriasProdEmpr implements Serializable {
      public List<ProductoTO> ejecutarBusquedaProductosPorSubFam() {
         mapbean map =  (mapbean) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("mapbean");
         BusquedaBusiness busquedaBusiness = new BusquedaBusiness();
-        //int idsubfa = map.
+        
         int idempresa = Integer.parseInt(map.getIdEmpresaBuscar());
         List<ProductoTO> productos = new ArrayList<ProductoTO>();
         try {
