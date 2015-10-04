@@ -50,29 +50,33 @@ public class mapbean implements Serializable {
     private Object value;
     private EmpresaGeoTO emprsaGeoTO = new EmpresaGeoTO();
     private TreeNode root;
-
+    private int idprod;
+    private String nombreEmpresa;
+    
     public mapbean() {
         ExternalContext contexto = FacesContext.getCurrentInstance().getExternalContext();
         BeanBusqueda referenciaBeanSession = (BeanBusqueda) contexto.getSessionMap().get("beanBusqueda");
         List<EmpresaGeoTO> resultadoFinal = referenciaBeanSession.getResFinal();
         String centrarMapa = referenciaBeanSession.getEmprego().getLat() + "," + referenciaBeanSession.getEmprego().getLng();
+        setIdprod(referenciaBeanSession.getIdprod());
         listaIdEmpresa = new ArrayList<EmpresaGeoTO>();
         centerCoords = centrarMapa;
 
         for (EmpresaGeoTO empresa : resultadoFinal) {
             LatLng ll = new LatLng(empresa.getLat(), empresa.getLng());
-            Marker markers = new Marker(ll, String.valueOf(empresa.getIdem()), "imagen/" + empresa.getIdem() + ".png");
+            Marker markers = new Marker(ll, String.valueOf(empresa.getIdem())+", "+empresa.getNombre(), "imagen/" + empresa.getIdem() + ".png");
             mapModel.addOverlay(markers);
         }
-
+        
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
     }
 
     public void onMarkerSelect(OverlaySelectEvent event) {
-        setIdEmpresaBuscar("");
         marker = (Marker) event.getOverlay();
-        setIdEmpresaBuscar(getMarker().getTitle());
-        setValue(getMarker().getData());
+        String datos[] = getMarker().getTitle().split(",");
+        setIdEmpresaBuscar(datos[0]);
+        setValue(getMarker().getData());    
+        setNombreEmpresa(datos[1]);
     }
 
     public void redireccionarResultado() {
@@ -90,15 +94,13 @@ public class mapbean implements Serializable {
     public List<BusquedaTO> getEjecutarBusqueda() {
         busquedaBusiness = new BusquedaBusiness();
         context = FacesContext.getCurrentInstance();
-        System.out.println("idEmpresa" + getIdEmpresaBuscar());
         int x = Integer.parseInt(getIdEmpresaBuscar());
-        System.out.println("idEmpresa" + x);
         List<BusquedaTO> resultaBusqueda = new ArrayList<BusquedaTO>();
         try {
-            resultaBusqueda = getBusquedaBusiness().getBusquedaProductoBusiness(x);
+            
+            resultaBusqueda = getBusquedaBusiness().getBusquedaProductoBusiness(x, getIdprod());
             if (resultaBusqueda != null && !resultaBusqueda.isEmpty()) {
-                setNomEmpresa(getMarker().getTitle());
-                System.out.println("asdas" + getNomEmpresa());
+                setNomEmpresa(resultaBusqueda.get(0).getEmpresa().getNombreEmpresa());
             } else {
                 msg = new FacesMessage(FacesMessage.SEVERITY_INFO, Properties.getProperty("beanBusqueda.buscarProducto.noregistros"), null);
                 context.addMessage(null, msg);
@@ -108,36 +110,10 @@ public class mapbean implements Serializable {
             System.out.println(e.getCause());
             e.getMessage();
         }
-         BeanCategoriasProdEmpr bcpe = new BeanCategoriasProdEmpr();
-         bcpe.init();
          return resultaBusqueda;
     }
 
    
-    public List<FamiliaProdTO> getEjecutarBusquedaFamilia() {
-        busquedaBusiness = new BusquedaBusiness();
-        context = FacesContext.getCurrentInstance();
-        int x = Integer.parseInt(getIdEmpresaBuscar());
-        List<FamiliaProdTO> resultaBusqueda = new ArrayList<FamiliaProdTO>();
-        try {
-            resultaBusqueda = getBusquedaBusiness().getBusquedaFamiliaEmpre(x);
-            if (resultaBusqueda != null && !resultaBusqueda.isEmpty()) {
-                setNomEmpresa(getMarker().getTitle());
-                System.out.println("asdas" + resultaBusqueda);
-
-            } else {
-                msg = new FacesMessage(FacesMessage.SEVERITY_INFO, Properties.getProperty("beanBusqueda.buscarProducto.noregistros"), null);
-                context.addMessage(null, msg);
-            }
-
-        } catch (Exception e) {
-            System.out.println(e.getCause());
-            e.getMessage();
-        }
-        return resultaBusqueda;
-        
-    }
-    
     /*
      public String bundle(){
      FacesContext facesContext = FacesContext.getCurrentInstance();
@@ -265,5 +241,33 @@ public class mapbean implements Serializable {
      */
     public void setEmprsaGeoTO(EmpresaGeoTO emprsaGeoTO) {
         this.emprsaGeoTO = emprsaGeoTO;
+    }
+
+    /**
+     * @return the idprod
+     */
+    public int getIdprod() {
+        return idprod;
+    }
+
+    /**
+     * @param idprod the idprod to set
+     */
+    public void setIdprod(int idprod) {
+        this.idprod = idprod;
+    }
+
+    /**
+     * @return the nombreEmpresa
+     */
+    public String getNombreEmpresa() {
+        return nombreEmpresa;
+    }
+
+    /**
+     * @param nombreEmpresa the nombreEmpresa to set
+     */
+    public void setNombreEmpresa(String nombreEmpresa) {
+        this.nombreEmpresa = nombreEmpresa;
     }
 }
