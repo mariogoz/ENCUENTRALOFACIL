@@ -32,6 +32,7 @@ public class BeanBusqueda implements Serializable {
     private BusquedaBusiness busquedaBusiness;
     private BusquedaTO selectedBusqueda;
     private String nomEmpresa;
+    private int idprod;
     private String url;
     private List<EmpresaGeoTO> resFinal;
     private ProductoTO prod = new ProductoTO();
@@ -44,14 +45,14 @@ public class BeanBusqueda implements Serializable {
      */
     public BeanBusqueda() {
         busquedaBusiness = new BusquedaBusiness();
-        ExternalContext contexto =  (ExternalContext) FacesContext.getCurrentInstance().getExternalContext();
+        ExternalContext contexto = (ExternalContext) FacesContext.getCurrentInstance().getExternalContext();
         if (contexto.getSessionMap().get("mapbean") != null) {
             contexto.invalidateSession();
-        } 
+        }
     }
 
     public void ejecutarBusqueda() {
-             mapbean s = null ; 
+        mapbean s = null;
         BusquedaBusiness bbuss = new BusquedaBusiness();
         setResFinal(null);
         List<EmpresaGeoTO> resultadoFinal = new ArrayList<EmpresaGeoTO>();
@@ -60,9 +61,10 @@ public class BeanBusqueda implements Serializable {
             if (getProd().getNombreProducto() != null) {
                 if (emprego.getLat() != 0.0 && emprego.getLng() != 0.0) {
                     resultadoFinal = bbuss.buscarProducto(getProd().getNombreProducto(), emprego.getLat(), emprego.getLng());
-                    if (resultadoFinal != null && !resultadoFinal.isEmpty()) {                                
-                                setResFinal(resultadoFinal);    
-                                FacesContext.getCurrentInstance().getExternalContext().redirect("resultado.xhtml");
+                    if (resultadoFinal != null && !resultadoFinal.isEmpty()) {
+                        setResFinal(resultadoFinal);
+                        setIdprod(resFinal.get(0).getIdprod());
+                        FacesContext.getCurrentInstance().getExternalContext().redirect("resultado.xhtml");
                     } else {
                         msg = new FacesMessage(FacesMessage.SEVERITY_INFO, Properties.getProperty("beanBusqueda.buscarProducto.noregistros"), null);
                         context.addMessage(null, msg);
@@ -79,26 +81,10 @@ public class BeanBusqueda implements Serializable {
         } catch (IOException e) {
             System.out.println(e.getCause());
             e.getMessage();
-        } 
-    }
-
-    public List<BusquedaTO> getEjecutarBusqueda() {
-        int x = 2;
-        busquedaBusiness = new BusquedaBusiness();
-        List<BusquedaTO> resultaBusqueda = new ArrayList<BusquedaTO>();
-
-        resultaBusqueda = busquedaBusiness.getBusquedaProductoBusiness(x);
-
-        setNomEmpresa(resultaBusqueda.get(0).getEmpresa().getNombreEmpresa());
-        System.out.println("asdas" + getNomEmpresa());
-        setUrl(resultaBusqueda.get(0).getEmpresa().getUrl());
-        System.out.println("asd" + getUrl());
-
-        for (BusquedaTO resultaBusqueda1 : resultaBusqueda) {
-            System.out.println("Clase" + resultaBusqueda1.getEmpresa().getNombreEmpresa());
         }
-
-        return resultaBusqueda;
+ //         if (s != null) {
+        //                                   FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+        //                               } 
     }
 
     public List<String> complete(String query) {
@@ -210,6 +196,20 @@ public class BeanBusqueda implements Serializable {
      */
     public void setProd(ProductoTO prod) {
         this.prod = prod;
+    }
+
+    /**
+     * @return the idemp
+     */
+    public int getIdprod() {
+        return idprod;
+    }
+
+    /**
+     * @param idemp the idemp to set
+     */
+    public void setIdprod(int idprod) {
+        this.idprod = idprod;
     }
 
 }

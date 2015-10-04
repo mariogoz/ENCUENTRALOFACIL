@@ -11,6 +11,8 @@ import cl.encuentraloFacil.aplicacion.TO.BusquedaTO;
 import cl.encuentraloFacil.aplicacion.TO.EmpresaGeoTO;
 import cl.encuentraloFacil.aplicacion.TO.FamiliaProdTO;
 import cl.encuentraloFacil.aplicacion.TO.ProductoTO;
+import cl.encuentraloFacil.aplicacion.TO.SubFamProductosTO;
+import cl.encuentraloFacil.aplicacion.TO.SubFamiliaProdTO;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,10 +24,10 @@ import java.util.List;
 public class BusquedaBusiness implements Serializable{
     BusquedaDAO busquedaDAO = new BusquedaDAO();
     
-    public List<BusquedaTO> getBusquedaProductoBusiness(int x){
+    public List<BusquedaTO> getBusquedaProductoBusiness(int emp, int prod){
         List<BusquedaTO> busquedaPro = new ArrayList<>();
         try {
-            busquedaPro = busquedaDAO.getBusquedaProd(x);
+            busquedaPro = busquedaDAO.getBusquedaProd(emp,prod);
         } catch (Exception e) {
             e.getMessage();
             throw new RuntimeException(e);
@@ -54,6 +56,28 @@ public class BusquedaBusiness implements Serializable{
             throw new RuntimeException(e);
         }
         return listFamiliaEmpresa;
+    }
+    
+     public List<SubFamProductosTO> getBusquedaProductosSubfa(int idempresa, int subfamilia){
+        List<SubFamProductosTO> listProductos = new ArrayList<>();
+        try {
+            listProductos = busquedaDAO.getBusquedaProductosSubfamilia(idempresa, subfamilia);
+        } catch (Exception e) {
+            e.getMessage();
+            throw new RuntimeException(e);
+        }
+        return listProductos;
+    }
+    
+    public List<SubFamiliaProdTO> getBusquedaSubFamiliaEmpre(int fam,int emp){
+        List<SubFamiliaProdTO> listSubFamiliaEmpresa = new ArrayList<>();
+        try {
+            listSubFamiliaEmpresa = busquedaDAO.getBusquedaSubFamiliaEmpre(emp,fam);
+        } catch (Exception e) {
+            e.getMessage();
+            throw new RuntimeException(e);
+        }
+        return listSubFamiliaEmpresa;
     }
     
     public List<ProductoTO> retornaNomProd(String nombreprod) {
