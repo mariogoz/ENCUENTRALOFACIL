@@ -30,9 +30,9 @@
             
             
             <h:form id="form">
-                <p:dataGrid emptyMessage="Información no Disponible" var="car" value="#{mapbean.ejecutarBusqueda}" columns="3" layout="grid"
+                <p:dataGrid emptyMessage="Información no Disponible" var="car" value="#{MenuProdEmpre.productosBean}" columns="3" layout="grid"
                             rows="10" paginator="true" id="cars"
-                            paginatorTemplate="  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                            paginatorTemplate=" {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
 
                             rowsPerPageTemplate="6,12,16">
 
@@ -40,12 +40,12 @@
                         Resultado Busqueda
                     </f:facet>
 
-                    <p:panel header="#{car.producto.nombreProducto}" style="text-align:center" >
+                    <p:panel header="#{car.nombreProducto}" style="text-align:center" >
                         <h:panelGrid columns="1" style="width:100%; " >
                          
-                            <img width="180px" height="180" src="imagen/#{car.producto.idProducto}.JPG" alt="" />
+                            <img width="180px" height="180" src="imagen/#{car.idProducto}.JPG" alt="" />
 
-                            <h:outputText value="#{car.producto.precio}" />
+                            <h:outputText value="#{car.precio}" />
 
                             
                         </h:panelGrid>
@@ -62,4 +62,3 @@
         </p:layout>
     </h:body>
 </html>
-
