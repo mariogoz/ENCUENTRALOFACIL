@@ -1,56 +1,106 @@
+
 package cl.encuentraloFacil.aplicacion.Controlador;
 
+import cl.encuentraloFacil.aplicacion.Business.BusquedaBusiness;
 import cl.encuentraloFacil.aplicacion.TO.FamiliaProdTO;
+import cl.encuentraloFacil.aplicacion.TO.SubFamProductosTO;
+import cl.encuentraloFacil.aplicacion.TO.SubFamiliaProdTO;
 import java.io.Serializable;
-import java.util.Iterator;
+import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-import org.primefaces.model.DefaultTreeNode;
-import org.primefaces.model.TreeNode;
+import org.primefaces.model.menu.DefaultMenuItem;
+import org.primefaces.model.menu.DefaultMenuModel;
+import org.primefaces.model.menu.DefaultSubMenu;
+import org.primefaces.model.menu.MenuModel;
  
-@ManagedBean(name="arbolCatEmpr")
-@ViewScoped
+@ManagedBean(name="MenuProdEmpre")
+@SessionScoped
 public class BeanCategoriasProdEmpr implements Serializable {
      
-    private TreeNode root;
+    private MenuModel modelomenu;
     private List<FamiliaProdTO> familia;
-    private mapbean mapbean;
-    private FacesContext context;
-    
+    private SubFamiliaProdTO SubFamilia;
+    private List<SubFamProductosTO> productosBean ;
     @PostConstruct
     public void init() {
-       /* context = FacesContext.getCurrentInstance();
-        this.setFamilia(mapbean.getEjecutarBusquedaFamilia());
-        int x;*/
-        root = new DefaultTreeNode("Root", null);
-        TreeNode node0 = new DefaultTreeNode("Node 0", root);
-        TreeNode node1 = new DefaultTreeNode("Node 1", root);
-         
-        TreeNode node00 = new DefaultTreeNode("Node 0.0", node0);
-        TreeNode node01 = new DefaultTreeNode("Node 0.1", node0);
-         
-        TreeNode node10 = new DefaultTreeNode("Node 1.0", node1);
-         
-        node1.getChildren().add(new DefaultTreeNode("Node 1.1"));
-        node00.getChildren().add(new DefaultTreeNode("Node 0.0.0"));
-        node00.getChildren().add(new DefaultTreeNode("Node 0.0.1"));
-        node01.getChildren().add(new DefaultTreeNode("Node 0.1.0"));
-        node10.getChildren().add(new DefaultTreeNode("Node 1.0.0"));
-        root.getChildren().add(new DefaultTreeNode("Node 2"));
+        familia = ejecutarBusquedaFamilia();
+        setModelomenu(new DefaultMenuModel());
+        crearMenu();
         
     }
- 
+    
+    
+    public List<FamiliaProdTO> ejecutarBusquedaFamilia() {
+        mapbean map =  (mapbean) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("mapbean");
+        BusquedaBusiness busquedaBusiness = new BusquedaBusiness();
+        int x = Integer.parseInt(map.getIdEmpresaBuscar());
+        List<FamiliaProdTO> resultaBusqueda = new ArrayList<FamiliaProdTO>();
+        try {
+            resultaBusqueda = busquedaBusiness.getBusquedaFamiliaEmpre(x);
+
+        } catch (Exception e) {
+            System.out.println(e.getCause());
+            e.getMessage();
+        }
+        return resultaBusqueda;
+    }
+        
+    public void crearMenu(){
+         
+        for(FamiliaProdTO fam: familia)
+        {
+            BusquedaBusiness busquedaBusiness = new BusquedaBusiness();
+            DefaultSubMenu primSubMenu =  new DefaultSubMenu(fam.getNomFam());
+            mapbean map =  (mapbean) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("mapbean");
+            int idemp = Integer.parseInt(map.getIdEmpresaBuscar());
+            List<SubFamiliaProdTO> resultaBusqueda = new ArrayList<SubFamiliaProdTO>();
+            resultaBusqueda = busquedaBusiness.getBusquedaSubFamiliaEmpre(fam.getIdFam(),idemp);
+            if(resultaBusqueda.size()>0)
+            {
+                for(SubFamiliaProdTO subFa: resultaBusqueda){
+                DefaultMenuItem subitem = new DefaultMenuItem(subFa.getNomSubFam());
+                subitem.setCommand("#{MenuProdEmpre.ejecutarBusquedaProductosPorSubFam("+subFa.getIdSubFam()+")}");
+                primSubMenu.addElement(subitem);}
+            }
+                       
+            getModelomenu().addElement(primSubMenu);
+            
+        }
+        
+    }
+    
+    
+    //Método que ejecuta la busqueda de los productos según subFamilia seleccionada en el MenuItem de la página viewResultado.xhtml
+     public List<SubFamProductosTO> ejecutarBusquedaProductosPorSubFam(int idsubfa) {
+        mapbean map =  (mapbean) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("mapbean");
+        BusquedaBusiness busquedaBusiness = new BusquedaBusiness();
+        
+        int idempresa = Integer.parseInt(map.getIdEmpresaBuscar());
+        List<SubFamProductosTO> productos = new ArrayList<SubFamProductosTO>();
+        try {
+            //necesito capturar variable seleccionada de subfamilia para listar
+            productos = busquedaBusiness.getBusquedaProductosSubfa(idempresa,idsubfa);
+            retornaListaProductos(productos);
+            FacesContext.getCurrentInstance().getExternalContext().redirect("viewResultadoSubFamilia.xhtml");
+        } catch (Exception e) {
+            System.out.println(e.getCause());
+            e.getMessage();
+        }
+        return productos;
+    }
+     
+     public List<SubFamProductosTO> retornaListaProductos(List<SubFamProductosTO> param){
+         return productosBean = param;
+     }
     
     public void familias(List<FamiliaProdTO> familiaresultado){
         familia = familiaresultado;
     }
    
-    public TreeNode getRoot() {
-        return root;
-    }
 
     /**
      * @return the familia
@@ -64,5 +114,54 @@ public class BeanCategoriasProdEmpr implements Serializable {
      */
     public void setFamilia(List<FamiliaProdTO> familia) {
         this.familia = familia;
+    }
+
+    /**
+     * @return the modelomenu
+     */
+    public MenuModel getModelomenu() {
+        return modelomenu;
+    }
+
+    /**
+     * @param modelomenu the modelomenu to set
+     */
+    public void setModelomenu(MenuModel modelomenu) {
+        this.modelomenu = modelomenu;
+    }
+
+    /**
+     * @return the SubFamilia
+     */
+    public SubFamiliaProdTO getSubFamilia() {
+        return SubFamilia;
+    }
+
+    /**
+     * @param SubFamilia the SubFamilia to set
+     */
+    public void setSubFamilia(SubFamiliaProdTO SubFamilia) {
+        this.SubFamilia = SubFamilia;
+    }
+
+    /**
+     * @return the productos
+     */
+    public List<SubFamProductosTO> getProductosSubFam() {
+        return getProductosBean();
+    }
+
+    /**
+     * @return the productosBean
+     */
+    public List<SubFamProductosTO> getProductosBean() {
+        return productosBean;
+    }
+
+    /**
+     * @param productosBean the productosBean to set
+     */
+    public void setProductosBean(List<SubFamProductosTO> productosBean) {
+        this.productosBean = productosBean;
     }
 }
