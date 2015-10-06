@@ -26,12 +26,12 @@ import java.util.List;
 public class BusquedaDAO implements Serializable {
 
     Conexion conn = new Conexion();
-    
+    PreparedStatement cst = null;
 
     public List<BusquedaTO> getBusquedaProd(int emp, int prod) {
         List<BusquedaTO> listBusqueda = new ArrayList<>();
         try {
-            PreparedStatement cst = conn.getConnection().prepareStatement("select * from producto as a, empresa as b \n" +
+            cst = conn.getConnection().prepareStatement("select * from producto as a, empresa as b \n" +
             "where a.idproduc = "+prod+" and\n" +
             "b.idemp = "+emp+"");
             ResultSet rs = cst.executeQuery();
@@ -55,7 +55,11 @@ public class BusquedaDAO implements Serializable {
             e.printStackTrace();
         } finally {
             try {
-                conn.getConnection().close();
+                if (cst != null) {
+                    cst.close();
+                } if (conn != null){
+                     conn.getConnection().close();
+                }
             } catch (SQLException ex) {
                 throw new RuntimeException(ex);
             } 
@@ -66,7 +70,7 @@ public class BusquedaDAO implements Serializable {
     public List<FamiliaProdTO> getBusquedaFamiliaEmpre(int valorx) {
         List<FamiliaProdTO> listFamiliaProd = new ArrayList<>();
         try {
-            PreparedStatement cst = conn.getConnection().prepareStatement("select distinct d.idfamilia ,d.nomfam from  producto_empresa as a,subfamilia as b, producto as c , familia as d\n" +
+            cst = conn.getConnection().prepareStatement("select distinct d.idfamilia ,d.nomfam from  producto_empresa as a,subfamilia as b, producto as c , familia as d\n" +
             "where b.idSubFamilia = c.SubFamilia_idSubFamilia and\n" +
             "a.producto_idproduc = c.idproduc and\n" +
             "d.idfamilia = b.Familia_idFamilia\n" +
@@ -84,7 +88,11 @@ public class BusquedaDAO implements Serializable {
             e.printStackTrace();
         } finally {
             try {
-                conn.getConnection().close();
+                 if (cst != null) {
+                    cst.close();
+                } if (conn != null){
+                     conn.getConnection().close();
+                }
             } catch (SQLException ex) {
                 throw new RuntimeException(ex);
             } 
@@ -95,7 +103,7 @@ public class BusquedaDAO implements Serializable {
     public List<SubFamProductosTO> getBusquedaProductosSubfamilia(int idempresa, int idsubfamilia) {
         List<SubFamProductosTO> listProductos = new ArrayList<>();
         try {
-            PreparedStatement cst = conn.getConnection().prepareStatement("select distinct c.idproduc, c.nomprod, c.precio from  producto_empresa as a,subfamilia as b, producto as c \n" +
+            cst = conn.getConnection().prepareStatement("select distinct c.idproduc, c.nomprod, c.precio from  producto_empresa as a,subfamilia as b, producto as c \n" +
             "where a.producto_idproduc = c.idproduc " +
             "and c.SubFamilia_idSubFamilia = "+idsubfamilia+"\n" +
             "and a.Empresa_idemp = "+idempresa+";");
@@ -113,7 +121,11 @@ public class BusquedaDAO implements Serializable {
             e.printStackTrace();
         } finally {
             try {
-                conn.getConnection().close();
+                 if (cst != null) {
+                    cst.close();
+                } if (conn != null){
+                     conn.getConnection().close();
+                }
             } catch (SQLException ex) {
                 throw new RuntimeException(ex);
             } 
@@ -124,7 +136,7 @@ public class BusquedaDAO implements Serializable {
     public List<SubFamiliaProdTO> getBusquedaSubFamiliaEmpre(int emp, int fam) {
         List<SubFamiliaProdTO> listSubFamiliaProd = new ArrayList<>();
         try {
-            PreparedStatement cst = conn.getConnection().prepareStatement("select distinct b.idSubFamilia, b.nomsubfam from  producto_empresa as a,subfamilia as b, producto as c , familia as d\n" +
+            cst = conn.getConnection().prepareStatement("select distinct b.idSubFamilia, b.nomsubfam from  producto_empresa as a,subfamilia as b, producto as c , familia as d\n" +
             "where b.idSubFamilia = c.SubFamilia_idSubFamilia and\n" +
             "a.producto_idproduc = c.idproduc and\n" +
             "b.Familia_idFamilia = "+fam+"\n" +
@@ -143,7 +155,11 @@ public class BusquedaDAO implements Serializable {
             e.printStackTrace();
         } finally {
             try {
-                conn.getConnection().close();
+                if (cst != null) {
+                    cst.close();
+                } if (conn != null){
+                     conn.getConnection().close();
+                }
             } catch (SQLException ex) {
                 throw new RuntimeException(ex);
             } 
@@ -157,14 +173,14 @@ public class BusquedaDAO implements Serializable {
         double difdist = 0;
         try {
             
-            PreparedStatement st = conn.getConnection().prepareStatement("select b.idemp,b.nomb,c.latitud,c.longitud,b.urlemp,a.idproduc \n"
+            cst = conn.getConnection().prepareStatement("select b.idemp,b.nomb,c.latitud,c.longitud,b.urlemp,a.idproduc \n"
                     + "from producto as a,empresa as b, emprgeo as c, producto_empresa as d\n"
                     + "where d.producto_idproduc = a.idproduc\n"
                     + "and d.empresa_idemp = b.idemp \n"
                     + "and b.idemp = c.Empresa_idemp\n"
                     + "and a.nomprod = '"+nomprod+"';");
 
-            ResultSet rs = st.executeQuery();
+            ResultSet rs = cst.executeQuery();
 
             while (rs.next()) {
                 EmpresaGeoTO empresas = new EmpresaGeoTO();
@@ -185,7 +201,11 @@ public class BusquedaDAO implements Serializable {
             e.printStackTrace();
         } finally {
             try {
-                conn.getConnection().close();
+                 if (cst != null) {
+                    cst.close();
+                } if (conn != null){
+                     conn.getConnection().close();
+                }
             } catch (SQLException ex) {
                 throw new RuntimeException(ex);
             } 
@@ -217,13 +237,12 @@ public class BusquedaDAO implements Serializable {
      */
     public List<ProductoTO> autoComProd(String nombreProd) {
         List<ProductoTO> resultadoFinal = new ArrayList<ProductoTO>();
-
+        PreparedStatement ps = null;
         try {
             
-            PreparedStatement ps = conn.getConnection().prepareStatement("select idproduc, nomprod from producto where nomprod like '%" + nombreProd + "%';");
+             cst = conn.getConnection().prepareStatement("select idproduc, nomprod from producto where nomprod like '%" + nombreProd + "%';");
             //ps.setString(1, nombreProd);
-            ResultSet rs = ps.executeQuery();
-
+            ResultSet rs = cst.executeQuery();
             while (rs.next()) {
                 ProductoTO prod = new ProductoTO();
                 prod.setIdProducto(rs.getInt(1));
@@ -234,7 +253,11 @@ public class BusquedaDAO implements Serializable {
             e.printStackTrace();
         } finally {
             try {
-                conn.getConnection().close();
+                if (cst != null) {
+                    cst.close();
+                } if (conn != null){
+                     conn.getConnection().close();
+                }
             } catch (SQLException ex) {
                 throw new RuntimeException(ex);
             } 
