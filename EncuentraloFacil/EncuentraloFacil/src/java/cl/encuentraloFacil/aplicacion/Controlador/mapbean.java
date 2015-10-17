@@ -33,6 +33,8 @@ import org.primefaces.model.TreeNode;
 @SessionScoped
 public class mapbean implements Serializable {
 
+    
+    
     private final double distance = 2800;
     //private final double distance_meters = distance * 1852;
     private String centerCoords = "";
