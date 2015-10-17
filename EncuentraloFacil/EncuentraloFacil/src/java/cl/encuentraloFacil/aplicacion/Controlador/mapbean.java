@@ -58,6 +58,7 @@ public class mapbean implements Serializable {
         BeanBusqueda referenciaBeanSession = (BeanBusqueda) contexto.getSessionMap().get("beanBusqueda");
         List<EmpresaGeoTO> resultadoFinal = referenciaBeanSession.getResFinal();
         String centrarMapa = referenciaBeanSession.getEmprego().getLat() + "," + referenciaBeanSession.getEmprego().getLng();
+        LatLng latLngYO = new LatLng(referenciaBeanSession.getEmprego().getLat() , referenciaBeanSession.getEmprego().getLng());
         setIdprod(referenciaBeanSession.getIdprod());
         listaIdEmpresa = new ArrayList<EmpresaGeoTO>();
         centerCoords = centrarMapa;
@@ -65,9 +66,14 @@ public class mapbean implements Serializable {
         for (EmpresaGeoTO empresa : resultadoFinal) {
             LatLng ll = new LatLng(empresa.getLat(), empresa.getLng());
             Marker markers = new Marker(ll, String.valueOf(empresa.getIdem())+", "+empresa.getNombre(), "imagen/" + empresa.getIdem() + ".png");
+            markers.setIcon("imagen/marcador_carro_rojo.png");
             mapModel.addOverlay(markers);
         }
+                    Marker markerYO = new Marker(latLngYO,"YO :)");
+            markerYO.setIcon("imagen/persona_roja.png");
         
+            mapModel.addOverlay(markerYO);
+
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
     }
 
