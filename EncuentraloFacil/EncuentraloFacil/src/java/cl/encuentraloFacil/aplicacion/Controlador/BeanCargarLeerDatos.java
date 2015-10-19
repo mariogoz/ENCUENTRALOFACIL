@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package cl.encuentraloFacil.aplicacion.Controlador;
+import cl.encuentraloFacil.aplicacion.Business.CargaArchivoBusiness;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -26,6 +27,7 @@ import org.primefaces.event.FileUploadEvent;
 public class BeanCargarLeerDatos {
     
     private UploadedFile file;
+    private CargaArchivoBusiness archivoBusiness;
     
     public void cargarLeerDatos(FileUploadEvent event){
         
@@ -82,8 +84,9 @@ public class BeanCargarLeerDatos {
                     }
                 }
             }
-
-        } }catch(Exception e)
+            archivoBusiness = new CargaArchivoBusiness();
+            archivoBusiness.retornaNomProd(prod);
+            } }catch(Exception e)
         {
            e.printStackTrace();
         }
