@@ -23,12 +23,14 @@ public class CargaArchivosDAO {
 
     Conexion conn = new Conexion();
     PreparedStatement cst = null;
+    private Object FacesContext;
 
-    public List<String> cargarDatos(List<Integer> prod) {
+    public List<Integer> cargarDatos(List<Integer> prod) {
         List<Integer> productos = new ArrayList<>();
         List<String> querys = new ArrayList<>();
         productos = prod;
-
+        List<Integer> repetidos =  new ArrayList<>();
+                
         int contador = 0;
         try {
             PreparedStatement ps = conn.getConnection().prepareStatement("insert into producto_empresa values(?,?);");
@@ -57,7 +59,6 @@ public class CargaArchivosDAO {
             try {
                 cst = conn.getConnection().prepareStatement("select * from producto_empresa where empresa_idemp = 15");
                 ResultSet rs =  cst.executeQuery();
-                List<Integer> repetidos =  new ArrayList<>();
                 while(rs.next())
                 {
                     int prodbd = rs.getInt(1);
@@ -73,6 +74,7 @@ public class CargaArchivosDAO {
                 Logger.getLogger(CargaArchivosDAO.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        return querys;
+        return repetidos;
     }
+    
 }
