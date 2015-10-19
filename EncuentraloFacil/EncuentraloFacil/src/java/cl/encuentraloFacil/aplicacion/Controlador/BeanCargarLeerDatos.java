@@ -30,11 +30,13 @@ public class BeanCargarLeerDatos {
     public void cargarLeerDatos(FileUploadEvent event){
         
         try {
+         
             if(event.getFile()!=null)  {
+             file = event.getFile();
             //Get the workbook instance for XLS file 
             FacesMessage message = new FacesMessage("Succesful", file.getFileName() + " is uploaded.");
             FacesContext.getCurrentInstance().addMessage(null, message);
-            HSSFWorkbook workbook = new HSSFWorkbook((POIFSFileSystem) file);
+            HSSFWorkbook workbook = new HSSFWorkbook(file.getInputstream());
 
             //Get first sheet from the workbook
             HSSFSheet sheet = workbook.getSheetAt(0);
@@ -79,7 +81,6 @@ public class BeanCargarLeerDatos {
                             break;
                     }
                 }
-                System.out.println("");
             }
 
         } }catch(Exception e)
