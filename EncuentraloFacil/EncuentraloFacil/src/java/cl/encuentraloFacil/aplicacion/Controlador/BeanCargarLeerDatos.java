@@ -90,8 +90,9 @@ public class BeanCargarLeerDatos {
                     }
                 }
                 archivoBusiness = new CargaArchivoBusiness();
-                if (archivoBusiness.retornaNomProd(prod) != null) {
-                    generarExcel(archivoBusiness.retornaNomProd(prod));
+                List<Integer> prodRepBD = archivoBusiness.retornaNomProd(prod) ;
+                if (prodRepBD.size()!= 0) {
+                    generarExcel(prodRepBD);
                 } else {
 
                 }
