@@ -14,7 +14,7 @@ import java.util.Date;
  */
 public class UsuarioTO implements Serializable {
 
-    private int idUsuario;
+    private Integer idUsuario;
     private String userName;
     private String password;
     private String primerNombre;
@@ -23,18 +23,20 @@ public class UsuarioTO implements Serializable {
     private Date fecCrea;
     private Date fecVal;
     private String correo;
+    private Integer estadoId;
+    private String GlosaConexion;
 
     /**
      * @return the idUsuario
      */
-    public int getIdUsuario() {
+    public Integer getIdUsuario() {
         return idUsuario;
     }
 
     /**
      * @param idUsuario the idUsuario to set
      */
-    public void setIdUsuario(int idUsuario) {
+    public void setIdUsuario(Integer idUsuario) {
         this.idUsuario = idUsuario;
     }
 
@@ -148,5 +150,33 @@ public class UsuarioTO implements Serializable {
      */
     public void setCorreo(String correo) {
         this.correo = correo;
+    }
+
+    /**
+     * @return the estadoId
+     */
+    public Integer getEstadoId() {
+        return estadoId;
+    }
+
+    /**
+     * @param estadoId the estadoId to set
+     */
+    public void setEstadoId(Integer estadoId) {
+        this.estadoId = estadoId;
+    }
+
+    /**
+     * @return the GlosaConexion
+     */
+    public String getGlosaConexion() {
+        return GlosaConexion;
+    }
+
+    /**
+     * @param GlosaConexion the GlosaConexion to set
+     */
+    public void setGlosaConexion(String GlosaConexion) {
+        this.GlosaConexion = GlosaConexion;
     }
 }

@@ -23,20 +23,14 @@ public class LoginBusiness implements Serializable {
     public LoginBusiness() {
     }
 
-    public String getBuscarCliente(UsuarioTO user) {
-        String res = null;
+    public UsuarioTO getBuscarCliente(UsuarioTO user) {
+        UsuarioTO res = null;
         try {
             res = loginDao.procedureAuntentificar(user);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
         return res;
-    }
-    
-    public List<ProductoTO> getBuscarAutoComplete(String resultado){
-        List<ProductoTO> producto = new ArrayList<>();
-        producto = loginDao.getProcedureAutoComplete(resultado);
-        return producto;
     }
     /*
      public String getInsertarCliente(int id,String rut, String dv, String nombre, String apellido,Date s, String correo){

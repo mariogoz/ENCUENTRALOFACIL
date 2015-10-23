@@ -6,14 +6,13 @@
 package cl.encuentraloFacil.aplicacion.DAO;
 
 import cl.encuentraloFacil.aplicacion.Conexion.Conexion;
-import cl.encuentraloFacil.aplicacion.TO.ProductoTO;
+
 import cl.encuentraloFacil.aplicacion.TO.UsuarioTO;
 import java.io.Serializable;
-import java.sql.CallableStatement;
+
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  *
@@ -22,38 +21,57 @@ import java.util.List;
 public class LoginDAO implements Serializable {
 
     Conexion conn = new Conexion();
-
+    PreparedStatement cst = null;
     public LoginDAO() {
 
     }
 
-    public String procedureAuntentificar(UsuarioTO user) {
+    public UsuarioTO procedureAuntentificar(UsuarioTO user) {
 
         
         String resultado = null;
+        StringBuilder sql = new StringBuilder();
         try {
+            sql.append("SELECT ");
+            sql.append("idus IDUSUARIO, ");
+            sql.append("usernom NOMBREUSUARIO, ");
+            sql.append("cod CONTRASENIA, ");
+            sql.append("fecrea FECHACREACION, ");
+            sql.append("fevalha FECHAVALIDA, ");
+            sql.append("Estados_idest IDESTADO, ");
+            sql.append("Apells APELLIDOS, ");
+            sql.append("nomb NOMBRES ");
+            sql.append("FROM USUARIO ");
+            sql.append("WHERE ");
+            sql.append("usernom = ? ");
+            sql.append("AND ");
+            sql.append("cod = ? ");
+            
             // se crea instancia a procedimiento, los parametros de entrada y salida se simbolizan con el signo ?
-            CallableStatement proc = conn.getConnection().prepareCall("{call pro_auntenticar(?,?)}");
+             cst = conn.getConnection().prepareStatement(sql.toString());
             //se cargan los parametros de entrada
-            proc.setString("nombre", user.getUserName());//Tipo String
-            proc.setString("pass", user.getPassword());//Tipo String
+            cst.setString(1, user.getUserName());//Tipo String
+            cst.setString(2, user.getPassword());//Tipo String
 
-            ResultSet rs = proc.executeQuery();
+            ResultSet rs = cst.executeQuery();
 
             while (rs.next()) {
-
-                user.setFecCrea(rs.getDate("fecrea"));
-                user.setFecVal(rs.getDate("fevalha"));
-                user.setPrimerNombre(rs.getString("nomb"));
-                user.setPrimerApellido(rs.getString("Apells"));
-                String n = rs.getString("usernom");
-                String p = rs.getString("cod");
+                
+                user.setIdUsuario(rs.getInt("IDUSUARIO"));
+                user.setFecCrea(rs.getDate("FECHACREACION"));
+                user.setFecVal(rs.getDate("FECHAVALIDA"));
+                user.setPrimerNombre(rs.getString("NOMBRES"));
+                user.setPrimerApellido(rs.getString("APELLIDOS"));
+                user.setEstadoId(rs.getInt("IDESTADO"));
+                
+                String n = rs.getString("NOMBREUSUARIO");
+                String p = rs.getString("CONTRASENIA");
 
 
                 if (user.getUserName().equals(n) && user.getPassword().equals(p)) {
-                    resultado = "EXITO";
+                    user.setGlosaConexion("EXITO");
                 } else {
-                    resultado = "DATOSERRONEOS";
+                    user.setGlosaConexion("DATOSE RRONEOS");
                 }
 
             }
@@ -63,40 +81,16 @@ public class LoginDAO implements Serializable {
             throw new RuntimeException(e);
         } finally {
             try {
-                conn.getConnection().close();
-            } catch (SQLException ex) {
-                throw new RuntimeException(ex);
-            }
-        }
-
-        return resultado;
-    }
-    
-    public List<ProductoTO> getProcedureAutoComplete(String resultado){
-        List<ProductoTO> producto = new ArrayList<ProductoTO>() {};
-            try{
-                
-                CallableStatement cts = conn.getConnection().prepareCall("{call serchautocomplete(?)}");
-                cts.setString("valor","%"+resultado+"%" );
-                ResultSet rs = cts.executeQuery();
-                while (rs.next()){
-                    ProductoTO x = new ProductoTO();
-                    x.setIdProducto(rs.getInt("idproduc"));
-                    x.setNombreProducto(rs.getNString("nomprod"));
-                    producto.add(x);
+                if (cst != null) {
+                    cst.close();
+                } if (conn != null){
+                     conn.getConnection().close();
                 }
-                
-            } catch(SQLException e){
-                throw new RuntimeException(e);
-            } finally {
-            try {
-                conn.getConnection().close();
             } catch (SQLException ex) {
                 throw new RuntimeException(ex);
-            }
+            } 
         }
-        return producto;
-    }
-    
 
+        return user;
+    }
 }
