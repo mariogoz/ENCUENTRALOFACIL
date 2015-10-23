@@ -7,13 +7,10 @@ package cl.encuentraloFacil.aplicacion.Controlador;
 
 import cl.encuentraloFacil.aplicacion.Business.LoginBusiness;
 import cl.encuentraloFacil.aplicacion.TO.ClienteTO;
-import cl.encuentraloFacil.aplicacion.TO.ProductoTO;
 import cl.encuentraloFacil.aplicacion.TO.UsuarioTO;
 import cl.encuentraloFacil.aplicacion.util.Properties;
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -30,27 +27,13 @@ public class BeanLogin implements Serializable {
     //Declaracion de atributos
     private UsuarioTO usuario = new UsuarioTO();
     private ClienteTO cliente = new ClienteTO();
-    private ProductoTO pro;
     private final LoginBusiness loginBusiness = new LoginBusiness();
     private FacesMessage msg;
     private FacesContext context;
-    private Boolean render = false;
     private String auto;
-    
-    
-
-    /**
-     * Creates a new instance of BeanLogin
-     */
+ 
     public BeanLogin() {
         
-    }
-    
-    public void cambiar()
-    {
-        System.out.println("default :" + render);
-        setRender(true);
-        System.out.println("RenderCambiado :" + render);
     }
     /**
      * Metodo encargado de la autentificacion al sistema EncuentraloFacil
@@ -59,22 +42,22 @@ public class BeanLogin implements Serializable {
      */
     public String doLogin() {
         String destino = null;
-        String respuesta = null;
+        UsuarioTO respuesta = null;
         context = FacesContext.getCurrentInstance();
 
         try {
 
             respuesta = loginBusiness.getBuscarCliente(getUsuario());
-            if (respuesta != null && respuesta.equals("EXITO")) {
+            if (respuesta != null && respuesta.getGlosaConexion().equalsIgnoreCase(Properties.getProperty("beanlogin.autentificacion.exitosa"))) {
                 FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("beanLogin", this);
                 msg = new FacesMessage(FacesMessage.SEVERITY_INFO, Properties.getProperty("beanlogin.autentificacion.success") + " " + usuario.getPrimerNombre()
                         + " " + usuario.getPrimerApellido(), null);
-                FacesContext.getCurrentInstance().addMessage(null, msg);
-                destino = "exito.login";
+                context.addMessage(null, msg);
+                destino = Properties.getProperty("beanlogin.redireccionar.exitoso");
                 
                 
             } else {
-                destino = "fallo.login";
+                destino = Properties.getProperty("beanlogin.redireccionar.fallida");
                 msg = new FacesMessage(FacesMessage.SEVERITY_INFO, Properties.getProperty("beanlogin.autentificacion.fail"), null);
                 context.addMessage(null, msg);
             }
@@ -101,7 +84,6 @@ public class BeanLogin implements Serializable {
         }
     }
 
-    
 
     /**
      *
@@ -110,7 +92,11 @@ public class BeanLogin implements Serializable {
     public String cancelarLogin() {
         return "cancelar.login";
     }
-
+    
+    
+     public String cargaMasivaRef() {
+        return "cargamasiva.auto";
+    }
     /**
      *
      * @return Metodo que redirecciona ViewRegistrar
@@ -118,27 +104,7 @@ public class BeanLogin implements Serializable {
     public String doNuevoUsuario() {
         return "usuario.nuevo";
     }
-   
-     
-    public List<String> autoComplete(String query){
-        List<ProductoTO> resPro = new ArrayList<ProductoTO>();
-        List<String> res = new ArrayList<String>();
-       
-        
-        resPro = loginBusiness.getBuscarAutoComplete(query);
-        for(int x = 0; x < resPro.size();x++){
-            res.add(resPro.get(x).getNombreProducto());
-            
-            
-        }
-       
-        
-        
-        
-        
-       return res;
-    }
-        
+           
     /**
      * @return the usuario
      */
@@ -166,36 +132,6 @@ public class BeanLogin implements Serializable {
      */
     public void setCliente(ClienteTO cliente) {
         this.cliente = cliente;
-    }
-
-    /**
-     * @return the render
-     */
-    public Boolean getRender() {
-        return render;
-    }
-
-    /**
-     * @param render the render to set
-     */
-    public void setRender(Boolean render) {
-        this.render = render;
-    }
-
-    
-
-    /**
-     * @return the pro
-     */
-    public ProductoTO getPro() {
-        return pro;
-    }
-
-    /**
-     * @param pro the pro to set
-     */
-    public void setPro(ProductoTO pro) {
-        this.pro = pro;
     }
 
     /**
