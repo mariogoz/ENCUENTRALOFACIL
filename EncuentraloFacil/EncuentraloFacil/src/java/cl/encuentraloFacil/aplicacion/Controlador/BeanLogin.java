@@ -11,6 +11,8 @@ import cl.encuentraloFacil.aplicacion.TO.UsuarioTO;
 import cl.encuentraloFacil.aplicacion.util.Properties;
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -50,8 +52,8 @@ public class BeanLogin implements Serializable {
             respuesta = loginBusiness.getBuscarCliente(getUsuario());
             if (respuesta != null && respuesta.getGlosaConexion().equalsIgnoreCase(Properties.getProperty("beanlogin.autentificacion.exitosa"))) {
                 FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("beanLogin", this);
-                msg = new FacesMessage(FacesMessage.SEVERITY_INFO, Properties.getProperty("beanlogin.autentificacion.success") + " " + usuario.getPrimerNombre()
-                        + " " + usuario.getPrimerApellido(), null);
+                msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "", Properties.getProperty("beanlogin.autentificacion.success") + " " + usuario.getPrimerNombre()
+                        + " " + usuario.getPrimerApellido());
                 context.addMessage(null, msg);
                 destino = Properties.getProperty("beanlogin.redireccionar.exitoso");
                 
@@ -95,7 +97,18 @@ public class BeanLogin implements Serializable {
     
     
      public String cargaMasivaRef() {
-        return "cargamasiva.auto";
+         String val = null;
+        try {
+            //FacesContext.getCurrentInstance().getExternalContext().redirect("cargaMasiva.xhtml");
+            val = "cargamasiva.auto";
+        } catch (ExceptionInInitializerError ex) {
+         FacesMessage var =  new FacesMessage(FacesMessage.SEVERITY_ERROR, null,"Error redireccionar [Carga Masiva] :"+ ex.getMessage());
+         context.addMessage(null, var);           
+        } 
+         return val;
+    }
+     public String doInicio() {
+        return "inicio.auto";
     }
     /**
      *
@@ -104,7 +117,7 @@ public class BeanLogin implements Serializable {
     public String doNuevoUsuario() {
         return "usuario.nuevo";
     }
-           
+               
     /**
      * @return the usuario
      */

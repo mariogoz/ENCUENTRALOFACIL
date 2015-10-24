@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import org.primefaces.model.menu.DefaultSubMenu;
 
 /**
  *
@@ -34,7 +35,14 @@ public class BeanAutoAdmin implements Serializable{
         
     }
     
-  
+    public void crearMenu(){
+         String[] arreglo = new String[]{"Carga de datos","Quien SOY", "Info EncuenraloFacil"};
+        for (String titulo : arreglo) {
+           // DefaultMenu primSubMenu =  new DefaultSubMenu(titulo);
+          //  primSubMenu.
+        }
+         
+    }
     
     public void getProductosPorCliente(){
         List<ProductoTO> listProductos = new ArrayList();
