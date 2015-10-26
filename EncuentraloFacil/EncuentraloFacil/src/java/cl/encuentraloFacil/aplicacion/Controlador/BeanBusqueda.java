@@ -29,7 +29,7 @@ import javax.faces.context.FacesContext;
 public class BeanBusqueda implements Serializable {
 
     private EmpresaGeoTO emprego = new EmpresaGeoTO();
-    private BusquedaBusiness busquedaBusiness;
+    private final BusquedaBusiness busquedaBusiness;
     private BusquedaTO selectedBusqueda;
     private String nomEmpresa;
     private int idprod;
@@ -82,9 +82,6 @@ public class BeanBusqueda implements Serializable {
             System.out.println(e.getCause());
             e.getMessage();
         }
- //         if (s != null) {
-        //                                   FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
-        //                               } 
     }
 
     public List<String> complete(String query) {
@@ -211,5 +208,4 @@ public class BeanBusqueda implements Serializable {
     public void setIdprod(int idprod) {
         this.idprod = idprod;
     }
-
 }

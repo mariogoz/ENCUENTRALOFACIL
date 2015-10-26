@@ -79,8 +79,9 @@ public class BeanLogin implements Serializable {
 
         try {
             FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
-            FacesContext.getCurrentInstance().getExternalContext().redirect("ViewLogin.xhtml");
             usuario = null;
+            FacesContext.getCurrentInstance().getExternalContext().redirect("ViewLogin.xhtml");
+            
         } catch (IOException ex) {
             throw new RuntimeException(ex);
         }

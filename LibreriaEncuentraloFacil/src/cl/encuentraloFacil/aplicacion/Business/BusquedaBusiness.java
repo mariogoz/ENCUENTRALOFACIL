@@ -35,6 +35,7 @@ public class BusquedaBusiness implements Serializable{
         return busquedaPro;
     }
     
+   
     public List<EmpresaGeoTO> buscarProducto(String nomprod, double lat, double lng)
     {
         List<EmpresaGeoTO> resultadoFinal = new ArrayList<EmpresaGeoTO>();

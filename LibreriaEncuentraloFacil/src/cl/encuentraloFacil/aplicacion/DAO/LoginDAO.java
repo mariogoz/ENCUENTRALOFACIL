@@ -31,6 +31,7 @@ public class LoginDAO implements Serializable {
         
         String resultado = null;
         StringBuilder sql = new StringBuilder();
+        UsuarioTO usuario = new UsuarioTO();
         try {
             sql.append("SELECT ");
             sql.append("idus IDUSUARIO, ");
@@ -57,27 +58,26 @@ public class LoginDAO implements Serializable {
 
             while (rs.next()) {
                 
-                user.setIdUsuario(rs.getInt("IDUSUARIO"));
-                user.setFecCrea(rs.getDate("FECHACREACION"));
-                user.setFecVal(rs.getDate("FECHAVALIDA"));
-                user.setPrimerNombre(rs.getString("NOMBRES"));
-                user.setPrimerApellido(rs.getString("APELLIDOS"));
-                user.setEstadoId(rs.getInt("IDESTADO"));
+                usuario.setIdUsuario(rs.getInt("IDUSUARIO"));
+                usuario.setFecCrea(rs.getDate("FECHACREACION"));
+                usuario.setFecVal(rs.getDate("FECHAVALIDA"));
+                usuario.setPrimerNombre(rs.getString("NOMBRES"));
+                usuario.setPrimerApellido(rs.getString("APELLIDOS"));
+                usuario.setEstadoId(rs.getInt("IDESTADO"));
                 
                 String n = rs.getString("NOMBREUSUARIO");
                 String p = rs.getString("CONTRASENIA");
 
 
                 if (user.getUserName().equals(n) && user.getPassword().equals(p)) {
-                    user.setGlosaConexion("EXITO");
-                } else {
-                    user.setGlosaConexion("DATOSE RRONEOS");
-                }
-
+                    usuario.setGlosaConexion("EXITO");
+                } 
+            }
+            if (usuario.getGlosaConexion() == null) {
+                usuario.setGlosaConexion("DATOS RRONEOS");
             }
 
         } catch (SQLException e) {
-            System.out.println("Error en la llamada al procedimiento");
             throw new RuntimeException(e);
         } finally {
             try {
@@ -91,6 +91,6 @@ public class LoginDAO implements Serializable {
             } 
         }
 
-        return user;
+        return usuario;
     }
 }
