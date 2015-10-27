@@ -33,6 +33,7 @@ public class BeanLogin implements Serializable {
     private FacesMessage msg;
     private FacesContext context;
     private String auto;
+    private UsuarioTO respuesta;
  
     public BeanLogin() {
         
@@ -44,16 +45,16 @@ public class BeanLogin implements Serializable {
      */
     public String doLogin() {
         String destino = null;
-        UsuarioTO respuesta = null;
+        setRespuesta(null);
         context = FacesContext.getCurrentInstance();
 
         try {
 
-            respuesta = loginBusiness.getBuscarCliente(getUsuario());
-            if (respuesta != null && respuesta.getGlosaConexion().equalsIgnoreCase(Properties.getProperty("beanlogin.autentificacion.exitosa"))) {
+            setRespuesta(loginBusiness.getBuscarCliente(getUsuario()));
+            if (getRespuesta() != null && getRespuesta().getGlosaConexion().equalsIgnoreCase(Properties.getProperty("beanlogin.autentificacion.exitosa"))) {
                 FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("beanLogin", this);
-                msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "", Properties.getProperty("beanlogin.autentificacion.success") + " " + usuario.getPrimerNombre()
-                        + " " + usuario.getPrimerApellido());
+                msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "", Properties.getProperty("beanlogin.autentificacion.success") + " " + getRespuesta().getPrimerNombre()
+                        + " " + getRespuesta().getPrimerApellido());
                 context.addMessage(null, msg);
                 destino = Properties.getProperty("beanlogin.redireccionar.exitoso");
                 
@@ -62,6 +63,7 @@ public class BeanLogin implements Serializable {
                 destino = Properties.getProperty("beanlogin.redireccionar.fallida");
                 msg = new FacesMessage(FacesMessage.SEVERITY_INFO, Properties.getProperty("beanlogin.autentificacion.fail"), null);
                 context.addMessage(null, msg);
+                setRespuesta(null);
             }
         } catch (Exception e) {
             msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, Properties.getProperty("beanlogin.autentificacion.error"), null);
@@ -160,6 +162,20 @@ public class BeanLogin implements Serializable {
      */
     public void setAuto(String auto) {
         this.auto = auto;
+    }
+
+    /**
+     * @return the respuesta
+     */
+    public UsuarioTO getRespuesta() {
+        return respuesta;
+    }
+
+    /**
+     * @param respuesta the respuesta to set
+     */
+    public void setRespuesta(UsuarioTO respuesta) {
+        this.respuesta = respuesta;
     }
 
 }

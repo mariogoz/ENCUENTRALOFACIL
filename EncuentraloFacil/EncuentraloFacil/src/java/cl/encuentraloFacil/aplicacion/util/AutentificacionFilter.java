@@ -17,7 +17,6 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.xml.registry.infomodel.User;
 
 /**
  *
@@ -38,7 +37,7 @@ public class AutentificacionFilter implements Filter{
         boolean loginRequest = request.getRequestURI().equals(loginURI);
         boolean resourceRequest = request.getRequestURI().startsWith(request.getContextPath() + ResourceHandler.RESOURCE_IDENTIFIER);
 
-        if (beanLogin != null || loginRequest || resourceRequest) {
+        if ((beanLogin != null && beanLogin.getRespuesta() != null) || loginRequest || resourceRequest) {
             chain.doFilter(request, response);
         } else {
             response.sendRedirect(loginURI);
