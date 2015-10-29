@@ -7,6 +7,7 @@
 package cl.encuentraloFacil.aplicacion.Business;
 
 import cl.encuentraloFacil.aplicacion.DAO.CargaArchivosDAO;
+import cl.encuentraloFacil.aplicacion.TO.ResultadoCargaTO;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,9 +21,9 @@ public class CargaArchivoBusiness implements Serializable{
     
     CargaArchivosDAO cargaArchDAO =  new CargaArchivosDAO();
     
-    public List<Integer> retornaNomProd(List<Integer> prod) {
+    public List<ResultadoCargaTO> retornaNomProd(List<Integer> prod) {
         
-        List<Integer> resp = new ArrayList<>();
+        List<ResultadoCargaTO> resp = new ArrayList<>();
         try {
             resp = cargaArchDAO.cargarDatos(prod);
         } catch (Exception e) {

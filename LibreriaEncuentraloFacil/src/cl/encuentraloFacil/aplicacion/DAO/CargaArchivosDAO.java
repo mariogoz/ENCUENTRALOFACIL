@@ -6,6 +6,7 @@
 package cl.encuentraloFacil.aplicacion.DAO;
 
 import cl.encuentraloFacil.aplicacion.Conexion.Conexion;
+import cl.encuentraloFacil.aplicacion.TO.ResultadoCargaTO;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -25,10 +26,11 @@ public class CargaArchivosDAO {
     PreparedStatement cst = null;
     private Object FacesContext;
 
-    public List<Integer> cargarDatos(List<Integer> prod) {
+    public List<ResultadoCargaTO> cargarDatos(List<Integer> prod) {
         List<Integer> productos = new ArrayList<>();
         List<String> querys = new ArrayList<>();
         List<Integer> repetidos = new ArrayList<>();
+        List<ResultadoCargaTO> resultadoCarga = new ArrayList<>();
         int sizeRs = 0;
         int contador = 0;
         try {
@@ -46,11 +48,19 @@ public class CargaArchivosDAO {
                     if (prodbd == prod.get(x)) {
                         repetidos.add(x);
                         System.out.println("Repetido " + prodbd);
+                        ResultadoCargaTO resultcarNoOk = new ResultadoCargaTO();
+                        resultcarNoOk.setId_prod(prodbd);
+                        resultcarNoOk.setResultado("Repetido");
+                        resultadoCarga.add(resultcarNoOk);
                         cont = 0;
                     }
                     if (sizeRs == cont) {
                         productos.add(prod.get(x));
                         System.out.println("Nuevo " + prod.get(x));
+                        ResultadoCargaTO resultcarOk = new ResultadoCargaTO();
+                        resultcarOk.setId_prod(prod.get(x));
+                        resultcarOk.setResultado("Agregado");
+                        resultadoCarga.add(resultcarOk);
                     }
                 }
             }
@@ -67,6 +77,6 @@ public class CargaArchivosDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return repetidos;
+        return resultadoCarga;
     }
 }
