@@ -30,9 +30,7 @@ public class BeanCategoriasProdEmpr implements Serializable {
         familia = ejecutarBusquedaFamilia();
         setModelomenu(new DefaultMenuModel());
         crearMenu();
-        
     }
-    
     
     public List<FamiliaProdTO> ejecutarBusquedaFamilia() {
         mapbean map =  (mapbean) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("mapbean");
@@ -84,7 +82,7 @@ public class BeanCategoriasProdEmpr implements Serializable {
         try {
             //necesito capturar variable seleccionada de subfamilia para listar
             productos = busquedaBusiness.getBusquedaProductosSubfa(idempresa,idsubfa);
-            retornaListaProductos(productos);
+            setProductosBean(productos);
             FacesContext.getCurrentInstance().getExternalContext().redirect("viewResultadoSubFamilia.xhtml");
         } catch (Exception e) {
             System.out.println(e.getCause());
@@ -93,9 +91,9 @@ public class BeanCategoriasProdEmpr implements Serializable {
         return productos;
     }
      
-     public List<SubFamProductosTO> retornaListaProductos(List<SubFamProductosTO> param){
+    /* public List<SubFamProductosTO> retornaListaProductos(List<SubFamProductosTO> param){
          return productosBean = param;
-     }
+     }*/
     
     public void familias(List<FamiliaProdTO> familiaresultado){
         familia = familiaresultado;

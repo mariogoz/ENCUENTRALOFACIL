@@ -6,11 +6,14 @@
 package cl.encuentraloFacil.aplicacion.Controlador;
 
 import cl.encuentraloFacil.aplicacion.Business.CargaArchivoBusiness;
+import cl.encuentraloFacil.aplicacion.TO.ResultadoCargaTO;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.poi.hssf.usermodel.HSSFCell;
@@ -29,10 +32,12 @@ import org.primefaces.event.FileUploadEvent;
  * @author FelipeSilva
  */
 @ManagedBean
-public class BeanCargarLeerDatos {
+@SessionScoped
+public class BeanCargarLeerDatos implements Serializable{
 
     private UploadedFile file;
     private CargaArchivoBusiness archivoBusiness;
+    private List<ResultadoCargaTO> listaResultado;
 
     public void cargarLeerDatos(FileUploadEvent event) {
 
@@ -90,12 +95,13 @@ public class BeanCargarLeerDatos {
                     }
                 }
                 archivoBusiness = new CargaArchivoBusiness();
-                List<Integer> prodRepBD = archivoBusiness.retornaNomProd(prod) ;
-                if (prodRepBD.size()!= 0) {
+                setListaResultado(archivoBusiness.retornaNomProd(prod)) ;
+                FacesContext.getCurrentInstance().getExternalContext().redirect("cargaMasivaResultado.xhtml");
+                /*if (prodRepBD.size()!= 0) {
                     generarExcel(prodRepBD);
                 } else {
 
-                }
+                }*/
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -129,7 +135,7 @@ public class BeanCargarLeerDatos {
             }
 
             libro.setSheetName(0, "Productos Repetidos");
-
+            System.out.println(libro.getSheetName(0));
             //Obtenemos los bytes del Excel
             xls = libro.getBytes();
 
@@ -143,7 +149,6 @@ public class BeanCargarLeerDatos {
             HttpServletResponse response = (HttpServletResponse) fc.getExternalContext().getResponse();
 
             response.setHeader("Content-disposition", "attachment; filename=" + "ProductosRepetidos");
-
             //Se indicamos el tipo de contenido
             response.setContentType(contentType);
 
@@ -170,5 +175,19 @@ public class BeanCargarLeerDatos {
      */
     public void setFile(UploadedFile file) {
         this.file = file;
+    }
+
+    /**
+     * @return the listaResultado
+     */
+    public List<ResultadoCargaTO> getListaResultado() {
+        return listaResultado;
+    }
+
+    /**
+     * @param listaResultado the listaResultado to set
+     */
+    public void setListaResultado(List<ResultadoCargaTO> listaResultado) {
+        this.listaResultado = listaResultado;
     }
 }

@@ -30,6 +30,7 @@
             <from-outcome>cancelar.login</from-outcome>
             <to-view-id>/ViewBusqueda.xhtml</to-view-id>
         </navigation-case>
+         
     </navigation-rule>
     
     <navigation-rule>
@@ -38,18 +39,43 @@
             <from-outcome>cerrar.auto</from-outcome>
             <to-view-id>/ViewLogin.xhtml</to-view-id>
         </navigation-case>
+        <navigation-case>
+            <from-outcome>cargamasiva.auto</from-outcome>
+            <to-view-id>/cargaMasiva.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>cargamasivaresultado.auto</from-outcome>
+            <to-view-id>/cargaMasivaResultado.xhtml</to-view-id>
+        </navigation-case>
     </navigation-rule>
     
+    <navigation-rule>
+        <from-view-id>/cargaMasiva.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>cerrar.auto</from-outcome>
+            <to-view-id>/ViewLogin.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>cargamasiva.auto</from-outcome>
+            <to-view-id>/cargaMasiva.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>inicio.auto</from-outcome>
+            <to-view-id>/ViewAutoAdm.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    
+  
     
 
-  <managed-bean>
-              <description>
-                         Bean para la gestión de logeo
-              </description>
-              <managed-bean-name>BeanLogin</managed-bean-name>
-              <managed-bean-class>cl.encuentraloFacil.aplicacion.Controlador</managed-bean-class>
-              <managed-bean-scope>session</managed-bean-scope>
-  </managed-bean>
+    <managed-bean>
+        <description>
+            Bean para la gestión de logeo
+        </description>
+        <managed-bean-name>BeanLogin</managed-bean-name>
+        <managed-bean-class>cl.encuentraloFacil.aplicacion.Controlador</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
     <managed-bean>
         <description>autoAdmin</description>
         <managed-bean-name>beanAutoAdmin</managed-bean-name>
@@ -63,19 +89,19 @@
         <managed-bean-scope>request</managed-bean-scope>
     </managed-bean>
     <managed-bean>
-              <description>
-                         Bean map
-              </description>
-              <managed-bean-name>mapBean</managed-bean-name>
-              <managed-bean-class>cl.encuentraloFacil.aplicacion.Controlador</managed-bean-class>
-              <managed-bean-scope>session</managed-bean-scope>
-  </managed-bean>
-  <managed-bean>
-              <description>
-                         BeanBusqueda
-              </description>
-              <managed-bean-name>BeanBusqueda</managed-bean-name>
-              <managed-bean-class>cl.encuentraloFacil.aplicacion.Controlador</managed-bean-class>
-              <managed-bean-scope>session</managed-bean-scope>
-  </managed-bean>
+        <description>
+            Bean map
+        </description>
+        <managed-bean-name>mapBean</managed-bean-name>
+        <managed-bean-class>cl.encuentraloFacil.aplicacion.Controlador</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+    <managed-bean>
+        <description>
+            BeanBusqueda
+        </description>
+        <managed-bean-name>BeanBusqueda</managed-bean-name>
+        <managed-bean-class>cl.encuentraloFacil.aplicacion.Controlador</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
 </faces-config>

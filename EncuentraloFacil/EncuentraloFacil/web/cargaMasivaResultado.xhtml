@@ -1,0 +1,81 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ppctu="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head>
+        <title>Carga Masiva</title>
+    </h:head>
+    <h:body>
+        <h:form>
+
+            <ppctu:layout fullPage="true">
+
+                <ppctu:layoutUnit  position="north"  size="140" resizable="false" closable="true" collapsible="false"  >
+
+                    <ppctu:growl id="message" showDetail="true" />
+
+                    <ppctu:commandButton value="Cerrar Sesion"   update="message">
+                        <ppctu:confirm header="Confirmation" message="Estas seguro?" icon="ui-icon-alert"/>
+                    </ppctu:commandButton>
+
+                    <ppctu:confirmDialog global="true"  showEffect="fade" hideEffect="explode">
+                        <ppctu:commandButton value="Yes"  styleClass="ui-confirmdialog-yes" icon="ui-icon-check" action="#{beanLogin.cerrarSesion()}"/>
+                        <ppctu:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                    </ppctu:confirmDialog>
+                </ppctu:layoutUnit>
+
+                <ppctu:layoutUnit  position="south"  header="footer" >
+                </ppctu:layoutUnit>
+
+                <ppctu:layoutUnit   position="west" header="menu" size="140" resizable="false" closable="true" collapsible="false" >
+                    <ppctu:growl id="growl" life="2000" />
+                    <div>
+                    <ppctu:commandLink  id="ajax1" update="growl" action="#{beanLogin.doInicio()}" value="Inicio" />
+                    </div>
+                    <div>
+                    <ppctu:commandLink  id="ajax" update="growl" action="#{beanLogin.cargaMasivaRef()}" value="Carga Masiva" />
+                    </div>
+                </ppctu:layoutUnit>
+
+                <ppctu:layoutUnit   id="centerLayout" header="content" position="center">
+                    <h:form>
+                        <ppctu:dataTable id="tbl" var="car" value="#{beanCargarLeerDatos.listaResultado}"
+                                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
+                                         paginator="true" rows="10" style="margin-bottom:20px">
+                            <f:facet name="{Exporters}">
+                                <h:commandLink>
+                                    <ppctu:graphicImage name="imagen/excel.png" value="imagen/excel.png" width="24"/>
+                                    <ppctu:dataExporter type="xls" target="tbl" fileName="cars" />
+                                </h:commandLink>
+
+                                <h:commandLink>
+                                    <ppctu:graphicImage name="imagen/pdf.png" value="imagen/pdf.png" width="24"/>
+                                    <ppctu:dataExporter type="pdf" target="tbl" fileName="cars"/>
+                                </h:commandLink>
+                            </f:facet>
+                            <ppctu:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Id Producto" />
+                                </f:facet>
+                                <h:outputText value="#{car.id_prod}" />
+                            </ppctu:column>
+                            <ppctu:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Mensaje" />
+                                </f:facet>
+                                <h:outputText value="#{car.resultado}" />
+                            </ppctu:column>
+                        </ppctu:dataTable>
+                    </h:form>
+                </ppctu:layoutUnit>
+            </ppctu:layout>
+
+        </h:form>
+
+
+    </h:body>
+</html>
+
