@@ -110,6 +110,19 @@ public class BeanLogin implements Serializable {
         } 
          return val;
     }
+     
+     public String cargaMultipleRef() {
+         String val = null;
+        try {
+            //FacesContext.getCurrentInstance().getExternalContext().redirect("cargaMasiva.xhtml");
+            val = "cargamultiple.auto";
+        } catch (ExceptionInInitializerError ex) {
+         FacesMessage var =  new FacesMessage(FacesMessage.SEVERITY_ERROR, null,"Error redireccionar [Carga Multiple] :"+ ex.getMessage());
+         context.addMessage(null, var);           
+        } 
+         return val;
+    }
+     
      public String doInicio() {
         return "inicio.auto";
     }

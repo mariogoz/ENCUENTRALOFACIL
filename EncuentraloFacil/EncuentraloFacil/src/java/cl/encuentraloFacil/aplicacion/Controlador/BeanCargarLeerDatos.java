@@ -6,6 +6,7 @@
 package cl.encuentraloFacil.aplicacion.Controlador;
 
 import cl.encuentraloFacil.aplicacion.Business.CargaArchivoBusiness;
+import cl.encuentraloFacil.aplicacion.TO.ProductoTO;
 import cl.encuentraloFacil.aplicacion.TO.ResultadoCargaTO;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -37,6 +38,8 @@ public class BeanCargarLeerDatos implements Serializable{
 
     private UploadedFile file;
     private CargaArchivoBusiness archivoBusiness;
+    private List<Integer> listaCargaMulti;
+    private List<ProductoTO> listaCargaMultiString;
     private List<ResultadoCargaTO> listaResultado;
 
     public void cargarLeerDatos(FileUploadEvent event) {
@@ -109,6 +112,10 @@ public class BeanCargarLeerDatos implements Serializable{
 
     }
 
+    public void cargaDatosMulti(){
+        this.getListaCargaMultiString();
+    
+    }
     public void generarExcel(List<Integer> rep) {
         byte[] xls = new byte[0];
 
@@ -189,5 +196,33 @@ public class BeanCargarLeerDatos implements Serializable{
      */
     public void setListaResultado(List<ResultadoCargaTO> listaResultado) {
         this.listaResultado = listaResultado;
+    }
+
+    /**
+     * @return the listaCargaMulti
+     */
+    public List<Integer> getListaCargaMulti() {
+        return listaCargaMulti;
+    }
+
+    /**
+     * @param listaCargaMulti the listaCargaMulti to set
+     */
+    public void setListaCargaMulti(List<Integer> listaCargaMulti) {
+        this.listaCargaMulti = listaCargaMulti;
+    }
+
+    /**
+     * @return the listaCargaMultiString
+     */
+    public List<ProductoTO> getListaCargaMultiString() {
+        return listaCargaMultiString;
+    }
+
+    /**
+     * @param listaCargaMultiString the listaCargaMultiString to set
+     */
+    public void setListaCargaMultiString(List<ProductoTO> listaCargaMultiString) {
+        this.listaCargaMultiString = listaCargaMultiString;
     }
 }

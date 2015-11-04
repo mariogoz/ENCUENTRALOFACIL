@@ -39,7 +39,7 @@ public class BeanBusqueda implements Serializable {
     List<ProductoTO> producto = new ArrayList<ProductoTO>();
     private FacesMessage msg;
     private FacesContext context;
-
+    private List<ProductoTO> prods = new ArrayList<ProductoTO>();
     /**
      * Creates a new instance of BeanBusqueda
      */
@@ -84,11 +84,11 @@ public class BeanBusqueda implements Serializable {
         }
     }
 
-    public List<String> complete(String query) {
+    public List<ProductoTO> complete(String query) {
         prod.setNombreProducto("");
+        prods.clear();
         BusquedaBusiness bbuss = new BusquedaBusiness();
 
-        List<String> nomprod = new ArrayList<String>();
         try {
             producto = bbuss.retornaNomProd(query);
             /*if (producto != null && !producto.isEmpty()) {
@@ -98,17 +98,17 @@ public class BeanBusqueda implements Serializable {
              */
             if (producto.size() > 0) {
                 for (ProductoTO producto1 : producto) {
-                    nomprod.add(producto1.getNombreProducto());
+                    getProds().add(producto1);
                 }
             } else {
-                nomprod.add("No se han encontrado coincidencias");
+                //nomprod.add("No se han encontrado coincidencias");
             }
         } catch (Exception e) {
             System.out.println(e.getCause());
             e.getMessage();
         }
 
-        return nomprod;
+        return getProds();
     }
 
     /**
@@ -207,5 +207,19 @@ public class BeanBusqueda implements Serializable {
      */
     public void setIdprod(int idprod) {
         this.idprod = idprod;
+    }
+
+    /**
+     * @return the prods
+     */
+    public List<ProductoTO> getProds() {
+        return prods;
+    }
+
+    /**
+     * @param prods the prods to set
+     */
+    public void setProds(List<ProductoTO> prods) {
+        this.prods = prods;
     }
 }

@@ -73,7 +73,13 @@
                 <h:inputHidden id="lat" value="#{beanBusqueda.emprego.lat}" />
                 <h:inputHidden id="lng" value="#{beanBusqueda.emprego.lng}" />
                 <h:panelGrid columns="2">
-                    <p:autoComplete value="#{beanBusqueda.prod.nombreProducto}" completeMethod="#{beanBusqueda.complete}" placeholder="Qué producto buscas ?" onclick="this.select()"/>
+                    <p:autoComplete  var="datos" value="#{beanBusqueda.prod.nombreProducto}" completeMethod="#{beanBusqueda.complete}" placeholder="Qué producto buscas ?" onclick="this.select()">
+                    <p:column>
+                        <h:outputText value="#{datos.nombreProducto}" />
+                    </p:column>
+                    
+                    
+                    </p:autoComplete>
                     <p:commandButton id="button" value="Buscar" action="#{beanBusqueda.ejecutarBusqueda()}" />
                </h:panelGrid>
                 <p:messages id="messages" autoUpdate="true"/>

@@ -33,14 +33,25 @@
 <ppctu:layoutUnit   position="west" header="menu" size="140" resizable="false" closable="true" collapsible="false" >
      <ppctu:growl id="grow1" life="2000" />
     <ppctu:commandLink  id="aja" update="grow1" action="#{beanLogin.cargaMasivaRef()}" value="Carga Masiva" />
-    <ppctu:commandLink  id="aj" update="grow1" action="#{beanLogin.cargaMultipleRef()}" value=" Carga Multiple" />
 </ppctu:layoutUnit>
 
 <ppctu:layoutUnit   id="centerLayout" header="content" position="center">
     <h:form id="form" enctype="multipart/form-data">   
-       
-        <!--<ui:include src="ViewAutoAdmin.xhtml" /> -->
-    
+        <ppctu:outputLabel value="Multiple:" />
+        <ppctu:autoComplete var="it" multiple="true" 
+                            value="#{beanCargarLeerDatos.listaCargaMultiString}"
+            completeMethod="#{beanBusqueda.complete}"  
+            itemValue="#{it}"
+            itemLabel="#{it.nombreProducto}"
+            forceSelection="true">
+            <ppctu:ajax event="itemSelect" />
+            <ppctu:ajax event="itemUnselect" />
+            <ppctu:column>
+                <h:outputText value="#{it.nombreProducto}" />
+            </ppctu:column>
+        </ppctu:autoComplete>
+        <ppctu:commandButton id="button" value="Buscar" action="#{beanCargarLeerDatos.cargaDatosMulti()}" />
+             
     </h:form>
 </ppctu:layoutUnit>
 </ppctu:layout>
