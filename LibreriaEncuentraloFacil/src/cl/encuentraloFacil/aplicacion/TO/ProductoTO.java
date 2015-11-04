@@ -18,6 +18,7 @@ public class ProductoTO implements Serializable{
     private Double precio;
     private String img;
 
+    public ProductoTO(){}
     /**
      * @return the idProducto
      */
