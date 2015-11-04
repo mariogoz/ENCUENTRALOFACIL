@@ -13,23 +13,30 @@ import java.io.Serializable;
  * @author Mario
  */
 public class ProductoTO implements Serializable{
-    private int idProducto;
+    private Integer idProducto;
     private String nombreProducto;
     private Double precio;
     private String img;
 
     public ProductoTO(){}
+    
+    public ProductoTO(Integer idProducto, String nombreProducto,Double precio,String img) {
+        this.idProducto = idProducto;
+        this.nombreProducto = nombreProducto;
+        this.precio = precio;
+        this.img = img;
+    }
     /**
      * @return the idProducto
      */
-    public int getIdProducto() {
+    public Integer getIdProducto() {
         return idProducto;
     }
 
     /**
      * @param idProducto the idProducto to set
      */
-    public void setIdProducto(int idProducto) {
+    public void setIdProducto(Integer idProducto) {
         this.idProducto = idProducto;
     }
 

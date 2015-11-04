@@ -21,8 +21,6 @@ import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.poifs.filesystem.POIFSFileSystem;
-import org.apache.poi.ss.formula.functions.Column;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.primefaces.model.UploadedFile;
@@ -39,8 +37,8 @@ public class BeanCargarLeerDatos implements Serializable{
     private UploadedFile file;
     private CargaArchivoBusiness archivoBusiness;
     private List<Integer> listaCargaMulti;
-    private List<ProductoTO> listaCargaMultiString;
     private List<ResultadoCargaTO> listaResultado;
+    private List<ProductoTO> listaCargaMultiProductos;
 
     public void cargarLeerDatos(FileUploadEvent event) {
 
@@ -113,7 +111,8 @@ public class BeanCargarLeerDatos implements Serializable{
     }
 
     public void cargaDatosMulti(){
-        this.getListaCargaMultiString();
+       // getListaCargaMultiString();
+        getListaCargaMultiProductos();
     
     }
     public void generarExcel(List<Integer> rep) {
@@ -213,16 +212,16 @@ public class BeanCargarLeerDatos implements Serializable{
     }
 
     /**
-     * @return the listaCargaMultiString
+     * @return the listaCargaMultiProductos
      */
-    public List<ProductoTO> getListaCargaMultiString() {
-        return listaCargaMultiString;
+    public List<ProductoTO> getListaCargaMultiProductos() {
+        return listaCargaMultiProductos;
     }
 
     /**
-     * @param listaCargaMultiString the listaCargaMultiString to set
+     * @param listaCargaMultiProductos the listaCargaMultiProductos to set
      */
-    public void setListaCargaMultiString(List<ProductoTO> listaCargaMultiString) {
-        this.listaCargaMultiString = listaCargaMultiString;
+    public void setListaCargaMultiProductos(List<ProductoTO> listaCargaMultiProductos) {
+        this.listaCargaMultiProductos = listaCargaMultiProductos;
     }
 }

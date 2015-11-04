@@ -29,8 +29,7 @@
         <navigation-case>
             <from-outcome>cancelar.login</from-outcome>
             <to-view-id>/ViewBusqueda.xhtml</to-view-id>
-        </navigation-case>
-         
+        </navigation-case>        
     </navigation-rule>
     
     <navigation-rule>
@@ -42,6 +41,10 @@
         <navigation-case>
             <from-outcome>cargamasiva.auto</from-outcome>
             <to-view-id>/cargaMasiva.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome> cargamultiple.auto</from-outcome>
+            <to-view-id>/CargaManualMult.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
     
@@ -58,6 +61,26 @@
         <navigation-case>
             <from-outcome>inicio.auto</from-outcome>
             <to-view-id>/ViewAutoAdm.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+        <from-view-id>/CargaManualMult.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>cerrar.auto</from-outcome>
+            <to-view-id>/ViewLogin.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>cargamasiva.auto</from-outcome>
+            <to-view-id>/cargaMasiva.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>inicio.auto</from-outcome>
+            <to-view-id>/ViewAutoAdm.xhtml</to-view-id>
+        </navigation-case>
+         <navigation-case>
+            <from-outcome>cargamasiva.auto</from-outcome>
+            <to-view-id>/cargaMasiva.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
     
