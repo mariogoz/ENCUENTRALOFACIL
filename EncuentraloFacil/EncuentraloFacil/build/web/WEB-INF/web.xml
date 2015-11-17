@@ -29,6 +29,8 @@
         <filter-name>MyFilter</filter-name>
         <url-pattern>/faces/ViewAutoAdm.xhtml</url-pattern>
         <url-pattern>/faces/cargaMasiva.xhtml</url-pattern>
-        <url-pattern>/faces/cargaMasivaResultado.xhtml</url-pattern>
+        <url-pattern>/faces/CargaManualMult.xhtml</url-pattern>
     </filter-mapping>
+    
+
 </web-app>

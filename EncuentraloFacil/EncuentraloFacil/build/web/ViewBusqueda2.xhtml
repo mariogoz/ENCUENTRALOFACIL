@@ -79,10 +79,11 @@ and open the template in the editor.
             <h:form id="form" >
                 <h:inputHidden id="latdir" value="#{beanBusqueda.emprego.lat}" />
                 <h:inputHidden id="lngdir" value="#{beanBusqueda.emprego.lng}" />
-                <!--<input id="autocomplete" onfocus="geolocate()" placeholder="Dónde los buscas?" value=""></input> -->
+              <!--  <input id="autocomplete" onfocus="geolocate()" placeholder="Dónde los buscas?" value=""></input>  -->
                 <h:panelGrid columns="3" >
-                    <p:autoComplete id="producto" placeholder="Qué producto buscas?" value="#{beanBusqueda.prod.nombreProducto}" completeMethod="#{beanBusqueda.complete}" onclick="this.select()"></p:autoComplete>
-                    <p:inputText id="autocomplete" onfocus="geolocate()"  placeholder="Dónde los buscas?" value="#{beanBusqueda.emprego.direc}" onclick="this.select()"></p:inputText>
+                   <p:autoComplete id="producto" placeholder="Qué producto buscas?" value="#{beanBusqueda.prod.nombreProducto}"
+                                    completeMethod="#{beanBusqueda.completeSting}" onclick="this.select()"></p:autoComplete>
+                    <p:inputText id="autocomplete" onfocus="initAutocomplete()"  placeholder="Dónde los buscas?" value="#{beanBusqueda.emprego.direc}" onclick="this.select()"></p:inputText>
 
                     <p:commandButton id="button" value="Buscar"  action="#{beanBusqueda.ejecutarBusqueda()}"/>
                 </h:panelGrid>

@@ -3,9 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui"
+      xmlns:p="http://primefaces.org/ui">
       
-      >
 
     <h:head>
         <meta http-equiv="Expires" content="0" />
@@ -19,16 +18,21 @@
                 <div align="center" > <img src="imagen/encuentraloFacil.gif" alt="" align="top" /> </div>
                 </p:layoutUnit>
             <p:layoutUnit position="west" size="200">
-                probando
+                <h:form>
+                    <p:growl id="messages"></p:growl>
+                    <p:slideMenu model="#{MenuProdEmpre.modelomenu}" style="width:180px"></p:slideMenu>
+     
+                </h:form>
             </p:layoutUnit>
        <p:layoutUnit position="center">
-            <h:form id="form3"></h:form>
-            <h:outputLabel value="#{mapbean.nomEmpresa}"/>
+           
+            <h:form id="form3"><h:outputLabel value="#{mapbean.nomEmpresa}"/></h:form>
+            
             
             <h:form id="form">
                 <p:dataGrid emptyMessage="Información no Disponible" var="car" value="#{mapbean.ejecutarBusqueda}" columns="3" layout="grid"
                             rows="10" paginator="true" id="cars"
-                            paginatorTemplate=" {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                            paginatorTemplate="  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
 
                             rowsPerPageTemplate="6,12,16">
 
@@ -39,7 +43,7 @@
                     <p:panel header="#{car.producto.nombreProducto}" style="text-align:center" >
                         <h:panelGrid columns="1" style="width:100%; " >
                          
-                            <img src="imagen/#{car.producto.idProducto}.JPG" alt="" />
+                            <img width="180px" height="180" src="imagen/#{car.producto.idProducto}.JPG" alt="" />
 
                             <h:outputText value="#{car.producto.precio}" />
 
