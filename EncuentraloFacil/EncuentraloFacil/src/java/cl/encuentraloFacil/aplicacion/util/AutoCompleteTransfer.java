@@ -32,7 +32,6 @@ public class AutoCompleteTransfer implements Converter {
                     ProductoTO producto = service.getProds().get(x);
                     if (producto.getIdProducto().equals(Integer.parseInt(value))) {
                         val = x;
-                        //return service.getProds().get(x);
                     }
                 }
                 return service.getProds().get(val);

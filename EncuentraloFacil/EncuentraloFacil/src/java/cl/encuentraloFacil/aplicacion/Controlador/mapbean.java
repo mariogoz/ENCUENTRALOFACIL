@@ -100,7 +100,7 @@ public class mapbean implements Serializable {
     }
 
     public List<BusquedaTO> getEjecutarBusqueda() {
-        busquedaBusiness = new BusquedaBusiness();
+            busquedaBusiness = new BusquedaBusiness();
         context = FacesContext.getCurrentInstance();
         int x = Integer.parseInt(getIdEmpresaBuscar());
         List<BusquedaTO> resultaBusqueda = new ArrayList<BusquedaTO>();

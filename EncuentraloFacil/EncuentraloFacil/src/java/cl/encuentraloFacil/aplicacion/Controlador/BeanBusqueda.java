@@ -40,6 +40,8 @@ public class BeanBusqueda implements Serializable {
     private FacesMessage msg;
     private FacesContext context;
     private List<ProductoTO> prods = new ArrayList<ProductoTO>();
+    
+    private List<ProductoTO> listBusquedaProd = new ArrayList();
     /**
      * Creates a new instance of BeanBusqueda
      */
@@ -83,7 +85,33 @@ public class BeanBusqueda implements Serializable {
             e.getMessage();
         }
     }
+       public List<String> completeSting(String query) {
+        prod.setNombreProducto("");
+        BusquedaBusiness bbuss = new BusquedaBusiness();
 
+        List<String> nomprod = new ArrayList<String>();
+        try {
+            producto = bbuss.retornaNomProd(query);
+            /*if (producto != null && !producto.isEmpty()) {
+             FacesContext.getCurrentInstance().getExternalContext().redirect("resultado.xhtml");
+             System.out.println(producto.size());
+             }else{
+             */
+            if (producto.size() > 0) {
+                for (ProductoTO producto1 : producto) {
+                    nomprod.add(producto1.getNombreProducto());
+                }
+            } else {
+                nomprod.add("No se han encontrado coincidencias");
+            }
+        } catch (Exception e) {
+            System.out.println(e.getCause());
+            e.getMessage();
+        }
+
+        return nomprod;
+    }
+    
     public List<ProductoTO> complete(String query) {
         prod.setNombreProducto("");
         prods.clear();
@@ -203,7 +231,7 @@ public class BeanBusqueda implements Serializable {
     }
 
     /**
-     * @param idemp the idemp to set
+     * @param idprod
      */
     public void setIdprod(int idprod) {
         this.idprod = idprod;
@@ -221,5 +249,20 @@ public class BeanBusqueda implements Serializable {
      */
     public void setProds(List<ProductoTO> prods) {
         this.prods = prods;
+    }
+
+
+    /**
+     * @return the listBusquedaProd
+     */
+    public List<ProductoTO> getListBusquedaProd() {
+        return listBusquedaProd;
+    }
+
+    /**
+     * @param listBusquedaProd the listBusquedaProd to set
+     */
+    public void setListBusquedaProd(List<ProductoTO> listBusquedaProd) {
+        this.listBusquedaProd = listBusquedaProd;
     }
 }

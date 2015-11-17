@@ -6,17 +6,22 @@
 package cl.encuentraloFacil.aplicacion.Controlador;
 
 import cl.encuentraloFacil.aplicacion.Business.LoginBusiness;
+import cl.encuentraloFacil.aplicacion.Interface.EFDataSource;
+import cl.encuentraloFacil.aplicacion.Interface.EFReporte;
+import cl.encuentraloFacil.aplicacion.Rpt.RptEjemplo;
 import cl.encuentraloFacil.aplicacion.TO.ClienteTO;
 import cl.encuentraloFacil.aplicacion.TO.UsuarioTO;
+import cl.encuentraloFacil.aplicacion.util.GenerardorReporte;
 import cl.encuentraloFacil.aplicacion.util.Properties;
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.HashMap;
+import java.util.Map;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Mario
@@ -34,10 +39,11 @@ public class BeanLogin implements Serializable {
     private FacesContext context;
     private String auto;
     private UsuarioTO respuesta;
- 
+
     public BeanLogin() {
-        
+
     }
+
     /**
      * Metodo encargado de la autentificacion al sistema EncuentraloFacil
      *
@@ -57,8 +63,7 @@ public class BeanLogin implements Serializable {
                         + " " + getRespuesta().getPrimerApellido());
                 context.addMessage(null, msg);
                 destino = Properties.getProperty("beanlogin.redireccionar.exitoso");
-                
-                
+
             } else {
                 destino = Properties.getProperty("beanlogin.redireccionar.fallida");
                 msg = new FacesMessage(FacesMessage.SEVERITY_INFO, Properties.getProperty("beanlogin.autentificacion.fail"), null);
@@ -83,12 +88,11 @@ public class BeanLogin implements Serializable {
             FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
             usuario = null;
             FacesContext.getCurrentInstance().getExternalContext().redirect("ViewLogin.xhtml");
-            
+
         } catch (IOException ex) {
             throw new RuntimeException(ex);
         }
     }
-
 
     /**
      *
@@ -97,35 +101,39 @@ public class BeanLogin implements Serializable {
     public String cancelarLogin() {
         return "cancelar.login";
     }
-    
-    
-     public String cargaMasivaRef() {
-         String val = null;
+
+    public String cargaMasivaRef() {
+        String val = null;
         try {
             //FacesContext.getCurrentInstance().getExternalContext().redirect("cargaMasiva.xhtml");
             val = "cargamasiva.auto";
         } catch (ExceptionInInitializerError ex) {
-         FacesMessage var =  new FacesMessage(FacesMessage.SEVERITY_ERROR, null,"Error redireccionar [Carga Masiva] :"+ ex.getMessage());
-         context.addMessage(null, var);           
-        } 
-         return val;
+            FacesMessage var = new FacesMessage(FacesMessage.SEVERITY_ERROR, null, "Error redireccionar [Carga Masiva] :" + ex.getMessage());
+            context.addMessage(null, var);
+        }
+        return val;
     }
-     
-     public String cargaMultipleRef() {
-         String val = null;
+
+    public String cargaMultipleRef() {
+        String val = null;
         try {
             //FacesContext.getCurrentInstance().getExternalContext().redirect("cargaMasiva.xhtml");
             val = "cargamultiple.auto";
         } catch (ExceptionInInitializerError ex) {
-         FacesMessage var =  new FacesMessage(FacesMessage.SEVERITY_ERROR, null,"Error redireccionar [Carga Multiple] :"+ ex.getMessage());
-         context.addMessage(null, var);           
-        } 
-         return val;
+            FacesMessage var = new FacesMessage(FacesMessage.SEVERITY_ERROR, null, "Error redireccionar [Carga Multiple] :" + ex.getMessage());
+            context.addMessage(null, var);
+        }
+        return val;
     }
-     
-     public String doInicio() {
+
+    public String doInicio() {
         return "inicio.auto";
     }
+    
+    public String doInformes() {
+        return "informes.auto";
+    }
+
     /**
      *
      * @return Metodo que redirecciona ViewRegistrar
@@ -133,7 +141,7 @@ public class BeanLogin implements Serializable {
     public String doNuevoUsuario() {
         return "usuario.nuevo";
     }
-               
+
     /**
      * @return the usuario
      */
@@ -150,7 +158,7 @@ public class BeanLogin implements Serializable {
 
     /**
      * @return the cliente
-     * 
+     *
      */
     public ClienteTO getCliente() {
         return cliente;
@@ -191,4 +199,23 @@ public class BeanLogin implements Serializable {
         this.respuesta = respuesta;
     }
 
+    public void generarReporte() {
+        
+            Map parametros = new HashMap();
+            Map mapaParametros = new HashMap();
+            EFReporte ejemplo = new RptEjemplo();
+            parametros.put("RESPUESTA", getRespuesta()); 
+            mapaParametros.putAll(ejemplo.crearDataSources(parametros));
+            mapaParametros.putAll(ejemplo.crearImagenes());
+            EFDataSource dataSource = ejemplo.obtenerDataSource();
+            GenerardorReporte generador = new GenerardorReporte();
+            FacesContext facesContext = FacesContext.getCurrentInstance();
+            String ruta = facesContext.getExternalContext().getRealPath("/Reportes/rptEjemplo.jasper");
+
+            HttpServletResponse response = (HttpServletResponse) facesContext.getExternalContext().getResponse();
+            String nombre = "rptEjemplo.pdf";
+            
+            generador.isDataSource(nombre, mapaParametros, dataSource, response, ruta);
+
+    }
 }

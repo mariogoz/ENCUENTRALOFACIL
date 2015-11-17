@@ -42,12 +42,5 @@ public class BeanAutoAdmin implements Serializable{
           //  primSubMenu.
         }
          
-    }
-    
-    public void getProductosPorCliente(){
-        List<ProductoTO> listProductos = new ArrayList();
-        usuario = referenciaBeanSession.getUsuario();
-        listProductos = autoAdminBuss.getProductosClientes(usuario);
-    }
-    
+    }    
 }
