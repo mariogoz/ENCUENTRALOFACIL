@@ -3,8 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ppctu="http://primefaces.org/ui"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets">
+      >
     <h:head>
         <title>Carga Masiva</title>
     </h:head>
@@ -16,8 +15,8 @@
                 <ppctu:layoutUnit  position="north"  size="140" resizable="false" closable="true" collapsible="false"  >
 
                     <ppctu:growl id="message" showDetail="true" />
-
-                    <ppctu:commandButton value="Cerrar Sesion"   update="message">
+                    
+                    <ppctu:commandButton value="Cerrar Sesion"   update="message" style="position: static" >
                         <ppctu:confirm header="Confirmation" message="Estas seguro?" icon="ui-icon-alert"/>
                     </ppctu:commandButton>
 
@@ -27,24 +26,28 @@
                     </ppctu:confirmDialog>
                 </ppctu:layoutUnit>
 
-                <ppctu:layoutUnit  position="south"  header="footer" >
-                </ppctu:layoutUnit>
-
                 <ppctu:layoutUnit   position="west" header="menu" size="140" resizable="false" closable="true" collapsible="false" >
                     <ppctu:growl id="growl" life="2000" />
                     <div>
-                    <ppctu:commandLink  id="ajax1" update="growl" action="#{beanLogin.doInicio()}" value="Inicio" />
+                        <ppctu:commandLink  id="ajax1"  action="#{beanLogin.doInicio()}" value="Inicio" />
                     </div>
                     <div>
-                    <ppctu:commandLink  id="ajax" update="growl" action="#{beanLogin.cargaMasivaRef()}" value="Carga Masiva" />
+                        <ppctu:commandLink  id="ajax" action="#{beanLogin.cargaMasivaRef()}" value="Carga Masiva" />
+                    </div>
+                    <div>
+                        <ppctu:commandLink  id="aj" action="#{beanLogin.cargaMultipleRef()}" value=" Carga Multiple" />
+                    </div>
+                    <div>
+                        <ppctu:commandLink  id="informe" action="#{beanLogin.doInformes()}" value="Informes" />
                     </div>
                 </ppctu:layoutUnit>
 
-                <ppctu:layoutUnit   id="centerLayout" header="content" position="center">
+                <ppctu:layoutUnit   id="centerLayout" header="Carga Masiva" position="center" style="text-align: center">
+                    
                     <h:form id="form" enctype="multipart/form-data">
                         <ppctu:growl id="messages" showDetail="true" />
 
-                        <ppctu:fileUpload update="messages" fileUploadListener="#{beanCargarLeerDatos.cargarLeerDatos}"
+                        <ppctu:fileUpload style="alignment-baseline: central;font-size: 13px;font-family: cursive;  " update="messages" fileUploadListener="#{beanCargarLeerDatos.cargarLeerDatos}"
                                           allowTypes="/(\.|\/)(xls)$/"  mode="advanced"
                                           label="Buscar"
                                           cancelLabel="Cancelar"
@@ -53,6 +56,7 @@
                                           invalidFileMessage="Sólo se puede cargar un archivo"/>
 
                     </h:form>
+                    
                 </ppctu:layoutUnit>
             </ppctu:layout>
 

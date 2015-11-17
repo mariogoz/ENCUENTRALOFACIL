@@ -2,13 +2,12 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:ppctu="http://primefaces.org/ui"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets">
+      xmlns:ppctu="http://primefaces.org/ui">
     <h:head>
-        <title>Inicio</title>
+        <title>Inicio</title> 
     </h:head>
     <h:body>
+        
         <h:form>
             
             <ppctu:layout fullPage="true">
@@ -16,7 +15,7 @@
 <ppctu:layoutUnit  position="north"  size="140" resizable="false" closable="true" collapsible="false"  >
     
            <ppctu:growl id="message" showDetail="true" />
- 
+         
          <ppctu:commandButton value="Cerrar Sesion"   update="message">
             <ppctu:confirm header="Confirmation" message="Estas seguro?" icon="ui-icon-alert"/>
         </ppctu:commandButton>
@@ -26,7 +25,10 @@
         <ppctu:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
     </ppctu:confirmDialog>
 </ppctu:layoutUnit>
-<ppctu:layoutUnit   position="west" header="menu" size="140" resizable="false" closable="false" collapsible="false" >
+<ppctu:layoutUnit   position="west" header="Menu" size="140" resizable="false" closable="true" collapsible="false" 
+                    
+                    
+                    >
      <ppctu:growl id="grow1" life="2000" />
      <div>
          <ppctu:commandLink  id="ajax1" action="#{beanLogin.doInicio()}" value="Inicio" />
@@ -43,27 +45,6 @@
 </ppctu:layoutUnit>
 
 <ppctu:layoutUnit   id="centerLayout" header="content" position="center">
-   <!-- <h:form id="form" enctype="multipart/form-data">   -->
-        <ppctu:outputLabel value="Multiple:" />
-        <ppctu:autoComplete id="it" var="it" multiple="true" 
-                            value="#{beanCargarLeerDatos.listaCargaMultiProductos}"
-            completeMethod="#{beanBusqueda.complete}"  
-            converter="autoCompleteTransfer"
-            
-            itemValue="#{it}"
-            itemLabel="#{it.nombreProducto}"
-            forceSelection="true">
-            <ppctu:ajax event="itemSelect" />
-            <ppctu:ajax event="itemUnselect" />
-              <ppctu:column>
-                  <h:outputText value="#{it.nombreProducto}" />
-            </ppctu:column>
-        </ppctu:autoComplete>
-        <ppctu:commandButton id="button" value="Buscar" action="#{beanCargarLeerDatos.cargaDatosMulti()}" />
-        
-             
-   <!-- </h:form> -->
- 
    <ppctu:commandButton id="generar" value="PDF" ajax="false" actionListener="#{beanLogin.generarReporte}" />
   
 </ppctu:layoutUnit>

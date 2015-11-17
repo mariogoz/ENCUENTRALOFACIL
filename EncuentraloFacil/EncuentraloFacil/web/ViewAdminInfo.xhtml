@@ -5,22 +5,18 @@
       xmlns:ppctu="http://primefaces.org/ui"
         >
     <h:head>
-        <title>Inicio</title>
+        <title>Datos Usuario</title>
     </h:head>
     <h:body>
         <h:form>
             
             <ppctu:layout fullPage="true">
 
-<ppctu:layoutUnit  position="north"  size="140" resizable="false" closable="false" collapsible="false"  >
-     <ppctu:growl id="message" showDetail="true" />
-     <div id="slider-holder" style="left : initial;" border="">
-                <ul>
-                    <img src="imagen/encuentraloFacil.gif" alt="" style=" border:1px"/>
-                </ul>
-     </div> 
-    <div id="buttonNorth"> 
-           <ppctu:commandButton value="Cerrar Sesion"   update="message">
+<ppctu:layoutUnit  position="north"  size="140" resizable="false" closable="true" collapsible="false"  >
+    
+           <ppctu:growl id="message" showDetail="true" />
+ 
+         <ppctu:commandButton value="Cerrar Sesion"   update="message">
             <ppctu:confirm header="Confirmation" message="Estas seguro?" icon="ui-icon-alert"/>
         </ppctu:commandButton>
  
@@ -28,10 +24,6 @@
              <ppctu:commandButton value="Yes"  styleClass="ui-confirmdialog-yes" icon="ui-icon-check" action="#{beanLogin.cerrarSesion()}"/>
         <ppctu:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
     </ppctu:confirmDialog>
-    </div>
-          
- 
-      
 </ppctu:layoutUnit>
 <ppctu:layoutUnit   position="west" header="menu" size="140" resizable="false" closable="false" collapsible="false" >
      <ppctu:growl id="grow1" life="2000" />
@@ -52,7 +44,9 @@
 <ppctu:layoutUnit   id="centerLayout" header="content" position="center">
     <h:form id="form" enctype="multipart/form-data">   
        
-        <!--<ui:include src="ViewAutoAdmin.xhtml" /> -->
+        <div>
+            <h:outputLabel value=""
+        </div>
     
     </h:form>
 </ppctu:layoutUnit>
