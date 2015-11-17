@@ -14,40 +14,41 @@ import java.util.Date;
  * @author Mario
  */
 public class EmpresaTO implements Serializable{
-    private int idEmpresa;
-    private int rutEmp;
+    private Integer idEmpresa;
+    private Integer rutEmp;
     private String dv;
     private String nombreEmpresa;
     private String imagen;
     private Date fechaValidacion;
     private Date fechaActivacion;
     private String url;
+    private UsuarioTO usuario;
 
     /**
      * @return the idEmpresa
      */
-    public int getIdEmpresa() {
+    public Integer getIdEmpresa() {
         return idEmpresa;
     }
 
     /**
      * @param idEmpresa the idEmpresa to set
      */
-    public void setIdEmpresa(int idEmpresa) {
+    public void setIdEmpresa(Integer idEmpresa) {
         this.idEmpresa = idEmpresa;
     }
 
     /**
      * @return the rutEmp
      */
-    public int getRutEmp() {
+    public Integer getRutEmp() {
         return rutEmp;
     }
 
     /**
      * @param rutEmp the rutEmp to set
      */
-    public void setRutEmp(int rutEmp) {
+    public void setRutEmp(Integer rutEmp) {
         this.rutEmp = rutEmp;
     }
 
@@ -133,5 +134,19 @@ public class EmpresaTO implements Serializable{
      */
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    /**
+     * @return the usuario
+     */
+    public UsuarioTO getUsuario() {
+        return usuario;
+    }
+
+    /**
+     * @param usuario the usuario to set
+     */
+    public void setUsuario(UsuarioTO usuario) {
+        this.usuario = usuario;
     }
 }

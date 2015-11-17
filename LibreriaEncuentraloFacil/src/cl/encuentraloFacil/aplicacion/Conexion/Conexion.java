@@ -15,18 +15,19 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import javax.sql.DataSource;
 import org.apache.commons.dbcp2.BasicDataSource;
+import org.apache.log4j.Logger;
 
 public class Conexion implements Serializable {
-    
+    final static Logger logger = Logger.getLogger(Conexion.class);
     private DataSource datasource;
-    
+     BasicDataSource bds;
     public Conexion() {
-        
+       bds = new BasicDataSource();
     }
     
     public Connection getConnection() {
         Connection cnn = null;
-        BasicDataSource bds = new BasicDataSource();
+
         try {
             bds.setDriverClassName(Properties.getProperty("conexion.driver"));
             bds.setUrl(Properties.getProperty("conexion.url"));
@@ -37,7 +38,9 @@ public class Conexion implements Serializable {
             cnn = datasource.getConnection();
             
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            logger.error("[ERROR] conexion: " + e.getMessage());
+        } catch (Exception e) {
+            logger.error("[ERROR] conexion: " + e.getMessage());
         }
         
         return cnn;

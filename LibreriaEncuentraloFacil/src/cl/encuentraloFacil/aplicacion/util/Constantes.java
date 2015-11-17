@@ -11,5 +11,11 @@ package cl.encuentraloFacil.aplicacion.util;
  */
 public class Constantes {
     
+  public class ConstantesDSEjemplo {
+      public static final String NOMBREPRODUCTO = "NOMBREPRODUCTO";
+      public static final String PRECIO = "PRECIO";
+      public static final String RPTES_ULTIMA_PRO = "ES_ULTIMA_PRO";
+  }
+    
             
 }

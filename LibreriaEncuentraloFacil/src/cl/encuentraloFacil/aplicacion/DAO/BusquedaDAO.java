@@ -18,23 +18,26 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import org.apache.log4j.Logger;
 
 /**
  *
  * @author Mario
  */
 public class BusquedaDAO implements Serializable {
-
+    final static Logger logger = Logger.getLogger(BusquedaDAO.class);
     Conexion conn = new Conexion();
     PreparedStatement cst = null;
+    ResultSet rs = null;
 
     public List<BusquedaTO> getBusquedaProd(int emp, int prod) {
-        List<BusquedaTO> listBusqueda = new ArrayList<>();
+        logger.info("getBusquedaProd");
+        List<BusquedaTO> listBusqueda = new ArrayList();
         try {
             cst = conn.getConnection().prepareStatement("select * from producto as a, empresa as b \n" +
             "where a.idproduc = "+prod+" and\n" +
             "b.idemp = "+emp+"");
-            ResultSet rs = cst.executeQuery();
+            rs = cst.executeQuery();
             while (rs.next()) {
                 BusquedaTO busqueda = new BusquedaTO();
                 busqueda.getProducto().setIdProducto(rs.getInt("idproduc"));
@@ -50,32 +53,35 @@ public class BusquedaDAO implements Serializable {
 
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("[ERROR] getBusquedaProd SQLException: " + e.getMessage());
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("[ERROR] getBusquedaProd: " + e.getMessage());
         } finally {
             try {
                 if (cst != null) {
                     cst.close();
                 } if (conn != null){
                      conn.getConnection().close();
+                } if (rs != null) {
+                    rs.close();
                 }
             } catch (SQLException ex) {
-                throw new RuntimeException(ex);
+                logger.error("[ERROR] getBusquedaProd: " + ex.getMessage());
             } 
         }
         return listBusqueda;
     }
     
     public List<FamiliaProdTO> getBusquedaFamiliaEmpre(int valorx) {
-        List<FamiliaProdTO> listFamiliaProd = new ArrayList<>();
+        logger.info("getBusquedaFamiliaEmpre");
+        List<FamiliaProdTO> listFamiliaProd = new ArrayList();
         try {
             cst = conn.getConnection().prepareStatement("select distinct d.idfamilia ,d.nomfam from  producto_empresa as a,subfamilia as b, producto as c , familia as d\n" +
             "where b.idSubFamilia = c.SubFamilia_idSubFamilia and\n" +
             "a.producto_idproduc = c.idproduc and\n" +
             "d.idfamilia = b.Familia_idFamilia\n" +
             "and a.Empresa_idemp = "+valorx+";");
-            ResultSet rs = cst.executeQuery();
+            rs = cst.executeQuery();
             while (rs.next()) {
                 FamiliaProdTO familia = new FamiliaProdTO();
                 familia.setIdFam(rs.getInt(1));
@@ -83,31 +89,34 @@ public class BusquedaDAO implements Serializable {
                 listFamiliaProd.add(familia);
             }    
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("[ERROR] getBusquedaFamiliaEmpre SQLException: " + e.getMessage());
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("[ERROR] getBusquedaFamiliaEmpre: " + e.getMessage());
         } finally {
             try {
                  if (cst != null) {
                     cst.close();
                 } if (conn != null){
                      conn.getConnection().close();
+                } if (rs != null) {
+                    rs.close();
                 }
             } catch (SQLException ex) {
-                throw new RuntimeException(ex);
+                logger.error("[ERROR] getBusquedaFamiliaEmpre: " + ex.getMessage());
             } 
         }
         return listFamiliaProd;
     }
     
     public List<SubFamProductosTO> getBusquedaProductosSubfamilia(int idempresa, int idsubfamilia) {
-        List<SubFamProductosTO> listProductos = new ArrayList<>();
+        logger.info("getBusquedaProductosSubfamilia");
+        List<SubFamProductosTO> listProductos = new ArrayList();
         try {
             cst = conn.getConnection().prepareStatement("select distinct c.idproduc, c.nomprod, c.precio from  producto_empresa as a,subfamilia as b, producto as c \n" +
             "where a.producto_idproduc = c.idproduc " +
             "and c.SubFamilia_idSubFamilia = "+idsubfamilia+"\n" +
             "and a.Empresa_idemp = "+idempresa+";");
-            ResultSet rs = cst.executeQuery();
+            rs = cst.executeQuery();
             while (rs.next()) {
                 SubFamProductosTO productos = new SubFamProductosTO();
                 productos.setIdProducto(rs.getInt(1));
@@ -116,32 +125,35 @@ public class BusquedaDAO implements Serializable {
                 listProductos.add(productos);
             }    
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("[ERROR] getBusquedaProductosSubfamilia SQLException: " + e.getMessage());
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("[ERROR] getBusquedaProductosSubfamilia: " + e.getMessage());
         } finally {
             try {
                  if (cst != null) {
                     cst.close();
                 } if (conn != null){
                      conn.getConnection().close();
+                } if (rs != null) {
+                    rs.close();
                 }
             } catch (SQLException ex) {
-                throw new RuntimeException(ex);
+                logger.error("[ERROR] getBusquedaProductosSubfamilia: " + ex.getMessage());
             } 
         }
         return listProductos;
     }
     
     public List<SubFamiliaProdTO> getBusquedaSubFamiliaEmpre(int emp, int fam) {
-        List<SubFamiliaProdTO> listSubFamiliaProd = new ArrayList<>();
+        logger.info("getBusquedaSubFamiliaEmpre");
+        List<SubFamiliaProdTO> listSubFamiliaProd = new ArrayList();
         try {
             cst = conn.getConnection().prepareStatement("select distinct b.idSubFamilia, b.nomsubfam from  producto_empresa as a,subfamilia as b, producto as c , familia as d\n" +
             "where b.idSubFamilia = c.SubFamilia_idSubFamilia and\n" +
             "a.producto_idproduc = c.idproduc and\n" +
             "b.Familia_idFamilia = "+fam+"\n" +
             "and a.Empresa_idemp = "+emp+";");
-            ResultSet rs = cst.executeQuery();
+            rs = cst.executeQuery();
             while (rs.next()) {
                 SubFamiliaProdTO subFamilia = new SubFamiliaProdTO();
                 subFamilia.setIdSubFam(rs.getInt(1));
@@ -150,18 +162,20 @@ public class BusquedaDAO implements Serializable {
 
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("[ERROR] getBusquedaSubFamiliaEmpre SQLException: " + e.getMessage());
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("[ERROR] getBusquedaSubFamiliaEmpre: " + e.getMessage());
         } finally {
             try {
                 if (cst != null) {
                     cst.close();
                 } if (conn != null){
                      conn.getConnection().close();
+                } if (rs != null) {
+                    rs.close();
                 }
             } catch (SQLException ex) {
-                throw new RuntimeException(ex);
+                logger.error("[ERROR] getBusquedaSubFamiliaEmpre: " + ex.getMessage());
             } 
         }
         return listSubFamiliaProd;
@@ -169,7 +183,8 @@ public class BusquedaDAO implements Serializable {
     
     //connect to DB and get customer list
     public List<EmpresaGeoTO> getEmpresas(String nomprod, double lat, double lng)  {
-        List<EmpresaGeoTO> resultadoFinal = new ArrayList<EmpresaGeoTO>();
+        logger.info("getEmpresas");
+        List<EmpresaGeoTO> resultadoFinal = new ArrayList();
         double difdist = 0;
         try {
             
@@ -180,7 +195,7 @@ public class BusquedaDAO implements Serializable {
                     + "and b.idemp = c.Empresa_idemp\n"
                     + "and a.nomprod = '"+nomprod+"';");
 
-            ResultSet rs = cst.executeQuery();
+            rs = cst.executeQuery();
 
             while (rs.next()) {
                 EmpresaGeoTO empresas = new EmpresaGeoTO();
@@ -198,7 +213,7 @@ public class BusquedaDAO implements Serializable {
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("[ERROR] getEmpresas SQLException: " + e.getMessage());
         } finally {
             try {
                  if (cst != null) {
@@ -207,7 +222,7 @@ public class BusquedaDAO implements Serializable {
                      conn.getConnection().close();
                 }
             } catch (SQLException ex) {
-                throw new RuntimeException(ex);
+                logger.error("[ERROR] getEmpresas: " + ex.getMessage());
             } 
         }
 
@@ -215,7 +230,7 @@ public class BusquedaDAO implements Serializable {
     }
 
     public double distFinal(double lat1, double lng1, double lat2, double lng2) {
-
+        logger.info("distFinal");
         //double earthRadius = 3958.75;//miles  
         double earthRadius = 6371;//kilometers  
         double dLat = Math.toRadians(lat2 - lat1);
@@ -226,7 +241,8 @@ public class BusquedaDAO implements Serializable {
                 * Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2));
         double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
         double dist = earthRadius * c;
-
+        
+        logger.info("distFinal es un valor de : " + dist);
         return dist;
     }
 
@@ -236,13 +252,13 @@ public class BusquedaDAO implements Serializable {
      * @return
      */
     public List<ProductoTO> autoComProd(String nombreProd) {
-        List<ProductoTO> resultadoFinal = new ArrayList<ProductoTO>();
-        PreparedStatement ps = null;
+        logger.info("autoComProd");
+        List<ProductoTO> resultadoFinal = new ArrayList();
         try {
             
              cst = conn.getConnection().prepareStatement("select idproduc, nomprod from producto where nomprod like '%" + nombreProd + "%';");
             //ps.setString(1, nombreProd);
-            ResultSet rs = cst.executeQuery();
+            rs = cst.executeQuery();
             while (rs.next()) {
                 ProductoTO prod = new ProductoTO();
                 prod.setIdProducto(rs.getInt(1));
@@ -250,16 +266,18 @@ public class BusquedaDAO implements Serializable {
                 resultadoFinal.add(prod);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("[ERROR] autoComProd SQLException: " + e.getMessage());
         } finally {
             try {
                 if (cst != null) {
                     cst.close();
                 } if (conn != null){
                      conn.getConnection().close();
+                } if (rs != null) {
+                    rs.close();
                 }
             } catch (SQLException ex) {
-                throw new RuntimeException(ex);
+                logger.error("[ERROR] autoComProd: " + ex.getMessage());
             } 
         }
         return resultadoFinal;

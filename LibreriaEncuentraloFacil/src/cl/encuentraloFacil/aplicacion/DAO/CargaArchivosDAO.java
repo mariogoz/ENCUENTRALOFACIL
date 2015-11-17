@@ -10,23 +10,23 @@ import cl.encuentraloFacil.aplicacion.TO.ResultadoCargaTO;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import static java.sql.Statement.SUCCESS_NO_INFO;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.apache.log4j.Logger;
 
 /**
  *
  * @author Administrador
  */
 public class CargaArchivosDAO {
-
+    final static Logger logger = Logger.getLogger(CargaArchivosDAO.class);
     Conexion conn = new Conexion();
     PreparedStatement cst = null;
-    private Object FacesContext;
+    PreparedStatement ps = null;
+    ResultSet rs = null;
 
     public List<ResultadoCargaTO> cargarDatos(List<Integer> prod) {
+        logger.info("METHOD cargarDatos");
         List<Integer> productos = new ArrayList<>();
         List<String> querys = new ArrayList<>();
         List<Integer> repetidos = new ArrayList<>();
@@ -36,7 +36,7 @@ public class CargaArchivosDAO {
         try {
             //Es necesario tomar la variable id empresa para pasarla como parametro
             cst = conn.getConnection().prepareStatement("select * from producto_empresa where empresa_idemp = 15");
-            ResultSet rs = cst.executeQuery();
+            rs = cst.executeQuery();
             rs.last();
             sizeRs = rs.getRow();
             for (int x = 0; x < prod.size(); x++) {
@@ -65,7 +65,7 @@ public class CargaArchivosDAO {
                 }
             }
 
-            PreparedStatement ps = conn.getConnection().prepareStatement("insert into producto_empresa values(?,?);");
+            ps = conn.getConnection().prepareStatement("insert into producto_empresa values(?,?);");
             for (Integer prod1 : productos) {
                 ps.setInt(1, Integer.parseInt(prod1.toString()));
                 //Es necesario tomar la variable id empresa para pasarla como parametro
@@ -75,7 +75,21 @@ public class CargaArchivosDAO {
                 ps.executeBatch();
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("[ERROR] cargarDatos SQLException: " + e.getMessage());
+        } finally {
+            try {
+                if (cst != null) {
+                    cst.close();
+                }
+                if (conn != null) {
+                    conn.getConnection().close();
+                } 
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (SQLException ex) {
+                logger.error("[EMPRESADAO] cargarDatos FINALLY: " + ex.getMessage());
+            }
         }
         return resultadoCarga;
     }
