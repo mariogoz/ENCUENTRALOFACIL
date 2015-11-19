@@ -1,0 +1,71 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ppctu="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head>
+        <title>Inicio</title>
+    </h:head>
+    <h:body>
+        <h:form>
+            <ppctu:layout fullPage="true">
+            <ppctu:layoutUnit  position="north"  size="140" resizable="false" closable="true" collapsible="false"  >
+
+                    <ppctu:growl id="message" showDetail="true" />
+
+                    <ppctu:commandButton value="Cerrar Sesion"   update="message">
+                        <ppctu:confirm header="Confirmation" message="Estas seguro?" icon="ui-icon-alert"/>
+                    </ppctu:commandButton>
+
+                    <ppctu:confirmDialog global="true"  showEffect="fade" hideEffect="explode">
+                         <ppctu:commandButton value="Yes"  styleClass="ui-confirmdialog-yes" icon="ui-icon-check" action="#{beanLogin.cerrarSesion()}"/>
+                    <ppctu:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                </ppctu:confirmDialog>
+            </ppctu:layoutUnit>
+            <ppctu:layoutUnit   position="west" header="menu" size="140" resizable="false" closable="false" collapsible="false" >
+                <ppctu:growl id="grow1" life="2000" />
+                <div>
+                    <ppctu:commandLink  id="ajax1" action="#{beanLogin.doInicio()}" value="Inicio" />
+                </div>
+                <div>
+                    <ppctu:commandLink  id="ajax" action="#{beanLogin.cargaMasivaRef()}" value="Carga Masiva" />
+                </div>
+                <div>
+                    <ppctu:commandLink  id="aj" action="#{beanLogin.cargaMultipleRef()}" value=" Carga Multiple" />
+                </div>
+                <div>
+                    <ppctu:commandLink  id="informe" action="#{beanLogin.doInformes()}" value="Informes" />
+                </div>
+                <div>
+                    <ppctu:commandLink  id="productos"  action="#{beanLogin.doProductos()}" value="Mantenedor de productos" />
+                </div>
+            </ppctu:layoutUnit>
+            <ppctu:layoutUnit id="centerLayout" header="content" position="center">
+                <tr>
+                    <td><h:outputLabel id="lblNombreProducto" value="Producto"/></td>
+                    <td><h:inputText id="txtNombreProducto"></h:inputText></td>
+                </tr>
+                <tr>
+                    <td><h:outputLabel id="lblPrecio" value="Precio"/></td>
+                    <td><h:inputText id="txtPrecio"  /></td>
+                </tr>
+                <tr>
+                    <td><h:outputLabel id="lblFamilia" value="Familia" /></td>
+                    <td>
+                        <h:selectOneMenu value="#{userData.data}">
+                            <f:selectItem itemValue="1" itemLabel="Item 1" />
+                            <f:selectItem itemValue="2" itemLabel="Item 2" />	   							
+                        </h:selectOneMenu>	
+                    </td>
+                </tr>
+            <ppctu:commandButton id="button" value="Ingresar" action="#{beanProducto.registrarProducto()}" />
+
+ 
+            </ppctu:layoutUnit>
+            </ppctu:layout>
+        </h:form>   
+    </h:body>
+</html>
+
