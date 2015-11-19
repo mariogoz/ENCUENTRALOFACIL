@@ -58,6 +58,10 @@
             <from-outcome>informes.auto</from-outcome>
             <to-view-id>/ViewInformes.xhtml</to-view-id>
         </navigation-case>
+        <navigation-case>
+            <from-outcome>mantenedorproductos.auto</from-outcome>
+            <to-view-id>/ViewProductos.xhtml</to-view-id>
+        </navigation-case>
     </navigation-rule>
     
     <navigation-rule>
@@ -81,6 +85,10 @@
         <navigation-case>
             <from-outcome>informes.auto</from-outcome>
             <to-view-id>/ViewInformes.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>mantenedorproductos.auto</from-outcome>
+            <to-view-id>/ViewProductos.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
     
@@ -106,6 +114,10 @@
             <from-outcome>informes.auto</from-outcome>
             <to-view-id>/ViewInformes.xhtml</to-view-id>
         </navigation-case>
+        <navigation-case>
+            <from-outcome>mantenedorproductos.auto</from-outcome>
+            <to-view-id>/ViewProductos.xhtml</to-view-id>
+        </navigation-case>
     </navigation-rule>
     
     <navigation-rule>
@@ -129,6 +141,38 @@
         <navigation-case>
             <from-outcome>informes.auto</from-outcome>
             <to-view-id>/ViewInformes.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>mantenedorproductos.auto</from-outcome>
+            <to-view-id>/ViewProductos.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+        <from-view-id>/ViewProductos.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>cerrar.auto</from-outcome>
+            <to-view-id>/ViewLogin.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>cargamasiva.auto</from-outcome>
+            <to-view-id>/cargaMasiva.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>inicio.auto</from-outcome>
+            <to-view-id>/ViewAutoAdm.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>cargamultiple.auto</from-outcome>
+            <to-view-id>/CargaManualMult.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>informes.auto</from-outcome>
+            <to-view-id>/ViewInformes.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>mantenedorproductos.auto</from-outcome>
+            <to-view-id>/ViewProductos.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
 
@@ -168,4 +212,10 @@
               <managed-bean-class>cl.encuentraloFacil.aplicacion.Controlador</managed-bean-class>
               <managed-bean-scope>session</managed-bean-scope>
   </managed-bean>
+    <managed-bean>
+        <description>BeanProductos</description>
+        <managed-bean-name>beanProducto</managed-bean-name>
+        <managed-bean-class>cl.encuentraloFacil.aplicacion.Controlador.BeanRegistro</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
 </faces-config>
