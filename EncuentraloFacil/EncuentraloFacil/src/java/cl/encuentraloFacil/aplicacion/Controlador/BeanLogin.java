@@ -133,6 +133,10 @@ public class BeanLogin implements Serializable {
     public String doInformes() {
         return "informes.auto";
     }
+    
+    public String doProductos() {
+        return "mantenedorproductos.auto";
+    }
 
     /**
      *
