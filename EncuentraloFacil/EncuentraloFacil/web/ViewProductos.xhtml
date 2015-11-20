@@ -40,30 +40,26 @@
                 </div>
             </ppctu:layoutUnit>
             <ppctu:layoutUnit id="centerLayout" header="content" position="center">
-                <tr>
-                    <td><h:outputLabel id="lblNombreProducto" value="Producto"/></td>
-                    <td><h:inputText id="txtNombreProducto"></h:inputText></td>
-                </tr>
-                <tr>
-                    <td><h:outputLabel id="lblPrecio" value="Precio"/></td>
-                    <td><h:inputText id="txtPrecio"  /></td>
-                </tr>
-                <tr>
-                    <td><h:outputLabel id="lblFamilia" value="Familia" /></td>
-                    <td>
-                        <ppctu:selectOneMenu>
-                            <f:selectItems value="#{beanFamilia.cmbFamilia}"></f:selectItems>
-                        </ppctu:selectOneMenu>	
-                    </td>
-                </tr>
-                <tr>
-                    <td><h:outputLabel id="lblSubFamilia" value="Sub-Familia" /></td>
-                    <td>
-                        <ppctu:selectOneMenu>
-                            <f:selectItems value="#{beanFamilia.cmbFamilia}"></f:selectItems>
-                        </ppctu:selectOneMenu>	
-                    </td>
-                </tr>
+                <div>
+                    <h:outputLabel id="lblNombreProducto" value="Producto"/>
+                    <h:inputText id="txtNombreProducto"></h:inputText>
+                </div>
+                <div>
+                    <h:outputLabel id="lblPrecio" value="Precio"/>
+                    <h:inputText id="txtPrecio" />
+                </div>
+                <div>
+                    <h:outputLabel id="lblFamilia" value="Familia" />
+                    <ppctu:selectOneMenu>
+                        <f:selectItems value="#{beanFamilia.cmbFamilia}"></f:selectItems>
+                    </ppctu:selectOneMenu>	
+                </div>
+                <div>
+                    <h:outputLabel id="lblSubFamilia" value="Sub-Familia" />
+                    <ppctu:selectOneMenu>
+                        <f:selectItems value="#{beanFamilia.cmbFamilia}"></f:selectItems>
+                    </ppctu:selectOneMenu>
+                </div>
             <ppctu:commandButton id="button" value="Ingresar" action="#{beanProducto.registrarProducto()}" />
             </ppctu:layoutUnit>
         </ppctu:layout>
