@@ -36,6 +36,9 @@ public class BeanFamilia implements Serializable{
             cmbFamilia = new ArrayList<SelectItem>();
             FamiliaDao fDao = new FamiliaDao();
             
+            SelectItem a = new SelectItem(0,"Seleccione");
+            cmbFamilia.add(a);
+            
             for(FamiliaProdTO f : fDao.getBusquedaProd()){
                 SelectItem s = new SelectItem(f.getIdFam(), f.getNomFam());
                 cmbFamilia.add(s);
