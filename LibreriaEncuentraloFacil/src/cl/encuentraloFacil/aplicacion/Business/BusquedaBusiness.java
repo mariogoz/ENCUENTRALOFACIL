@@ -11,7 +11,6 @@ import cl.encuentraloFacil.aplicacion.TO.BusquedaTO;
 import cl.encuentraloFacil.aplicacion.TO.EmpresaGeoTO;
 import cl.encuentraloFacil.aplicacion.TO.FamiliaProdTO;
 import cl.encuentraloFacil.aplicacion.TO.ProductoTO;
-import cl.encuentraloFacil.aplicacion.TO.SubFamProductosTO;
 import cl.encuentraloFacil.aplicacion.TO.SubFamiliaProdTO;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -38,7 +37,7 @@ public class BusquedaBusiness implements Serializable{
    
     public List<EmpresaGeoTO> buscarProducto(String nomprod, double lat, double lng)
     {
-        List<EmpresaGeoTO> resultadoFinal = new ArrayList<EmpresaGeoTO>();
+        List<EmpresaGeoTO> resultadoFinal = new ArrayList();
         try{
         resultadoFinal = busquedaDAO.getEmpresas(nomprod, lat, lng);
         }catch(Exception e){
@@ -59,8 +58,8 @@ public class BusquedaBusiness implements Serializable{
         return listFamiliaEmpresa;
     }
     
-     public List<SubFamProductosTO> getBusquedaProductosSubfa(int idempresa, int subfamilia){
-        List<SubFamProductosTO> listProductos = new ArrayList<>();
+     public List<ProductoTO> getBusquedaProductosSubfa(int idempresa, int subfamilia){
+        List<ProductoTO> listProductos = new ArrayList();
         try {
             listProductos = busquedaDAO.getBusquedaProductosSubfamilia(idempresa, subfamilia);
         } catch (Exception e) {
@@ -71,7 +70,7 @@ public class BusquedaBusiness implements Serializable{
     }
     
     public List<SubFamiliaProdTO> getBusquedaSubFamiliaEmpre(int fam,int emp){
-        List<SubFamiliaProdTO> listSubFamiliaEmpresa = new ArrayList<>();
+        List<SubFamiliaProdTO> listSubFamiliaEmpresa = new ArrayList();
         try {
             listSubFamiliaEmpresa = busquedaDAO.getBusquedaSubFamiliaEmpre(emp,fam);
         } catch (Exception e) {
@@ -82,7 +81,7 @@ public class BusquedaBusiness implements Serializable{
     }
     
     public List<ProductoTO> retornaNomProd(String nombreprod) {
-        List<ProductoTO> resultadoFinal = new ArrayList<ProductoTO>();
+        List<ProductoTO> resultadoFinal = new ArrayList();
         try {
             resultadoFinal = busquedaDAO.autoComProd(nombreprod);
         } catch (Exception e) {

@@ -10,7 +10,6 @@ import cl.encuentraloFacil.aplicacion.TO.BusquedaTO;
 import cl.encuentraloFacil.aplicacion.TO.EmpresaGeoTO;
 import cl.encuentraloFacil.aplicacion.TO.FamiliaProdTO;
 import cl.encuentraloFacil.aplicacion.TO.ProductoTO;
-import cl.encuentraloFacil.aplicacion.TO.SubFamProductosTO;
 import cl.encuentraloFacil.aplicacion.TO.SubFamiliaProdTO;
 import java.io.Serializable;
 import java.sql.PreparedStatement;
@@ -108,9 +107,9 @@ public class BusquedaDAO implements Serializable {
         return listFamiliaProd;
     }
     
-    public List<SubFamProductosTO> getBusquedaProductosSubfamilia(int idempresa, int idsubfamilia) {
+    public List<ProductoTO> getBusquedaProductosSubfamilia(int idempresa, int idsubfamilia) {
         logger.info("getBusquedaProductosSubfamilia");
-        List<SubFamProductosTO> listProductos = new ArrayList();
+        List<ProductoTO> listProductos = new ArrayList();
         try {
             cst = conn.getConnection().prepareStatement("select distinct c.idproduc, c.nomprod, c.precio from  producto_empresa as a,subfamilia as b, producto as c \n" +
             "where a.producto_idproduc = c.idproduc " +
@@ -118,7 +117,7 @@ public class BusquedaDAO implements Serializable {
             "and a.Empresa_idemp = "+idempresa+";");
             rs = cst.executeQuery();
             while (rs.next()) {
-                SubFamProductosTO productos = new SubFamProductosTO();
+                ProductoTO productos = new ProductoTO();
                 productos.setIdProducto(rs.getInt(1));
                 productos.setNombreProducto(rs.getString(2));
                 productos.setPrecio(rs.getDouble(3));

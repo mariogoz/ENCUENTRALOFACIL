@@ -25,6 +25,7 @@ public class UsuarioTO implements Serializable {
     private String correo;
     private Integer estadoId;
     private String GlosaConexion;
+    private Integer admin;
 
     /**
      * @return the idUsuario
@@ -178,5 +179,19 @@ public class UsuarioTO implements Serializable {
      */
     public void setGlosaConexion(String GlosaConexion) {
         this.GlosaConexion = GlosaConexion;
+    }
+
+    /**
+     * @return the admin
+     */
+    public Integer getAdmin() {
+        return admin;
+    }
+
+    /**
+     * @param admin the admin to set
+     */
+    public void setAdmin(Integer admin) {
+        this.admin = admin;
     }
 }

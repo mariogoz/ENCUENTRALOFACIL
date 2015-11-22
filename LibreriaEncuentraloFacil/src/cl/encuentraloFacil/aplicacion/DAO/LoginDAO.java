@@ -41,7 +41,8 @@ public class LoginDAO implements Serializable {
             sql.append("fevalha FECHAVALIDA, ");
             sql.append("Estados_idest IDESTADO, ");
             sql.append("Apells APELLIDOS, ");
-            sql.append("nomb NOMBRES ");
+            sql.append("nomb NOMBRES, ");
+            sql.append("is_admin ADMIN  ");
             sql.append("FROM USUARIO ");
             sql.append("WHERE ");
             sql.append("usernom = ? ");
@@ -65,6 +66,7 @@ public class LoginDAO implements Serializable {
                 usuario.setPrimerNombre(rs.getString("NOMBRES"));
                 usuario.setPrimerApellido(rs.getString("APELLIDOS"));
                 usuario.setEstadoId(rs.getInt("IDESTADO"));
+                usuario.setAdmin(rs.getInt("ADMIN"));
                 
                 String n = rs.getString("NOMBREUSUARIO");
                 String p = rs.getString("CONTRASENIA");
