@@ -41,12 +41,11 @@
                     </f:facet>
 
                     <p:panel header="#{car.nombreProducto}" style="text-align:center" >
-                        <h:panelGrid columns="1" style="width:100%; "   >
-                            <h:commandLink action="#{MenuProdEmpre.redireccionarProducto()}">
-                            <h:graphicImage value="imagen/#{car.idProducto}.JPG" width="180" height="180"/>
-                            </h:commandLink>
-                         <!--   <img width="180px" height="180" src="imagen/#{car.idProducto}.JPG" alt="" onclick="#{MenuProdEmpre.redireccionarProducto()}"/> -->
-
+                        <h:panelGrid columns="1" style="width:100%; " >
+                            <h:form id="imagen">
+                         
+                            <img width="180px" height="180" src="imagen/#{car.idProducto}.JPG" alt="" onclick="#{MenuProdEmpre.redireccionarProducto(car.idProducto)}"/>
+                            </h:form>
                             <h:outputText value="#{car.precio}" />
 
                             

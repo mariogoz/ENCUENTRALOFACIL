@@ -29,6 +29,10 @@
         <navigation-case>
             <from-outcome>cancelar.login</from-outcome>
             <to-view-id>/ViewBusqueda.xhtml</to-view-id>
+        </navigation-case>  
+         <navigation-case>
+            <from-outcome>intranet.login</from-outcome>
+            <to-view-id>/ViewLoginIntranet.xhtml</to-view-id>
         </navigation-case>        
     </navigation-rule>
     

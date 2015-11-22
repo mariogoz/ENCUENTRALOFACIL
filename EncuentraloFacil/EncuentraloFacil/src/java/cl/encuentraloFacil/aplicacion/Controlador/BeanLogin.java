@@ -11,6 +11,7 @@ import cl.encuentraloFacil.aplicacion.Interface.EFReporte;
 import cl.encuentraloFacil.aplicacion.Rpt.RptEjemplo;
 import cl.encuentraloFacil.aplicacion.TO.ClienteTO;
 import cl.encuentraloFacil.aplicacion.TO.UsuarioTO;
+import cl.encuentraloFacil.aplicacion.util.Constantes;
 import cl.encuentraloFacil.aplicacion.util.GenerardorReporte;
 import cl.encuentraloFacil.aplicacion.util.Properties;
 import java.io.IOException;
@@ -62,7 +63,12 @@ public class BeanLogin implements Serializable {
                 msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "", Properties.getProperty("beanlogin.autentificacion.success") + " " + getRespuesta().getPrimerNombre()
                         + " " + getRespuesta().getPrimerApellido());
                 context.addMessage(null, msg);
-                destino = Properties.getProperty("beanlogin.redireccionar.exitoso");
+                if (getRespuesta().getAdmin().equals(Constantes.ConstantesBeanLogin.ISADMIN)) {
+                    destino = Properties.getProperty("beanlogin.redireccionar.intranet");         
+                } else {
+                    destino = Properties.getProperty("beanlogin.redireccionar.exitoso");
+                }
+                
 
             } else {
                 destino = Properties.getProperty("beanlogin.redireccionar.fallida");

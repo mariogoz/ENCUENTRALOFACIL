@@ -2,9 +2,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui">
-      
+
 
     <h:head>
         <meta http-equiv="Expires" content="0" />
@@ -13,52 +12,49 @@
     </h:head>
     <h:body>
         <p:layout fullPage="true"> 
-        
-        <p:layoutUnit position="north" size="140" resizable="false" closable="true" collapsible="false"  >
-                <div align="center" > <img src="imagen/encuentraloFacil.gif" alt="" align="top" /> </div>
-                </p:layoutUnit>
+
+            <p:layoutUnit position="north" size="140" resizable="false" closable="true" collapsible="false"  >
+                <div>
+                <h:form>
+                    <h:inputHidden id="list" value="#{mapbean.ejecutarBusqueda}"/></h:form>
+                 <div align="center" >
+                     <img src="imagen/encuentraloFacil.gif" alt=""  /> 
+                 </div>
+                <div align="right">
+                    <table border="0" align="right">
+                        <tr>
+                            <td>
+                                <h:outputLabel value="Empresa" /> 
+                            </td>
+                            <td>
+                                <h:outputLabel id="nombreEmp" value="#{mapbean.busquedaObjeto.empresa.nombreEmpresa}"/>
+                            </td>
+                        </tr>                
+                    </table>
+                </div>
+                    
+                    </div>
+            </p:layoutUnit>
             <p:layoutUnit position="west" size="200">
                 <h:form>
                     <p:growl id="messages"></p:growl>
                     <p:slideMenu model="#{MenuProdEmpre.modelomenu}" style="width:180px"></p:slideMenu>
-     
                 </h:form>
             </p:layoutUnit>
-       <p:layoutUnit position="center">
-           
-            <h:form id="form3"><h:outputLabel value="#{mapbean.nomEmpresa}"/></h:form>
-            
-            
-            <h:form id="form">
-                <p:dataGrid emptyMessage="Información no Disponible" var="car" value="#{mapbean.ejecutarBusqueda}" columns="3" layout="grid"
-                            rows="10" paginator="true" id="cars"
-                            paginatorTemplate="  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+            <p:layoutUnit position="center">
+                <h:form id="form3">
+                    <div>
+                        <table>                   
+                            <h:graphicImage id="image" value="imagen/#{mapbean.busquedaObjeto.producto.idProducto}.JPG"   width="180" height="180"/>
+                        </table>
+                    </div>
+                    <div>
+                        <h:outputLabel id="nombreProducto" value="#{mapbean.busquedaObjeto.producto.nombreProducto}"/> <br></br>
+                        <h:outputLabel id="precio" value="#{mapbean.busquedaObjeto.producto.precio}"/>
+                    </div>
 
-                            rowsPerPageTemplate="6,12,16">
-
-                    <f:facet name="header" >
-                        Resultado Busqueda
-                    </f:facet>
-
-                    <p:panel header="#{car.producto.nombreProducto}" style="text-align:center" >
-                        <h:panelGrid columns="1" style="width:100%; " >
-                         
-                            <img width="180px" height="180" src="imagen/#{car.producto.idProducto}.JPG" alt="" />
-
-                            <h:outputText value="#{car.producto.precio}" />
-
-                            
-                        </h:panelGrid>
-                    </p:panel>
-
-                </p:dataGrid>
-
-                
-            </h:form>
+                </h:form>     
             </p:layoutUnit>
-       <!-- </div> -->
-       
-            
         </p:layout>
     </h:body>
 </html>

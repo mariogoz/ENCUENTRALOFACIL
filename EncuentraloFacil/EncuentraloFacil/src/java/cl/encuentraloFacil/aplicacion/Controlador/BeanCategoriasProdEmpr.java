@@ -3,7 +3,7 @@ package cl.encuentraloFacil.aplicacion.Controlador;
 
 import cl.encuentraloFacil.aplicacion.Business.BusquedaBusiness;
 import cl.encuentraloFacil.aplicacion.TO.FamiliaProdTO;
-import cl.encuentraloFacil.aplicacion.TO.SubFamProductosTO;
+import cl.encuentraloFacil.aplicacion.TO.ProductoTO;
 import cl.encuentraloFacil.aplicacion.TO.SubFamiliaProdTO;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -24,7 +24,7 @@ public class BeanCategoriasProdEmpr implements Serializable {
     private MenuModel modelomenu;
     private List<FamiliaProdTO> familia;
     private SubFamiliaProdTO SubFamilia;
-    private List<SubFamProductosTO> productosBean ;
+    private List<ProductoTO> productosBean ;
     @PostConstruct
     public void init() {
         familia = ejecutarBusquedaFamilia();
@@ -73,12 +73,12 @@ public class BeanCategoriasProdEmpr implements Serializable {
     
     
     //Método que ejecuta la busqueda de los productos según subFamilia seleccionada en el MenuItem de la página viewResultado.xhtml
-     public List<SubFamProductosTO> ejecutarBusquedaProductosPorSubFam(int idsubfa) {
+     public List<ProductoTO> ejecutarBusquedaProductosPorSubFam(int idsubfa) {
         mapbean map =  (mapbean) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("mapbean");
         BusquedaBusiness busquedaBusiness = new BusquedaBusiness();
         
         int idempresa = Integer.parseInt(map.getIdEmpresaBuscar());
-        List<SubFamProductosTO> productos = new ArrayList<SubFamProductosTO>();
+        List<ProductoTO> productos = new ArrayList();
         try {
             //necesito capturar variable seleccionada de subfamilia para listar
             productos = busquedaBusiness.getBusquedaProductosSubfa(idempresa,idsubfa);
@@ -90,6 +90,10 @@ public class BeanCategoriasProdEmpr implements Serializable {
         }
         return productos;
     }
+     
+     public void redireccionarProducto(){
+         System.out.println("");
+     }
      
     /* public List<SubFamProductosTO> retornaListaProductos(List<SubFamProductosTO> param){
          return productosBean = param;
@@ -145,21 +149,21 @@ public class BeanCategoriasProdEmpr implements Serializable {
     /**
      * @return the productos
      */
-    public List<SubFamProductosTO> getProductosSubFam() {
+    public List<ProductoTO> getProductosSubFam() {
         return getProductosBean();
     }
 
     /**
      * @return the productosBean
      */
-    public List<SubFamProductosTO> getProductosBean() {
+    public List<ProductoTO> getProductosBean() {
         return productosBean;
     }
 
     /**
      * @param productosBean the productosBean to set
      */
-    public void setProductosBean(List<SubFamProductosTO> productosBean) {
+    public void setProductosBean(List<ProductoTO> productosBean) {
         this.productosBean = productosBean;
     }
 }

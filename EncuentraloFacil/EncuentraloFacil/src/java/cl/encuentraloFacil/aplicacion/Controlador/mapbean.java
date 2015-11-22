@@ -54,6 +54,7 @@ public class mapbean implements Serializable {
     private TreeNode root;
     private int idprod;
     private String nombreEmpresa;
+    private BusquedaTO busquedaObjeto;
     
     public mapbean() {
         ExternalContext contexto = FacesContext.getCurrentInstance().getExternalContext();
@@ -108,7 +109,8 @@ public class mapbean implements Serializable {
             
             resultaBusqueda = getBusquedaBusiness().getBusquedaProductoBusiness(x, getIdprod());
             if (resultaBusqueda != null && !resultaBusqueda.isEmpty()) {
-                setNomEmpresa(resultaBusqueda.get(0).getEmpresa().getNombreEmpresa());
+                //setNomEmpresa(resultaBusqueda.get(0).getEmpresa().getNombreEmpresa());
+                setBusquedaObjeto(resultaBusqueda.get(0));
             } else {
                 msg = new FacesMessage(FacesMessage.SEVERITY_INFO, Properties.getProperty("beanBusqueda.buscarProducto.noregistros"), null);
                 context.addMessage(null, msg);
@@ -277,5 +279,19 @@ public class mapbean implements Serializable {
      */
     public void setNombreEmpresa(String nombreEmpresa) {
         this.nombreEmpresa = nombreEmpresa;
+    }
+
+    /**
+     * @return the busquedaObjeto
+     */
+    public BusquedaTO getBusquedaObjeto() {
+        return busquedaObjeto;
+    }
+
+    /**
+     * @param busquedaObjeto the busquedaObjeto to set
+     */
+    public void setBusquedaObjeto(BusquedaTO busquedaObjeto) {
+        this.busquedaObjeto = busquedaObjeto;
     }
 }
