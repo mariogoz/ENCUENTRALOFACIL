@@ -57,13 +57,14 @@ public class BusquedaDAO implements Serializable {
             logger.error("[ERROR] getBusquedaProd: " + e.getMessage());
         } finally {
             try {
+                if (rs != null) {
+                    rs.close();
+                }
                 if (cst != null) {
                     cst.close();
                 } if (conn != null){
-                     conn.getConnection().close();
-                } if (rs != null) {
-                    rs.close();
-                }
+                     conn.disconnect();
+                } 
             } catch (SQLException ex) {
                 logger.error("[ERROR] getBusquedaProd: " + ex.getMessage());
             } 
@@ -93,13 +94,14 @@ public class BusquedaDAO implements Serializable {
             logger.error("[ERROR] getBusquedaFamiliaEmpre: " + e.getMessage());
         } finally {
             try {
+                if (rs != null) {
+                    rs.close();
+                }
                  if (cst != null) {
                     cst.close();
                 } if (conn != null){
-                     conn.getConnection().close();
-                } if (rs != null) {
-                    rs.close();
-                }
+                     conn.disconnect();
+                } 
             } catch (SQLException ex) {
                 logger.error("[ERROR] getBusquedaFamiliaEmpre: " + ex.getMessage());
             } 
@@ -129,13 +131,14 @@ public class BusquedaDAO implements Serializable {
             logger.error("[ERROR] getBusquedaProductosSubfamilia: " + e.getMessage());
         } finally {
             try {
+                if (rs != null) {
+                    rs.close();
+                }
                  if (cst != null) {
                     cst.close();
                 } if (conn != null){
-                     conn.getConnection().close();
-                } if (rs != null) {
-                    rs.close();
-                }
+                     conn.disconnect();
+                } 
             } catch (SQLException ex) {
                 logger.error("[ERROR] getBusquedaProductosSubfamilia: " + ex.getMessage());
             } 
@@ -166,13 +169,14 @@ public class BusquedaDAO implements Serializable {
             logger.error("[ERROR] getBusquedaSubFamiliaEmpre: " + e.getMessage());
         } finally {
             try {
+                if (rs != null) {
+                    rs.close();
+                }
                 if (cst != null) {
                     cst.close();
                 } if (conn != null){
-                     conn.getConnection().close();
-                } if (rs != null) {
-                    rs.close();
-                }
+                     conn.disconnect();
+                } 
             } catch (SQLException ex) {
                 logger.error("[ERROR] getBusquedaSubFamiliaEmpre: " + ex.getMessage());
             } 
@@ -215,10 +219,13 @@ public class BusquedaDAO implements Serializable {
             logger.error("[ERROR] getEmpresas SQLException: " + e.getMessage());
         } finally {
             try {
+                if (rs != null) {
+                    rs.close();
+                }
                  if (cst != null) {
                     cst.close();
                 } if (conn != null){
-                     conn.getConnection().close();
+                     conn.disconnect();
                 }
             } catch (SQLException ex) {
                 logger.error("[ERROR] getEmpresas: " + ex.getMessage());
@@ -268,13 +275,14 @@ public class BusquedaDAO implements Serializable {
             logger.error("[ERROR] autoComProd SQLException: " + e.getMessage());
         } finally {
             try {
+                if (rs != null) {
+                    rs.close();
+                }
                 if (cst != null) {
                     cst.close();
                 } if (conn != null){
-                     conn.getConnection().close();
-                } if (rs != null) {
-                    rs.close();
-                }
+                     conn.disconnect();
+                } 
             } catch (SQLException ex) {
                 logger.error("[ERROR] autoComProd: " + ex.getMessage());
             } 

@@ -8,6 +8,7 @@ package cl.encuentraloFacil.aplicacion.TO;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  *
@@ -22,7 +23,7 @@ public class EmpresaTO implements Serializable{
     private Date fechaValidacion;
     private Date fechaActivacion;
     private String url;
-    private UsuarioTO usuario;
+    private List<UsuarioTO> usuario;
 
     /**
      * @return the idEmpresa
@@ -139,14 +140,14 @@ public class EmpresaTO implements Serializable{
     /**
      * @return the usuario
      */
-    public UsuarioTO getUsuario() {
+    public List<UsuarioTO> getUsuario() {
         return usuario;
     }
 
     /**
      * @param usuario the usuario to set
      */
-    public void setUsuario(UsuarioTO usuario) {
+    public void setUsuario(List<UsuarioTO> usuario) {
         this.usuario = usuario;
     }
 }

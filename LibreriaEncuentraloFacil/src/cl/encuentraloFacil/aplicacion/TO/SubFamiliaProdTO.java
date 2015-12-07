@@ -14,11 +14,12 @@ public class SubFamiliaProdTO {
     
     private int idSubFam;
     private String nomSubFam;
+    private String descest;
+    private FamiliaProdTO familia = new FamiliaProdTO();
     
-    
-        /**
+    /**
      * @return the idSubFam
-     */
+    */
     public int getIdSubFam() {
         return idSubFam;
     }
@@ -43,4 +44,20 @@ public class SubFamiliaProdTO {
     public void setNomSubFam(String nomSubFam) {
         this.nomSubFam = nomSubFam;
     }
-}
+    
+    public String getDescest() {
+        return descest;
+    }
+
+    public void setDescest(String descest) {
+        this.descest = descest;
+    }
+
+    public FamiliaProdTO getFamilia() {
+        return familia;
+    }
+
+    public void setFamilia(FamiliaProdTO familia) {
+        this.familia = familia;
+    }
+    }

@@ -17,8 +17,31 @@ public class ProductoTO implements Serializable{
     private String nombreProducto;
     private Double precio;
     private String img;
+    private FamiliaProdTO familia =  new FamiliaProdTO();
+    private SubFamiliaProdTO subfamilia =  new SubFamiliaProdTO();
+    private EstadosTO estados =  new EstadosTO();
 
+    
     public ProductoTO(){}
+
+    public ProductoTO(Integer idProducto, String nombreProducto, Double precio, String img, FamiliaProdTO familia, SubFamiliaProdTO subfamilia, EstadosTO estados) {
+        this.idProducto = idProducto;
+        this.nombreProducto = nombreProducto;
+        this.precio = precio;
+        this.img = img;
+        //this.familia = familia;
+        this.subfamilia = subfamilia;
+        this.estados = estados;
+    }
+
+    public ProductoTO(Integer idProducto, String nombreProducto, Double precio, String img, SubFamiliaProdTO subfamilia) {
+        this.idProducto = idProducto;
+        this.nombreProducto = nombreProducto;
+        this.precio = precio;
+        this.img = img;
+        this.subfamilia = subfamilia;
+    }
+    
     
     public ProductoTO(Integer idProducto, String nombreProducto,Double precio,String img) {
         this.idProducto = idProducto;
@@ -81,5 +104,23 @@ public class ProductoTO implements Serializable{
     public void setImg(String img) {
         this.img = img;
     }
+    
+    public SubFamiliaProdTO getSubfamilia() {
+        return subfamilia;
+    }
+
+    public void setSubfamilia(SubFamiliaProdTO subfamilia) {
+        this.subfamilia = subfamilia;
+    }
+
+    public EstadosTO getEstados() {
+        return estados;
+    }
+
+    public void setEstados(EstadosTO estados) {
+        this.estados = estados;
+    }
+    
+    
    
 }

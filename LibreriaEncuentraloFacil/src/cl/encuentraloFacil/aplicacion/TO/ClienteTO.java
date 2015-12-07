@@ -14,26 +14,27 @@ import java.util.Date;
  */
 public class ClienteTO implements Serializable {
 
-    private int idCliente;
-    private int rut;
+    private Integer idCliente;
+    private Integer rut;
     private char dv;
     private String nombre;
     private String primerApellido;
     private Date fecNac;
     private Date fecVal;
     private String correo;
+    private UsuarioTO usuario = new UsuarioTO();
 
     /**
      * @return the rut
      */
-    public int getRut() {
+    public Integer getRut() {
         return rut;
     }
 
     /**
      * @param rut the rut to set
      */
-    public void setRut(int rut) {
+    public void setRut(Integer rut) {
         this.rut = rut;
     }
 
@@ -124,15 +125,29 @@ public class ClienteTO implements Serializable {
     /**
      * @return the idCliente
      */
-    public int getIdCliente() {
+    public Integer getIdCliente() {
         return idCliente;
     }
 
     /**
      * @param idCliente the idCliente to set
      */
-    public void setIdCliente(int idCliente) {
+    public void setIdCliente(Integer idCliente) {
         this.idCliente = idCliente;
+    }
+
+    /**
+     * @return the usuario
+     */
+    public UsuarioTO getUsuario() {
+        return usuario;
+    }
+
+    /**
+     * @param usuario the usuario to set
+     */
+    public void setCliente(UsuarioTO usuario) {
+        this.usuario = usuario;
     }
 
 }

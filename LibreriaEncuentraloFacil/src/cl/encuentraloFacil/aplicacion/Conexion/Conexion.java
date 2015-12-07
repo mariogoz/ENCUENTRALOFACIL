@@ -21,18 +21,22 @@ public class Conexion implements Serializable {
     final static Logger logger = Logger.getLogger(Conexion.class);
     private DataSource datasource;
      BasicDataSource bds;
+      Connection cnn = null;
     public Conexion() {
        bds = new BasicDataSource();
     }
     
     public Connection getConnection() {
-        Connection cnn = null;
-
         try {
             bds.setDriverClassName(Properties.getProperty("conexion.driver"));
             bds.setUrl(Properties.getProperty("conexion.url"));
             bds.setUsername(Properties.getProperty("conexion.user"));
             bds.setPassword(Properties.getProperty("conexion.password"));
+            bds.setMaxTotal(100);
+            bds.setMaxConnLifetimeMillis(30000);
+            bds.setDefaultQueryTimeout(30);
+            bds.setMaxWaitMillis(30000);
+            bds.setMaxIdle(1);
             datasource = bds;
             
             cnn = datasource.getConnection();
@@ -43,7 +47,18 @@ public class Conexion implements Serializable {
             logger.error("[ERROR] conexion: " + e.getMessage());
         }
         
-        return cnn;
-        
+        return cnn;   
+    }
+    
+    // disconnect database
+    public void disconnect() {
+        if (cnn != null) {
+            try {
+                cnn.close();           
+                cnn = null;
+            } catch (SQLException e) {
+                logger.error("[ERROR disconnect] :" + e.getMessage());
+            }
+        }
     }
 }

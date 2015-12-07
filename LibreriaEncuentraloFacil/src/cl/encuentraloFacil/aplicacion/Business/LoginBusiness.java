@@ -6,11 +6,8 @@
 package cl.encuentraloFacil.aplicacion.Business;
 
 import cl.encuentraloFacil.aplicacion.DAO.LoginDAO;
-import cl.encuentraloFacil.aplicacion.TO.ProductoTO;
 import cl.encuentraloFacil.aplicacion.TO.UsuarioTO;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  *

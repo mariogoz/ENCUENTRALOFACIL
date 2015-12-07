@@ -7,6 +7,7 @@ package cl.encuentraloFacil.aplicacion.DAO;
 
 import cl.encuentraloFacil.aplicacion.Conexion.Conexion;
 import cl.encuentraloFacil.aplicacion.TO.ResultadoCargaTO;
+import java.io.Serializable;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -18,7 +19,7 @@ import org.apache.log4j.Logger;
  *
  * @author Administrador
  */
-public class CargaArchivosDAO {
+public class CargaArchivosDAO implements Serializable{
     final static Logger logger = Logger.getLogger(CargaArchivosDAO.class);
     Conexion conn = new Conexion();
     PreparedStatement cst = null;
@@ -78,15 +79,16 @@ public class CargaArchivosDAO {
             logger.error("[ERROR] cargarDatos SQLException: " + e.getMessage());
         } finally {
             try {
+                if (rs != null) {
+                    rs.close();
+                }
                 if (cst != null) {
                     cst.close();
                 }
                 if (conn != null) {
-                    conn.getConnection().close();
+                    conn.disconnect();
                 } 
-                if (rs != null) {
-                    rs.close();
-                }
+                
             } catch (SQLException ex) {
                 logger.error("[EMPRESADAO] cargarDatos FINALLY: " + ex.getMessage());
             }

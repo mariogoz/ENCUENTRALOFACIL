@@ -17,9 +17,6 @@ public class UsuarioTO implements Serializable {
     private Integer idUsuario;
     private String userName;
     private String password;
-    private String primerNombre;
-    private String primerApellido;
-    private String segundoApellido;
     private Date fecCrea;
     private Date fecVal;
     private String correo;
@@ -68,49 +65,7 @@ public class UsuarioTO implements Serializable {
     public void setPassword(String password) {
         this.password = password;
     }
-
-    /**
-     * @return the primerNombre
-     */
-    public String getPrimerNombre() {
-        return primerNombre;
-    }
-
-    /**
-     * @param primerNombre the primerNombre to set
-     */
-    public void setPrimerNombre(String primerNombre) {
-        this.primerNombre = primerNombre;
-    }
-
-    /**
-     * @return the primerApellido
-     */
-    public String getPrimerApellido() {
-        return primerApellido;
-    }
-
-    /**
-     * @param primerApellido the primerApellido to set
-     */
-    public void setPrimerApellido(String primerApellido) {
-        this.primerApellido = primerApellido;
-    }
-
-    /**
-     * @return the segundoApellido
-     */
-    public String getSegundoApellido() {
-        return segundoApellido;
-    }
-
-    /**
-     * @param segundoApellido the segundoApellido to set
-     */
-    public void setSegundoApellido(String segundoApellido) {
-        this.segundoApellido = segundoApellido;
-    }
-
+    
     /**
      * @return the fecCrea
      */
