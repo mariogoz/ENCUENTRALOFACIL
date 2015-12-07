@@ -58,10 +58,10 @@ public class BeanLogin implements Serializable {
         try {
 
             setRespuesta(loginBusiness.getBuscarCliente(getUsuario()));
-            if (getRespuesta() != null && getRespuesta().getGlosaConexion().equalsIgnoreCase(Properties.getProperty("beanlogin.autentificacion.exitosa"))) {
+            if (getRespuesta() != null && getRespuesta().getGlosaConexion() != null && 
+                    getRespuesta().getGlosaConexion().equalsIgnoreCase(Properties.getProperty("beanlogin.autentificacion.exitosa"))) {
                 FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("beanLogin", this);
-                msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "", Properties.getProperty("beanlogin.autentificacion.success") + " " + getRespuesta().getPrimerNombre()
-                        + " " + getRespuesta().getPrimerApellido());
+                msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "", Properties.getProperty("beanlogin.autentificacion.success") + " " + getRespuesta().getUserName());
                 context.addMessage(null, msg);
                 if (getRespuesta().getAdmin().equals(Constantes.ConstantesBeanLogin.ISADMIN)) {
                     destino = Properties.getProperty("beanlogin.redireccionar.intranet");         
@@ -79,7 +79,6 @@ public class BeanLogin implements Serializable {
         } catch (Exception e) {
             msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, Properties.getProperty("beanlogin.autentificacion.error"), null);
             context.addMessage(null, msg);
-            throw new RuntimeException(e);
         }
         return destino;
     }
@@ -142,6 +141,18 @@ public class BeanLogin implements Serializable {
     
     public String doProductos() {
         return "mantenedorproductos.auto";
+    }
+    
+    public String doFamilia() {
+        return "mantenedorfamilia.auto";
+    }
+
+    public String doSubFamilia() {
+        return "mantenedorsubfamilia.auto";
+    }
+
+    public String doProdEmpresa() {
+        return "mantenedorprodempresa.auto";
     }
 
     /**

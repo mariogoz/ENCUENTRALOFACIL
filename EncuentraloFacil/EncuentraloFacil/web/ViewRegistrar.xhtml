@@ -3,61 +3,141 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core">
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
     
     <h:head>
         <title>Registro EncuentraloFacil</title>
         <script language="javascript" src="js/jsAutentificacion.js"/>
         <link rel="STYLESHEET" type="text/css" href="fileformato.css"></link> 
+         
     </h:head>
     <h:body>
-        <div center="center">
-      <h:form>
-        <table>
-                <tr>    
-                    <h:outputLabel id="lblSubTituloRegistro" value="Registro usuario EncuentraloFacil" />
+        <p:layout fullPage="true">
+            <p:layoutUnit position="north" > 
+                
+            </p:layoutUnit>
+            <p:layoutUnit position="south">
+                
+            </p:layoutUnit>
+            <p:layoutUnit position="center">
+                 <!--<div center="center" style="width: 50%" align="center" > -->
+      <h:form id="formFormulario">
+           <p:growl id="message" showDetail="true" />
+          <table style="width: 25%"   align="center">
+                <tr> 
+                    <td colspan="3" align="center">
+                        <h:outputLabel id="lblSubTituloRegistro" value="Registro EncuentraloFacil"  />
+                    </td>
                 </tr>
                 <tr>
                    
                    <td><h:outputLabel id="lblRutRegistar" value="Rut"/></td>
-                   <td><h:inputText id="txtRutRegistro"  > 
-                           <f:validator validatorId="cl.encuentraloFacil.aplicacion.util.Validacion" />
-                       </h:inputText>
-                   
-                   </td>
-                   
+                   <td> <p:inputMask id="txtRutRegistro" mask="099.999.999-*" value="#{beanRegistro.dvView}"
+                                     validator="rutValidor" style="width: 100%"
+                                     requiredMessage="Por favor Ingrese su Rut"
+                                     required="true"> 
+                       </p:inputMask>
+                       <form id="">
+                       <p:message id="mesaggeRut" for="txtRutRegistro" style="color: red;" display="text"/>
+                       </form>
+                   </td> 
+                  
                 </tr>
                 <tr>
-                    <td><h:outputLabel id="lblPrimerNombreRegistro" value="Primer Nombre"/></td>
-                    <td><h:inputText id="txtPrimerNombreRegistro"  /></td>
-                </tr>
-                <tr>
-                    <td><h:outputLabel id="lblSegundoNombreRegistro" value="Segundo Nombre" /></td>
-                    <td><h:inputText id="txtSegundoNombreRegistro"  /></td>
+                    <td><h:outputLabel id="lblPrimerNombreRegistro" value="Nombres" /></td>
+                    <td><h:inputText  id="txtPrimerNombreRegistro" value="#{beanRegistro.cliente.nombre}" style="width: 100%"
+                                      required="true"
+                                      requiredMessage="Por favor Ingrese su Nombre"
+                                      converter="toUpperCaseConverter"
+                                      >
+                        </h:inputText>
+                        <p:message for="txtPrimerNombreRegistro" style="color: red;" display="text"/></td>
                 </tr>
                 <tr>
                     
 
-                    <td><h:outputLabel id="lblPrimerApellRegistro" value="Apellido Paterno" /></td>
-                    <td><h:inputText id="txtPrimerApellRegistro" /></td>
-                </tr>
-                <tr>
-                    <td><h:outputLabel id="lblSegundoApellRegistro" value="Apellido Materno" /></td>
-                    <td><h:inputText id="txtSegundoApelliRegisto"  /></td>
+                    <td><h:outputLabel id="lblPrimerApellRegistro" value="Apellidos" /></td>
+                    <td><h:inputText  id="txtPrimerApellRegistro" value="#{beanRegistro.cliente.primerApellido}" style="width: 100%" 
+                                     required="true"
+                                     requiredMessage="Por favor Ingrese su Apellido"
+                                     converter="toUpperCaseConverter"
+                                     >
+                            
+                        </h:inputText>
+                    <p:message for="txtPrimerApellRegistro" style="color: red;" display="text" />
+                    </td>
                 </tr>
                 <tr>
                     <td><h:outputLabel id="lblFechaNacimientoRegistro" value="Fecha de Nacimiento" /></td>
-                    <td><input type="date" min="1910-01-01" id="dateFechaNacRegistro" /></td>
+                    <td><p:calendar id="german" value="#{beanRegistro.cliente.fecNac}" locale="es" navigator="true" pattern="yyyy-MM-dd"
+                                    requiredMessage="Por favor Ingrese fecha Nacimiento"   maxlength="10"
+                                    placeholder="yyyy-MM-dd" converterMessage="Formato no valido"
+                                    style="width: 100%" mask="9999-99-99" required="true"/>
+                    <p:message for="german" style="color: red;" display="text"/>
+                    </td>
                 </tr>
-                <td>
-                    <td> <h:commandButton id="btnClienteRegistro"  value="Registar" action="#{beanRegistro.registrarCliente()}" /> </td>
-                    <td> <h:commandButton id="btnLimpiarRegistro" value="Limpiar" onclick="limpiarRegistro()"/> </td>
-                    <td> <h:commandButton id="btnVolverRegistro" value="Volver" action="ViewLogin"/></td>
-                </td>
+               <tr>
+                    <td><h:outputLabel id="lblCorreo" value="Email" /></td>
+                    <td><h:inputText id="txtEmail" value="#{beanRegistro.cliente.correo}" style="width: 100%" 
+                                     required="true"
+                                     requiredMessage="Por favor ingrese su Email"/>
+                    <p:message for="txtEmail" style="color: red;" display="text"/>
+                    </td>
+                </tr>
+              <tr>
+                    <td><h:outputLabel id="lblNombreUsuario" value="Usuario" /></td>
+                    <td><h:inputText id="txtNombreUsuario" value="#{beanRegistro.cliente.usuario.userName}" style="width: 100%" 
+                                     required="true"
+                                     requiredMessage="Por favor ingrese Usuario a crear" maxlength="15"/>
+                    <p:message for="txtNombreUsuario" style="color: red;" display="text"/>
+                    </td>
+                </tr>
+              <tr>
+                  <td><h:outputLabel id="lblPassword" value="Password" /></td>
+                  <td>
+                      <h:inputSecret id="password" value="#{beanRegistro.cliente.usuario.password}" required="true"
+                             requiredMessage="Por favor Ingresar Password" style="width: 100%"
+                             maxlength="8">
+
+                  <f:validator validatorId="passwordValidator" />
+                  <f:attribute name="confirmPassword" value="#{confirmPassword}" />
+          
                 
+              </h:inputSecret>
+                      <p:message id="mesagge" for="password" style="color: red;" display="text"/>
+                      </td>
+                  </tr>
+                  <tr>
+                      <td><h:outputLabel id="lblPasswordConfirmar" value="Confirmar Password"  /></td>
+                  <td>
+                       <h:inputSecret id="confirmPassword" required="true"
+                             binding="#{confirmPassword}"
+                             requiredMessage="Por favor ingresar Confirmar Password" 
+                             style="width: 100%" maxlength="8">
+                       
+                       </h:inputSecret>
+                       <p:message for="confirmPassword" style="color: red;" display="text" />
+                  </td>
+
+             
+              
+                </tr>
             </table>
+          <table border="1" align="center">
+              <tr>
+                
+                  <td colspan="3" align="center"> <h:commandButton id="btnClienteRegistro"  value="Registar" actionListener="#{beanRegistro.registrarCliente()}" /> 
+                      <h:commandButton id="btnLimpiarRegistro" value="Limpiar" action="#{beanRegistro.limpiarRegistro()}"/> 
+                     <h:commandButton id="btnVolverRegistro" value="Volver" onclick="history.go(-1)"/></td>
+                
+               </tr>    
+          </table>
          </h:form> 
-        </div>
+       <!-- </div> -->
+            </p:layoutUnit>
+       
+            </p:layout>
     </h:body>
  
 </html>

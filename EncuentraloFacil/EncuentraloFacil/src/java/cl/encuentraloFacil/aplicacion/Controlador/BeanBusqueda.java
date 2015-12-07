@@ -138,6 +138,10 @@ public class BeanBusqueda implements Serializable {
 
         return getProds();
     }
+    
+     public String redireccionarRegistro(){
+        return "registrar";  
+    }
 
     /**
      * @return the emprego

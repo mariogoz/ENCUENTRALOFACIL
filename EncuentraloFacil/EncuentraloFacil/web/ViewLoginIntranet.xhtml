@@ -3,6 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
       >
     <h:head>
         <title>INTRANET</title>
@@ -13,18 +14,74 @@
 
             <p:layout fullPage="true">
 
-                <p:layoutUnit  position="north"  size="140" resizable="false" closable="true" collapsible="false"  >
+                <p:layoutUnit  position="west"  size="140" resizable="false" closable="true" collapsible="false"  >
 
 
-
+                    <div>
+                        <p:commandLink  id="familias"  action="#{beanLogin.doFamilia()}" value="Mantenedor de Familias" /> 
+                    </div>
+                    <br/>
+                    <div>
+                        <p:commandLink  id="subfamilias"  action="#{beanLogin.doSubFamilia()}" value="Mantenedor de Sub-Familias" /> 
+                    </div>
+                    <br/>
+                    <p:growl id="message" showDetail="true" />
+                    <p:commandLink value="Cerrar Sesion"   update="message">
+                        <p:confirm header="Confirmation" message="Estas seguro?" icon="ui-icon-alert"/>
+                    </p:commandLink>
+                    <p:confirmDialog global="true"  showEffect="fade" hideEffect="explode">
+                        <p:commandButton value="Yes"  styleClass="ui-confirmdialog-yes" icon="ui-icon-check" action="#{beanLogin.cerrarSesion()}"/>
+                        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                    </p:confirmDialog>
 
                 </p:layoutUnit>
 
                 <p:layoutUnit   id="centerLayout"  position="center">
-                    <h:form id="form" enctype="multipart/form-data">   
+                    <h:form id="form" >   
+
 
                         <div>
-
+                            <p:dataTable value="#{beanIntranet.tableAlertas}" var="item"
+                                         paginator="true"
+                                         rows="5"
+                                         rowsPerPageTemplate="5,10,15"
+                                         paginatorTemplate="  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+                                <p:column headerText="Rut">
+                                    <p:cellEditor>
+                                        <f:facet name="output">
+                                            <h:outputText value="#{item.rut}" />
+                                        </f:facet>
+                                    </p:cellEditor>
+                                </p:column>
+                                <p:column headerText="DV">
+                                    <p:cellEditor>
+                                        <f:facet name="output">
+                                            <h:outputText value="#{item.dv}" />
+                                        </f:facet>
+                                    </p:cellEditor>
+                                </p:column>
+                                <p:column headerText="Nombre">
+                                    <p:cellEditor>
+                                        <f:facet name="output">
+                                            <h:outputText value="#{item.nombres}" />
+                                        </f:facet>
+                                    </p:cellEditor>
+                                </p:column>
+                                <p:column headerText="Apellido">
+                                    <p:cellEditor>
+                                        <f:facet name="output">
+                                            <h:outputText value="#{item.apellidos}" />
+                                        </f:facet>
+                                    </p:cellEditor>
+                                </p:column>
+                                <p:column headerText="Correo">
+                                    <p:cellEditor>
+                                        <f:facet name="output">
+                                            <h:outputText value="#{item.correo}" />
+                                        </f:facet>
+                                    </p:cellEditor>
+                                </p:column>
+                            </p:dataTable>
                         </div>
 
                     </h:form>

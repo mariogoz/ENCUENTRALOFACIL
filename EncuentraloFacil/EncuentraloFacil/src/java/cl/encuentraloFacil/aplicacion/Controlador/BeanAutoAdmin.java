@@ -7,20 +7,19 @@
 package cl.encuentraloFacil.aplicacion.Controlador;
 
 import cl.encuentraloFacil.aplicacion.Business.AutoAdminBusiness;
-import cl.encuentraloFacil.aplicacion.TO.ProductoTO;
 import cl.encuentraloFacil.aplicacion.TO.UsuarioTO;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
-import org.primefaces.model.menu.DefaultSubMenu;
 
 /**
  *
  * @author Mario
  */
-
+@ManagedBean
+@RequestScoped
 public class BeanAutoAdmin implements Serializable{
     
     private FacesContext facesContext;

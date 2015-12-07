@@ -1,0 +1,145 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ppctu="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+    <title>Inicio</title>
+</h:head>
+<h:body>
+    <h:form>
+        <ppctu:layout fullPage="true">
+            <ppctu:layoutUnit  position="north"  size="140" resizable="false" closable="true" collapsible="false"  >
+                <ppctu:growl id="message" showDetail="true" />
+                <ppctu:commandButton value="Cerrar Sesion"   update="message">
+                    <ppctu:confirm header="Confirmation" message="Estas seguro?" icon="ui-icon-alert"/>
+                </ppctu:commandButton>
+                <ppctu:confirmDialog global="true"  showEffect="fade" hideEffect="explode">
+                    <ppctu:commandButton value="Yes"  styleClass="ui-confirmdialog-yes" icon="ui-icon-check" action="#{beanLogin.cerrarSesion()}"/>
+                    <ppctu:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                </ppctu:confirmDialog>
+            </ppctu:layoutUnit>
+            <ppctu:layoutUnit   position="west" header="menu" size="140" resizable="false" closable="false" collapsible="false" >
+                <ppctu:growl id="grow1" life="2000" />
+                <div>
+                    <ppctu:commandLink  id="ajax1" action="#{beanLogin.doInicio()}" value="Inicio" />
+                </div>
+                <div>
+                    <ppctu:commandLink  id="ajax" action="#{beanLogin.cargaMasivaRef()}" value="Carga Masiva" />
+                </div>
+                <div>
+                    <ppctu:commandLink  id="aj" action="#{beanLogin.cargaMultipleRef()}" value=" Carga Multiple" />
+                </div>
+                <div>
+                    <ppctu:commandLink  id="informe" action="#{beanLogin.doInformes()}" value="Informes" />
+                </div>
+                <div>
+                    <ppctu:commandLink  id="productos"  action="#{beanLogin.doProductos()}" value="Mantenedor de Productos" />
+                </div>
+                <div>
+                    <ppctu:commandLink  id="familias"  action="#{beanLogin.doFamilia()}" value="Mantenedor de Familias" />
+                </div>
+                <div>
+                    <ppctu:commandLink  id="subfamilias"  action="#{beanLogin.doSubFamilia()}" value="Mantenedor de Sub-Familias" />
+                </div>
+                <div>
+                    <ppctu:commandLink  id="productos_empresa"  action="#{beanLogin.doProdEmpresa()}" value="Mantenedor de Producto-Empresa" />
+                </div>
+            </ppctu:layoutUnit>
+            <ppctu:layoutUnit id="centerLayout" header="Mantenedor de productos" position="center">
+                <table>
+                    <tr>
+                        <td><h:outputLabel id="lblFamilia" value="Familia" /></td>
+                        <td>
+                            <ppctu:selectOneMenu value="#{beanProductoEmpresa.producto.subfamilia.familia.idFam}" style="width:250px">
+                                <f:selectItems value="#{beanProductoEmpresa.cmbFamilia}"></f:selectItems>
+                                <ppctu:ajax event="change" listener="#{beanProductoEmpresa.getCmbSubFamilia()}" update="subfamilia"></ppctu:ajax>
+                            </ppctu:selectOneMenu>
+                        </td>
+                    </tr>
+                </table>
+                <br></br>
+                <ppctu:dataTable 
+                    var="producto" 
+                    value="#{beanProductoEmpresa.listadoProd}"
+                    paginator="true"
+                    rows="5"
+                    editable="true"
+                    rowsPerPageTemplate="5,10,15"
+                    paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                    >
+                    
+                    <ppctu:growl id="mensaje"></ppctu:growl>
+                    <ppctu:ajax event="rowEdit" listener="#{beanProductoEmpresa.asociar_producto}" ></ppctu:ajax>
+                    <ppctu:ajax event="rowEditCancel" listener="#{beanProductoEmpresa.cancelar}"></ppctu:ajax>
+                    
+                    <ppctu:column filterBy="#{producto.nombreProducto}"  filterMatchMode="contains" headerText="Nombre Producto">
+                        <ppctu:cellEditor>
+                            <f:facet name="output">
+                                <h:outputText value="#{producto.nombreProducto}"></h:outputText>
+                            </f:facet>
+                            <f:facet name="input">
+                                <h:inputHidden id="txtIdProducto_g" value="#{producto.idProducto}" />
+                                <h:inputText id="txtNombreProducto_g" value="#{beanProductoEmpresa.producto_g.nombreProducto}" style="width:250px"></h:inputText>
+                            </f:facet>
+                        </ppctu:cellEditor>
+                    </ppctu:column>
+                    <ppctu:column filterBy="#{producto.precio}"  filterMatchMode="contains"  headerText="precio">
+                        <ppctu:cellEditor>
+                            <f:facet name="output">
+                                <h:outputText value="#{producto.precio}"></h:outputText>
+                            </f:facet>
+                            <f:facet name="input">
+                                <h:inputText id="txtPrecio_g" value="#{beanProductoEmpresa.producto_g.precio}" style="width:250px"></h:inputText>
+                            </f:facet>
+                        </ppctu:cellEditor>
+                    </ppctu:column>
+                    <ppctu:column filterBy="#{producto.subfamilia.familia.nomFam}"  filterMatchMode="contains" headerText="Familia">
+                        <ppctu:cellEditor>
+                            <f:facet name="output">
+                                <h:outputText value="#{producto.subfamilia.familia.nomFam}"></h:outputText>
+                            </f:facet>
+                            <f:facet name="input">
+                                <ppctu:selectOneMenu value="#{beanProductoEmpresa.producto_g.subfamilia.familia.idFam}" style="width:250px">
+                                    <f:selectItems value="#{beanProductoEmpresa.cmbFamilia_g}"></f:selectItems>
+                                    <ppctu:ajax event="change" listener="#{beanProductoEmpresa.getCmbSubFamilia_g()}" update="subfamilia_g"></ppctu:ajax>
+                                </ppctu:selectOneMenu>
+                            </f:facet>
+                        </ppctu:cellEditor>
+                    </ppctu:column>
+                    <ppctu:column filterBy="#{producto.subfamilia.nomSubFam}"  filterMatchMode="contains" headerText="Sub-Familia">
+                        <ppctu:cellEditor>
+                            <f:facet name="output">
+                                <h:outputText value="#{producto.subfamilia.nomSubFam}"></h:outputText>
+                            </f:facet>
+                            <f:facet name="input">
+                                <ppctu:selectOneMenu id="subfamilia_g" value="#{beanProductoEmpresa.producto_g.subfamilia.idSubFam}" style="width:250px">
+                                    <f:selectItems value="#{beanProductoEmpresa.cmbSubFamilia_g}"></f:selectItems>
+                                </ppctu:selectOneMenu>
+                            </f:facet>
+                        </ppctu:cellEditor>
+                    </ppctu:column>
+                    <ppctu:column filterBy="#{producto.estados.nomest}"  filterMatchMode="contains" headerText="Estado">
+                        <ppctu:cellEditor>
+                            <f:facet name="output">
+                                <h:outputText value="#{producto.estados.nomest}"></h:outputText>
+                            </f:facet>
+                            <f:facet name="input">
+                                <ppctu:selectOneMenu id="estados_g" value="#{beanProductoEmpresa.producto_g.estados.idest}" style="width:250px">
+                                    <f:selectItems value="#{beanProductoEmpresa.cmbEstados_g}"></f:selectItems>
+                                </ppctu:selectOneMenu>
+                            </f:facet>
+                        </ppctu:cellEditor>
+                    </ppctu:column>
+                    <ppctu:column style="width:32px;text-align: center">
+                        <ppctu:rowEditor></ppctu:rowEditor>
+                   </ppctu:column>
+                </ppctu:dataTable>
+            </ppctu:layoutUnit>
+        </ppctu:layout>
+    </h:form>   
+</h:body>
+</html>
+

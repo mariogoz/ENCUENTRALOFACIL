@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"> 
+    <h:head>
+        <title>Empresa</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </h:head>
+    <h:body>
+
+        <p:layout fullPage="true">
+            <p:layoutUnit position="north" > 
+
+            </p:layoutUnit>
+            <p:layoutUnit position="south">
+
+            </p:layoutUnit>
+            <p:layoutUnit position="center">
+                <h:form id="seleccionarAccion">
+                    <table align="center">
+                        <td colspan="3" align="center">
+                            <h:commandButton id="btnRenderIngresar" value="Ingresar Empresa" actionListener="#{beanRegistroEmpresa.renderIngresar()}" > </h:commandButton>
+                            <h:commandButton id="btnRenderEditar" value="Editar Empresa" actionListener="#{beanRegistroEmpresa.renderEditar()}" > </h:commandButton>
+                            <h:commandButton id="btnRenderEliminar" value="Eliminar Empresa" actionListener="#{beanRegistroEmpresa.renderEliminar()}" > </h:commandButton>
+                        </td>
+                    </table>
+                </h:form>
+                <h:form id="formEmpresa" rendered="#{beanRegistroEmpresa.isIngresar != null}">
+                    <table style="width: 25%"   align="center">
+                        <tr> 
+                            <td colspan="2" align="center">
+                                <h:outputLabel id="lblSubTituloRegistro" value="Registro Empresas"  />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p:outputLabel id="lblRutEmpresa" value="Rut Empresa" ></p:outputLabel>
+                            </td>
+                            <td>
+                                <p:inputMask id="txtRutEmpresa" mask="099.999.999-*" value="#{beanRegistroEmpresa.rutEmpresaFrond}"
+                                             validator="rutValidor" style="width: 100%"
+                                             requiredMessage="Ingrese RUT empresa"
+                                             required="true"> 
+                                </p:inputMask>
+                                <p:message for="txtRutEmpresa" display="text" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p:outputLabel id="lblNombreEmpresa" value="Nombre" ></p:outputLabel>
+                            </td>
+                            <td>
+                                <p:inputText id="txtNombreEmpresa" value="#{beanRegistroEmpresa.empresa.nombreEmpresa}" 
+                                             required="true" 
+                                             requiredMessage="Ingrese nombre Empresa"
+                                             style="width: 100%"></p:inputText>
+                                <p:message for="txtNombreEmpresa" display="text" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p:outputLabel id="lblUrl" value="URL (Página Empresa)" ></p:outputLabel>
+                            </td>
+                            <td>
+                                <p:inputText id="txtUrl" value="#{beanRegistroEmpresa.empresa.url}" style="width: 100%"></p:inputText>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p:outputLabel id="lblImageEmpresa" value="Imagen Empresa" ></p:outputLabel>
+                            </td>
+                            <td>
+                                <p:fileUpload id="fileCargaImagen"  fileLimit="1" 
+                                              invalidFileMessage="Sólo se puede cargar este archivo"
+                                              allowTypes="/(\.|\/)(png)$/"
+                                              update="fileCargaImagen"
+                                              mode="simple"
+                                              style="width: 100%"
+                                              ></p:fileUpload>
+                            </td>
+                        </tr>
+                    </table>
+                    <table align="center">
+                        <td colspan="2" align="center">
+                            <h:commandButton id="btnRegistrarEmpresa" value="Registrar" actionListener="#{beanRegistroEmpresa.registrarEmpresa()}" > </h:commandButton>
+                            <h:commandButton id="btnLimpiarForm" value="Limpiar" actionListener="#{beanRegistroEmpresa.registrarEmpresa()}" > </h:commandButton>
+                        </td>
+                    </table>
+                </h:form> 
+
+                <h:form id="formEmpresaEditar" rendered="#{beanRegistroEmpresa.isEditar != null}">
+                    <table style="width: 25%"   align="center">
+                        <tr>
+                            <td>
+                                aqui estoy
+                            </td>
+                        </tr>
+                    </table>
+                </h:form>
+
+                <h:form id="formEmpresaEliminar" rendered="#{beanRegistroEmpresa.isEliminar != null}">
+                    <table style="width: 25%"   align="center">
+                         <tr> 
+                            <td colspan="2" align="center">
+                                <h:outputLabel id="lblEliminarEmpresaTitulo" value="Eliminar Empresa"  />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p:outputLabel id="lblEliminarEmpresa" value="Rut" style="width: 100%"></p:outputLabel>
+                            </td>
+                            <td>
+                                <p:inputMask id="txtRutEliminar" mask="099.999.999-*" value="#{beanRegistroEmpresa.rutEmpresaFrond}"
+                                             validator="rutValidor" style="width: 100%"
+                                             requiredMessage="Ingrese RUT empresa"
+                                             required="true"> 
+                                </p:inputMask>
+                                <p:message for="txtRutEliminar" display="text" />
+                            </td>
+                        </tr>
+                    </table>
+                    <table align="center">
+                        <td colspan="1" align="center">
+                            <h:commandButton id="btnRegistrarEmpresa" value="Eliminar" actionListener="#{beanRegistroEmpresa.registrarEmpresa()}" > </h:commandButton>
+                        </td>
+                    </table>
+                </h:form>
+            </p:layoutUnit>
+
+        </p:layout>
+
+    </h:body>
+</html>

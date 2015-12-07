@@ -1,0 +1,97 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+    <title>Inicio</title>
+</h:head>
+<h:body>
+    <h:form>
+        <p:layout fullPage="true">
+            <p:layoutUnit  position="north"  size="140" resizable="false" closable="true" collapsible="false"  >
+                <p:growl id="message" showDetail="true" />
+                <p:commandButton value="Cerrar Sesion"   update="message">
+                    <p:confirm header="Confirmation" message="Estas seguro?" icon="ui-icon-alert"/>
+                </p:commandButton>
+                <p:confirmDialog global="true"  showEffect="fade" hideEffect="explode">
+                    <p:commandButton value="Yes"  styleClass="ui-confirmdialog-yes" icon="ui-icon-check" action="#{beanLogin.cerrarSesion()}"/>
+                    <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                </p:confirmDialog>
+            </p:layoutUnit>
+            <p:layoutUnit   position="west" header="menu" size="140" resizable="false" closable="false" collapsible="false" >
+                <p:growl id="grow1" life="2000" />
+                <div>
+                    <p:commandLink  id="ajax1" action="#{beanLogin.doInicio()}" value="Inicio" />
+                </div>
+                <div>
+                    <p:commandLink  id="ajax" action="#{beanLogin.cargaMasivaRef()}" value="Carga Masiva" />
+                </div>
+                <div>
+                    <p:commandLink  id="aj" action="#{beanLogin.cargaMultipleRef()}" value=" Carga Multiple" />
+                </div>
+                <div>
+                    <p:commandLink  id="informe" action="#{beanLogin.doInformes()}" value="Informes" />
+                </div>
+                <div>
+                    <p:commandLink  id="productos"  action="#{beanLogin.doProductos()}" value="Mantenedor de Productos" />
+                </div>
+                <div>
+                    <p:commandLink  id="familias"  action="#{beanLogin.doFamilia()}" value="Mantenedor de Familias" />
+                </div>
+                <div>
+                    <p:commandLink  id="subfamilias"  action="#{beanLogin.doSubFamilia()}" value="Mantenedor de Sub-Familias" />
+                </div>
+                <div>
+                    <p:commandLink  id="productos_empresa"  action="#{beanLogin.doProdEmpresa()}" value="Mantenedor de Producto-Empresa" />
+                </div>
+            </p:layoutUnit>
+            <p:layoutUnit id="centerLayout" header="Mantenedor de productos" position="center">
+                <table>
+                    <tr>
+                        <td><h:outputLabel id="lblFamilia" value="Familia" /></td>
+                        <td><h:inputText id="txtFamilia" value="#{beanFamilia.familia.nomFam}" style="width:250px"></h:inputText></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"><p:commandButton id="button"  value="Ingresar"  actionListener="#{beanFamilia.IngresarFamilia()}" /></td>
+                    </tr>
+                </table>
+                <br></br>
+                <p:dataTable 
+                    id="tabla_familia"
+                    var="familia" 
+                    value="#{beanFamilia.list_familia}"         
+                    paginator="true"
+                    rows="5"
+                    editable="true"
+                    rowsPerPageTemplate="5,10,15"
+                    paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                    >
+                             
+                    <p:growl id="mensaje"></p:growl>
+                    <p:ajax event="rowEdit" listener="#{beanFamilia.ActualizarFamilia}" update="tabla_familia" ></p:ajax>
+                    <p:ajax event="rowEditCancel" listener="#{beanFamilia.cancelar}"></p:ajax>
+                    <p:column filterBy="#{familia.idFam}" headerText="ID Correlativo">
+                        <h:outputText value="#{familia.idFam}" />
+                    </p:column>
+                    <p:column filterBy="#{familia.nomFam}" headerText="Nombre Familia de Productos">
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <h:outputText value="#{familia.nomFam}" />
+                            </f:facet>
+                            <f:facet name="input">
+                                <h:inputText value="#{beanFamilia.familia.nomFam}" />
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+                    <p:column style="width:32px;text-align: center">
+                        <p:rowEditor></p:rowEditor>
+                   </p:column>
+                </p:dataTable>
+            </p:layoutUnit>
+        </p:layout>
+    </h:form>   
+</h:body>
+</html>

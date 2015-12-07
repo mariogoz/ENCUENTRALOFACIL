@@ -33,8 +33,6 @@ public class RptEjemplo implements EFReporte{
         parametros.put("NOMBRE", "Mario Aaron Gonzalez Sanchez");
         parametros.put("URL", empresa.getUrl());
         parametros.put("IMG", empresa.getImagen());
-        parametros.put("FECHAINICIO", empresa.getUsuario().getFecCrea());
-        parametros.put("FECHAVALIDACION", empresa.getUsuario().getFecVal());
         parametros.put("NOMBREEMPRESA",empresa.getNombreEmpresa());
         parametros.put("RUT",empresa.getRutEmp());
         parametros.put("DV",empresa.getDv());

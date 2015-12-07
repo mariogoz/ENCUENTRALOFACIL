@@ -6,13 +6,13 @@
 package cl.encuentraloFacil.aplicacion.Controlador;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.ss.formula.functions.Column;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 /**
@@ -20,7 +20,7 @@ import org.apache.poi.ss.usermodel.Row;
  * @author Mario
  */
 @ManagedBean
-public class BeanCargaDatos {
+public class BeanCargaDatos implements Serializable{
     
     public void cargarDatos(){
         try {

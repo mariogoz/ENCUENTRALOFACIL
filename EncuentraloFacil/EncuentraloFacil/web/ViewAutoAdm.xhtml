@@ -4,36 +4,32 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ppctu="http://primefaces.org/ui"
         >
-    <h:head>
-        <title>Inicio</title>
-    </h:head>
-    <h:body>
-        <h:form>
-            
-            <ppctu:layout fullPage="true">
+<h:head>
+    <title>Inicio</title>
+</h:head>
+<h:body>
+    <h:form>
 
-<ppctu:layoutUnit  position="north"  size="140" resizable="false" closable="false" collapsible="false"  >
-     <ppctu:growl id="message" showDetail="true" />
-     <div id="slider-holder" style="left : initial;" border="">
+        <ppctu:layout fullPage="true">
+        <ppctu:layoutUnit  position="north"  size="140" resizable="false" closable="false" collapsible="false"  >
+            <ppctu:growl id="message" showDetail="true" />
+            <div id="slider-holder" style="left : initial;" border="">
                 <ul>
                     <img src="imagen/encuentraloFacil.gif" alt="" style=" border:1px"/>
                 </ul>
-     </div> 
-    <div id="buttonNorth"> 
-           <ppctu:commandButton value="Cerrar Sesion"   update="message">
-            <ppctu:confirm header="Confirmation" message="Estas seguro?" icon="ui-icon-alert"/>
-        </ppctu:commandButton>
- 
-         <ppctu:confirmDialog global="true"  showEffect="fade" hideEffect="explode">
-             <ppctu:commandButton value="Yes"  styleClass="ui-confirmdialog-yes" icon="ui-icon-check" action="#{beanLogin.cerrarSesion()}"/>
-        <ppctu:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
-    </ppctu:confirmDialog>
-    </div>
-          
- 
-      
-</ppctu:layoutUnit>
-<ppctu:layoutUnit   position="west" header="menu" size="140" resizable="false" closable="false" collapsible="false" >
+            </div> 
+            <div id="buttonNorth"> 
+                <ppctu:commandButton value="Cerrar Sesion"   update="message">
+                    <ppctu:confirm header="Confirmation" message="Estas seguro?" icon="ui-icon-alert"/>
+                </ppctu:commandButton>
+
+                <ppctu:confirmDialog global="true"  showEffect="fade" hideEffect="explode">
+                    <ppctu:commandButton value="Yes"  styleClass="ui-confirmdialog-yes" icon="ui-icon-check" action="#{beanLogin.cerrarSesion()}"/>
+                    <ppctu:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                </ppctu:confirmDialog>
+            </div>
+        </ppctu:layoutUnit>
+<ppctu:layoutUnit   position="west" header="Menu" size="140" resizable="false" closable="false" collapsible="false" >
      <ppctu:growl id="grow1" life="2000" />
      <div>
          <ppctu:commandLink  id="ajax1"  action="#{beanLogin.doInicio()}" value="Inicio" />
@@ -48,11 +44,20 @@
          <ppctu:commandLink  id="informe"  action="#{beanLogin.doInformes()}" value="Informes" />
      </div>
      <div>
-         <ppctu:commandLink  id="productos"  action="#{beanLogin.doProductos()}" value="Mantenedor de productos" />
+         <ppctu:commandLink  id="productos"  action="#{beanLogin.doProductos()}" value="Mantenedor de Productos" />
+     </div>
+     <div>
+         <ppctu:commandLink  id="familias"  action="#{beanLogin.doFamilia()}" value="Mantenedor de Familias" />
+     </div>
+     <div>
+         <ppctu:commandLink  id="subfamilias"  action="#{beanLogin.doSubFamilia()}" value="Mantenedor de Sub-Familias" />
+     </div>
+     <div>
+         <ppctu:commandLink  id="productos_empresa"  action="#{beanLogin.doProdEmpresa()}" value="Mantenedor de Producto-Empresa" />
      </div>
 </ppctu:layoutUnit>
 
-<ppctu:layoutUnit   id="centerLayout" header="content" position="center">
+<ppctu:layoutUnit   id="centerLayout" header="EncuentraloFacil" position="center">
     <h:form id="form" enctype="multipart/form-data">   
        
         <!--<ui:include src="ViewAutoAdmin.xhtml" /> -->
